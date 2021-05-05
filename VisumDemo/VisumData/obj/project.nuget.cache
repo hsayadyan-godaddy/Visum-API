@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Kvpia0HiQYZRVtB3TYA7OIvAF2cBbvzUdmsPe+JcYw7Dp1As3ESCDvQ4EGE7SlF0e41qY1LC2mqCmzlcY2OelQ==",
+  "success": true,
+  "projectFilePath": "C:\\code\\VisumDemo\\VisumData\\VisumData.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\H256615\\.nuget\\packages\\mongodb.bson\\2.12.3\\mongodb.bson.2.12.3.nupkg.sha512",
+    "C:\\Users\\H256615\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
