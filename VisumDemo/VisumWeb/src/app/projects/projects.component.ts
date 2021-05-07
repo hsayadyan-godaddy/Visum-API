@@ -3,23 +3,31 @@ import {Component} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  position: number,
+  wellName: string, 
+  projectName: string, 
+  country: string, 
+  reservoir: string, 
+  pad:string,
+  api:string, 
+  field:string, 
+  wellType:string,
+  customer:string 
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+  {position: 1, wellName: 'Well P1 1.1', projectName: 'Project1', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 2, wellName: 'Well P1 1.2', projectName: 'Project2', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 3, wellName: 'Well P1 1.3', projectName: 'Project3', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 4, wellName: 'Well P1 1.4', projectName: 'Project4', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 5, wellName: 'Well P1 1.5', projectName: 'Project5', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 6, wellName: 'Well P1 1.5', projectName: 'Project6', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 7, wellName: 'Well P1 2.1', projectName: 'Project7', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 8, wellName: 'Well P1 2.2', projectName: 'Project8', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 9, wellName: 'Well P1 2.3', projectName: 'Project9', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 10, wellName: 'Well P1 2.4', projectName: 'Project10', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 11, wellName: 'Well P1 3.1', projectName: 'Project11', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
+  {position: 12, wellName: 'Well P1 3.2', projectName: 'Project12', country: 'USA', reservoir: 'Rezervoir z', pad:'Pad 1', api:'', field:'', wellType:'', customer:'' },
 ];
 
 /**
@@ -31,7 +39,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   templateUrl: './projects.component.html',
 })
 export class ProjectsComponent {
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = ['select', 'position', 'wellName', 'projectName', 'country', 'reservoir', 'pad', 'api', 'field', 'wellType', 'customer'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
 
@@ -55,5 +63,9 @@ export class ProjectsComponent {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  onClickbutton(event){
+    console.log("View button click");
   }
 }

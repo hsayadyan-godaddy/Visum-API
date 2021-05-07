@@ -11,12 +11,19 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedService} from './shared.service'
 import { HttpClientModule } from '@angular/common/http';
 import { ProjectsComponent } from './projects/projects.component';
+import { RoutingModule } from './routing/routing.module';
+import { HomeComponent } from './home/home.component';
+import { ViewComponent } from './view/view.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    HomeComponent,
+    ViewComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +37,8 @@ import { ProjectsComponent } from './projects/projects.component';
       { path: '', redirectTo: '/', pathMatch : 'full'},
       {path: 'login', component: LoginComponent},
       {path: 'projects', component: ProjectsComponent}
-    ])
+    ]),
+    RoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
