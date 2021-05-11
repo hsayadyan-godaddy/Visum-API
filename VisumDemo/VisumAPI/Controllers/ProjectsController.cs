@@ -13,6 +13,13 @@ namespace VisumAPI.Controllers
     [ApiController]
     public class ProjectsController : ControllerBase
     {
+        //TODO should be moved to service or DB project
+        private readonly DBClient _dbClient;
+
+        public ProjectsController(DBClient dBClient)
+        {
+            _dbClient = dBClient;
+        }
 
         [HttpGet]
         [Route("projects")]

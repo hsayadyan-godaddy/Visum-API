@@ -1,20 +1,14 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using VisumAPI.Models;
 
 namespace VisumAPI
 {
@@ -33,17 +27,14 @@ namespace VisumAPI
             var jwtSettings = Configuration.GetSection("JwtSettings");
             var connectionString = Configuration.GetSection("ConnectionString");
 
-            services.AddMongoIdentityProvider<Customer, UserRole>(connectionString.GetSection("MongodbConnection"), OptionsBuilderConfigurationExtensions =>
+            //services.Configure<DBClientSettings>(Configuration.GetSection("ConnectionString"));
+            //services.AddSingleton<IDBClientSettings>(sp =>sp.GetRequiredService<IOptions<DBClientSettings>>().Value);
+            services.Configure<DBClientSettings>(options =>
             {
-                options.Password.RequiredLength = 6;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireDigit = true;
+                options.MongodbConnection = Configuration.GetSection("ConnectionString:MongodbConnection").Value;
             });
-
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            services.AddAuthentication(opt =>
+            services.AddAuthentication(opt => 
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -62,6 +53,10 @@ namespace VisumAPI
             });
 
             services.AddScoped<JwtHandler>();
+            services.AddSingleton<DBClient>();
+
+            //TODO AutoMapper
+            //services.AddSingleton(mapper);
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

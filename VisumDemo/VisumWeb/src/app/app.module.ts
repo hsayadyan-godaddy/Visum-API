@@ -9,12 +9,14 @@ import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from './angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedService} from './shared.service'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule , HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './shared/aouthconfig.interceptor';
 import { ProjectsComponent } from './projects/projects.component';
 import { RoutingModule } from './routing/routing.module';
 import { HomeComponent } from './home/home.component';
 import { ViewComponent } from './view/view.component';
 import { HeaderComponent } from './header/header.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { HeaderComponent } from './header/header.component';
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    ChartsModule,
     RouterModule.forRoot([
       { path: '', redirectTo: '/', pathMatch : 'full'},
       {path: 'login', component: LoginComponent},
@@ -40,7 +43,13 @@ import { HeaderComponent } from './header/header.component';
     ]),
     RoutingModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

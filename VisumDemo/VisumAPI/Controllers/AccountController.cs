@@ -1,12 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Threading.Tasks;
 using VisumAPI.Models;
 
@@ -16,24 +9,26 @@ namespace VisumAPI.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly UserManager<Customer> _userManager;
-        private readonly SignInManager<Customer> _signInManager;
-        private readonly IMapper _mapper;
+        private readonly DBClient _dbClient;
+        //private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
 
-        public AccountController(UserManager<Customer> userManager, IMapper mapper, JwtHandler jwtHandler, SignInManager<Customer> signInManager)
+        public AccountController(
+            DBClient dBClient, 
+            //IMapper mapper,
+            JwtHandler jwtHandler)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            //_mapper = mapper;
             _jwtHandler = jwtHandler;
-            _signInManager = signInManager;
+            _dbClient = dBClient;
         }
 
         [HttpPost, Route("login")]
-        public async Task<IActionResult> Login([FromBody] Customer userData)
+        public async Task<IActionResult> Login([FromBody] User userData)
         {
-            var user = await _signInManager.Users.FindByNameAsync(userData.UserName);
-            if (user == null || !await _userManager.CheckPasswordAsync(user, userData.Password))
+            //TODO password hash method
+            var user = await _dbClient.GetUserByUserNameAndpass(userData.UserName, userData.PasswordHash);
+            if (user == null)
                 return Unauthorized(new AuthResponse { ErrorMessage = "Invalid Credentials" });
 
             var signinCredentials = _jwtHandler.GetSigningCredentials();

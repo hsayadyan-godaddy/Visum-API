@@ -29,7 +29,7 @@ namespace VisumAPI
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }    
 
-        public List<Claim> GetClaims(IdentityUser user)
+        public List<Claim> GetClaims(User user)
         {
             var claims = new List<Claim>
             {
