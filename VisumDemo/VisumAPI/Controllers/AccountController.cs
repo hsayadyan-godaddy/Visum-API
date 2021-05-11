@@ -27,7 +27,7 @@ namespace VisumAPI.Controllers
         public async Task<IActionResult> Login([FromBody] User userData)
         {
             //TODO password hash method
-            var user = await _dbClient.GetUserByUserNameAndpass(userData.UserName, userData.PasswordHash);
+            var user = await _dbClient.GetUserByUserNameAndpass(userData.UserName, userData.Password);
             if (user == null)
                 return Unauthorized(new AuthResponse { ErrorMessage = "Invalid Credentials" });
 

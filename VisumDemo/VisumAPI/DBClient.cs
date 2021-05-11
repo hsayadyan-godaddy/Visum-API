@@ -30,9 +30,25 @@ namespace VisumAPI
 
         public async Task<User> GetUserByUserNameAndpass(string username, string pass)
         {
-            var user = await _users.Find<User>(u => u.UserName == username && u.PasswordHash == pass).FirstOrDefaultAsync();
-            return user;
+            //var userNew = new User
+            //{
+            //    Email = "haykaz.sayadyan@hall",
+            //    Password = "strongpassword",
+            //    PasswordHash = "hashpassword",
+            //    UserName = "Haykaz",
+            //    Name = "Haykaz Sayadyan"
+            //};
+
+            //await _users.InsertOneAsync(userNew);
+
+
+            var filter1 = Builders<User>.Filter.Eq("UserName", username);
+            var filter2 = Builders<User>.Filter.Eq("Password", pass);
+            var user =  await _users.Find(f=>f.UserName == username && f.Password == pass).FirstOrDefaultAsync();
+            return  user;
         }
+
+
 
         public async Task<ProjectList> GetProjectsForUser(BsonObjectId userId)
         {
