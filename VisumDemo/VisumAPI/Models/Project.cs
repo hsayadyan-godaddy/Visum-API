@@ -10,8 +10,6 @@ namespace VisumAPI.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         //position: number,
-        //wellName: string, 
-        public string WellName { get; set; }
 
         //projectName: string, 
         [BsonElement("Name")]
@@ -31,9 +29,6 @@ namespace VisumAPI.Models
 
         //field:string, 
         public string Field { get; set; }
-
-        //wellType:string,
-        public string WellType { get; set; }
 
         //customer:string
         public BsonObjectId  UserId { get; set; }

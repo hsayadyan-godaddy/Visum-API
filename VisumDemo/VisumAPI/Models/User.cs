@@ -1,17 +1,24 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace VisumAPI.Models
 {
     public class User
     {
+        private ObjectId _id;
+
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId Id { get; set; }
+        public string Id 
+        {
+            get { return Convert.ToString(_id); }
+            set { _id = MongoDB.Bson.ObjectId.Parse(value); }
+        }
 
-        
+
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Username is required")]

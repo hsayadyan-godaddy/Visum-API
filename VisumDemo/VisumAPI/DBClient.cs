@@ -14,6 +14,8 @@ namespace VisumAPI
     {
         private readonly IMongoCollection<User> _users;
         private readonly IMongoCollection<Project> _projects;
+        private readonly IMongoCollection<Well> _well;
+        private readonly IMongoCollection<WellData> _wellData;
 
         public DBClient(IOptions<DBClientSettings> settings)
         {
@@ -23,6 +25,33 @@ namespace VisumAPI
 
             _users = database.GetCollection<User>("User");
             _projects = database.GetCollection<Project>("Project");
+            _well = database.GetCollection<Well>("Well");
+            _wellData = database.GetCollection<WellData>("WellData");
+        }
+
+        public async Task<List<Well>> GetWellsByProjectId(string id)
+        {
+            var wells = await _well.Find(p => p.ProjectId == id).ToListAsync();
+
+            return wells;
+        }
+
+        public async Task AddWell(Well well)
+        {
+            await _well.InsertOneAsync(well);
+        }
+
+        public async Task<Well> GetWellById(string id)
+        {
+            var well = await _well.Find(p => p.Id == id).FirstOrDefaultAsync();
+
+            return well;
+        }
+
+        public async Task AddWellData(WellData welldata)
+        {
+            //TODO datetime
+            await _wellData.InsertOneAsync(welldata);
         }
 
         public async Task<User> GetUserById(BsonObjectId id) =>
@@ -48,20 +77,31 @@ namespace VisumAPI
             return  user;
         }
 
-
-
-        public async Task<ProjectList> GetProjectsForUser(BsonObjectId userId)
+        public async Task AddProject(Project project, ObjectId userId)
         {
-            var user = await GetUserById(userId);
-            var customer = new Customer { UserName = user.UserName };
-            var projects = await _projects.Find(p => p.UserId == userId).ToListAsync();
-            var projectList = new ProjectList
+            var projectn = new Project
             {
-                Customer = customer,
-                Projects = projects
+                Country = "USA",
+                ProjectName = "Project1",
+                Reservoir = "reservoir z",
+                Pad = "Pad 1",
+                UserId = userId
             };
-            return projectList;
+            await _projects.InsertOneAsync(projectn);
         }
-       
+
+        public async Task<List<Project>> GetProjectsForUser(BsonObjectId userId)
+        {
+            var projects = await _projects.Find(p => p.UserId == userId).ToListAsync();
+            
+            return projects;
+        }
+
+        public async Task<Project> GetProjectById(string projectId)
+        {
+            var project = await _projects.Find(p => p.Id == projectId).FirstOrDefaultAsync();
+
+            return project;
+        }
     }
 }
