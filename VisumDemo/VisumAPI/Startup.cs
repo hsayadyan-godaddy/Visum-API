@@ -54,7 +54,7 @@ namespace VisumAPI
 
             services.AddScoped<JwtHandler>();
             services.AddSingleton<DBClient>();
-
+            services.AddSingleton<IHostedService, KafkaConsumerHandler>();
             //TODO AutoMapper
             //services.AddSingleton(mapper);
 

@@ -22,7 +22,7 @@ namespace VisumAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("wells/{id}")]
         public async Task<ActionResult> GetWells(string id)
         {
             var wells =  await _dbClient.GetWellsByProjectId(id);
@@ -40,7 +40,7 @@ namespace VisumAPI.Controllers
         }
 
         [HttpGet]
-        [Route("well/{id}")]
+        [Route("{id}")]
         public async Task<ActionResult> GetWell(string id)
         {
             var well = await _dbClient.GetWellById(id);

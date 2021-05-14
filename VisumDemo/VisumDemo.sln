@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisumAPI", "VisumAPI\VisumAPI.csproj", "{C49509CB-41F4-418C-A6D8-3B0658581B03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisumData", "VisumData\VisumData.csproj", "{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisumData", "VisumData\VisumData.csproj", "{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisumDAS", "VisumDAS\VisumDAS.csproj", "{57B24A1A-C818-4459-8E8E-B1F628C0FA01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57B24A1A-C818-4459-8E8E-B1F628C0FA01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B24A1A-C818-4459-8E8E-B1F628C0FA01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B24A1A-C818-4459-8E8E-B1F628C0FA01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B24A1A-C818-4459-8E8E-B1F628C0FA01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

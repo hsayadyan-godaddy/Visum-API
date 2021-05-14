@@ -6,3 +6,5 @@
 *.suo
 /VisumDemo/.vs/VisumDemo/DesignTimeBuild
 /VisumDemo/VisumAPI/obj
+/VisumDemo/VisumDAS/obj
+/VisumDemo/VisumDAS/bin/Debug/net5.0
