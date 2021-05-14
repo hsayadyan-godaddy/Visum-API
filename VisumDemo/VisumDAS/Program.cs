@@ -19,7 +19,7 @@ namespace VisumDAS
             while (true)
             {
                 await CreateMessageAndSend();
-                await Task.Delay(1000, cancellationToken);
+                await Task.Delay(5000, cancellationToken);
                 if (cancellationToken.IsCancellationRequested)
                     break;
             };
@@ -35,8 +35,8 @@ namespace VisumDAS
            
             return new WellData
             {
-                Temperature = T,
-                Pressure = P
+                Temperature = T.ToString(),
+                Pressure = P.ToString()
             };
         }
 
@@ -44,9 +44,9 @@ namespace VisumDAS
         public static async Task CreateMessageAndSend()
         {
             var data = CreateRandomPT();
-            var jsonData = JsonConvert.SerializeObject(data);
-            var prod = new ProducerWrapper("demoTopic");
-            await prod.WriteMessage(jsonData);
+            //var jsonData = JsonConvert.SerializeObject(data);
+            var prod = new ProducerWrapper("simpletalk_topic");
+            await prod.WriteMessage($"{data.Pressure}/{data.Temperature}");
         }
     }
 }

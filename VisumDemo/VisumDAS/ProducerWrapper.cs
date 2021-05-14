@@ -20,18 +20,21 @@ namespace VisumDAS
         {
             var config = new ProducerConfig
             {
-                BootstrapServers = "localhost:9092",
-                ClientId = Dns.GetHostName()
+                BootstrapServers = "localhost:9092"
             };
-            using (var producer = new ProducerBuilder<string, string>(config).Build())
+            using (var producer = new ProducerBuilder<Null, string>(config).Build())
             {
-
-
-                var dr = await producer.ProduceAsync(_topiName, new Message<string, string>
+                try
                 {
-                    Key = rand.Next(5).ToString(),
-                    Value = message
-                });
+                    var dr = await producer.ProduceAsync(_topiName, new Message<Null, string>
+                    {
+                        Value = message
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Something went wrong: {ex}");
+                }
             }
 
         }

@@ -8,3 +8,6 @@
 /VisumDemo/VisumAPI/obj
 /VisumDemo/VisumDAS/obj
 /VisumDemo/VisumDAS/bin/Debug/net5.0
+/VisumDemo/VisumKafkaConsumerAPI/bin/Debug/net5.0
+/VisumDemo/VisumKafkaConsumerAPI/obj
+/VisumDemo/VisumKafkaConsumerAPI/bin

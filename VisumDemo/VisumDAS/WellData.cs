@@ -2,7 +2,7 @@
 {
     public class WellData
     {
-        public double Temperature { get; set; }
-        public double Pressure { get; set; }
+        public string Temperature { get; set; }
+        public string Pressure { get; set; }
     }
 }
