@@ -17,12 +17,4 @@ namespace VisumAPI.Models
         public string ProjectId { get; set; }
     }
 
-    public class WellData
-    {
-        public string WellId { get; set; }
-        public int Pressure { get; set; }
-        public int Temperature { get; set; }
-        public BsonDateTime DateTime { get; set; }
-
-    }
 }

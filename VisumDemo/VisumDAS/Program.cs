@@ -2,6 +2,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using VisumData;
 
 namespace VisumDAS
 {
@@ -36,7 +37,9 @@ namespace VisumDAS
             return new WellData
             {
                 Temperature = T.ToString(),
-                Pressure = P.ToString()
+                Pressure = P.ToString(),
+                WellId  = "609d8252c62d2a1a325fa220",
+                DateTime = DateTime.Now.ToString()
             };
         }
 
@@ -46,7 +49,7 @@ namespace VisumDAS
             var data = CreateRandomPT();
             //var jsonData = JsonConvert.SerializeObject(data);
             var prod = new ProducerWrapper("simpletalk_topic");
-            await prod.WriteMessage($"{data.Pressure}/{data.Temperature}");
+            await prod.WriteMessage(JsonConvert.SerializeObject(data));
         }
     }
 }
