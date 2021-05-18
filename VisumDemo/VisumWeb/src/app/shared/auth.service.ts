@@ -4,7 +4,6 @@ import { Observable, throwError } from 'rxjs';
 import { catchError, map }  from 'rxjs/operators';
 import { HttpClient , HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Router }  from '@angular/router';
-import { resourceLimits } from 'worker_threads';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ import { resourceLimits } from 'worker_threads';
 
 
 export class AuthService { 
-endpoint: string  = "http://localhost:5200/api";
+endpoint: string  = "http://localhost:5000/api";
 headers = new HttpHeaders().set('Content-Type','application/json');
 currentUser = {};
 
@@ -23,13 +22,13 @@ constructor(
 
 //Sign Up
 signIn(user: User){
-  return this.http.post<any>(`${this.endpoint}/login`, user)
+  return this.http.post<any>(`${this.endpoint}/account/login`, user,  { headers : this.headers})
   .subscribe((res: any)=> {
     localStorage.setItem('access_token', res.token)
-    this.getUserProfile(res._id).subscribe((res)=> {
-      this.currentUser = res;
-      this.router.navigate(['user-profile/'+ res.msg._id]);
-    })
+    //this.getUserProfile(res._id).subscribe((res)=> {
+     // this.currentUser = res;
+      this.router.navigate(['projects/']);
+    //})
   })
 }
 
@@ -50,7 +49,7 @@ get isLoggedIn() : boolean {
   }
 
   getUserProfile(id): Observable<any>{
-    let api = `${this.endpoint}/user-profile/$id`;
+    let api = `${this.endpoint}/account/$id`;
     return this.http.get(api, {headers: this.headers}).pipe(
       map((res: Response) => {
         return res || {}

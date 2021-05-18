@@ -59,6 +59,7 @@ namespace VisumAPI
             //services.AddSingleton(mapper);
 
             services.AddControllers();
+            services.AddCors(); //todo
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VisumAPI", Version = "v1" });
@@ -79,7 +80,11 @@ namespace VisumAPI
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

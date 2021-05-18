@@ -56,7 +56,7 @@ namespace VisumAPI
             await _wellData.InsertOneAsync(welldata);
         }
 
-        public async Task<User> GetUserById(BsonObjectId id) =>
+        public async Task<User> GetUserById(string id) =>
             await _users.Find(u => u.Id == id).FirstOrDefaultAsync();
 
         public async Task<User> GetUserByUserNameAndpass(string username, string pass)

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {  ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label  } from 'ng2-charts';
-import * as pluginAnnotations from 'chartjs-plugin-annotation';
 
 @Component({
   selector: 'app-view',
@@ -40,23 +39,7 @@ export class ViewComponent implements OnInit {
         }
       ]
     },
-    annotation: {
-      annotations: [
-        {
-          type: 'line',
-          mode: 'horizontal',
-          scaleID: 'y-axis-0',
-          value: '55',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'red',
-            content: 'Higth'
-          }
-        },
-      ],
-    },
+    annotation : {},
   };
 
 
@@ -68,7 +51,6 @@ export class ViewComponent implements OnInit {
   ];
   public lineChartLegend = true;
   public lineChartType = 'line';
-  public lineChartPlugins = [pluginAnnotations];
 
   constructor() { }
 

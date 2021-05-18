@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using VisumAPI.Models;
@@ -37,5 +38,16 @@ namespace VisumAPI.Controllers
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
             return Ok(new AuthResponse { IsAuthSuccessful = true, Token = token });
-    } }
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        [Authorize]
+        public async Task<IActionResult> GetUserInfo(string id)
+        {
+            var user = await _dbClient.GetUserById(id);
+            return Ok(user);
+        }
+    }
 }
