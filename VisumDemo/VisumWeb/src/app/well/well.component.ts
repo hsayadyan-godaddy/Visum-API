@@ -54,7 +54,7 @@ export class WellComponent implements OnInit {
 
   getWellData(id){
     console.log(id);
-    //this.router.navigate(['well/'], id)
+    this.router.navigate(['view/', id])
   }
 
 

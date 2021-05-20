@@ -48,7 +48,7 @@ namespace VisumDAS
         {
             var data = CreateRandomPT();
             //var jsonData = JsonConvert.SerializeObject(data);
-            var prod = new ProducerWrapper("simpletalk_topic");
+            var prod = new ProducerWrapper("609d8252c62d2a1a325fa220");
             await prod.WriteMessage(JsonConvert.SerializeObject(data));
         }
     }

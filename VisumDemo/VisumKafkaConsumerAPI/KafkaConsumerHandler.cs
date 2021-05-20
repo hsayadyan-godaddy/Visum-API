@@ -13,7 +13,7 @@ namespace VisumKafkaConsumerAPI
 {
     public class KafkaConsumerHandler : IHostedService
     {
-        private readonly string topic = "simpletalk_topic";
+        private readonly string topic = "609d8252c62d2a1a325fa220";
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             var conf = new ConsumerConfig
@@ -35,7 +35,7 @@ namespace VisumKafkaConsumerAPI
                         var message = consumer.Message.Value;
                         // send to API and save into the DB Collection
                         Console.WriteLine($"Message: {message} received from {consumer.TopicPartitionOffset}");
-                        await SendToDB(message); 
+                        //await SendToDB(message); 
                     }
                 }
                 catch (Exception ex)

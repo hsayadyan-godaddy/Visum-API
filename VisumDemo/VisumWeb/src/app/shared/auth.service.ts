@@ -37,8 +37,8 @@ getToken(){
 }
 
 get isLoggedIn() : boolean {
-  let aoutToken = localStorage.getItem('access_token');
-  return (aoutToken != null) ? true : false;
+  let authToken = localStorage.getItem('access_token');
+  return (authToken !== null || authToken !== 'null' || authToken !== undefined) ? true : false;
 }
 
   logout() {

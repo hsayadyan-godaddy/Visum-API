@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {  ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label  } from 'ng2-charts';
+import { Subscription } from 'rxjs';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-view',
@@ -8,6 +11,7 @@ import { Color, Label  } from 'ng2-charts';
   styleUrls: ['./view.component.css']
 })
 export class ViewComponent implements OnInit {
+private eventSubsciption$ : Subscription;
 
   public lineChartData: ChartDataSets[] = [
     { data: [65, 59, 80, 81, 56, 55, 40], label: 'Weel  A' },
@@ -52,8 +56,26 @@ export class ViewComponent implements OnInit {
   public lineChartLegend = true;
   public lineChartType = 'line';
 
-  constructor() { }
+  constructor(
+    private sharedService: SharedService,
+    private actRoute : ActivatedRoute
+  ) { }
 
-  ngOnInit() : void {
+  ngOnInit()  {
+    this.eventSubsciption$ = this.sharedService.getServerSentEvent().subscribe(event =>
+    {
+        let data = JSON.parse(event.data);
+        console.log(data);
+        this.pushEventToChartData(data);
+      })
   }
+  pushEventToChartData(event: any) : void {
+    this.lineChartData[0].data.push(event.data);
+    this.lineChartLabels.push(this.getLabel(event))
+  }
+  
+  getLabel(event: any): string {
+    return `${event.window}`;
+  };
+  
 }

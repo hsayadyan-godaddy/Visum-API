@@ -1,10 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using VisumAPI.Models;
 using VisumData;
 
 namespace VisumAPI.Controllers
@@ -24,10 +19,10 @@ namespace VisumAPI.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task<ActionResult> AddProject([FromBody] WellData data)
+        public async Task<ActionResult> AddWllData([FromBody] WellData data)
         {
             await _dbClient.AddWellData(data);
-            return Ok();
+            return Ok(data);
         }
     }
 }
