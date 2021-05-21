@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using VisumData;
 
@@ -23,6 +24,16 @@ namespace VisumAPI.Controllers
         {
             await _dbClient.AddWellData(data);
             return Ok(data);
+        }
+
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ActionResult> GetData(string id)
+        {
+            var wellData = await _dbClient.GetWellDataById(id);
+            var jsonResult = JsonConvert.SerializeObject(wellData);
+            return Ok(jsonResult);
         }
     }
 }

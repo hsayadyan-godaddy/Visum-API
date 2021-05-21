@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Options;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +32,12 @@ namespace VisumAPI
             _wellData = database.GetCollection<WellData>("WellData");
         }
 
+        public async Task<WellData> GetWellDataById(string id)
+        {
+            var data = await _wellData.Find(d => d.WellId == id).SortByDescending(d => d.DateTime).FirstOrDefaultAsync();
+            return data;
+        }
+
         public async Task<List<Well>> GetWellsByProjectId(string id)
         {
             var wells = await _well.Find(p => p.ProjectId == id).ToListAsync();
@@ -47,6 +55,22 @@ namespace VisumAPI
             var well = await _well.Find(p => p.Id == id).FirstOrDefaultAsync();
 
             return well;
+        }
+
+        public async Task<WellInfo> GetWellAndProjectById(string id)
+        {
+            var well = await _well.Find(p => p.Id == id).FirstOrDefaultAsync();
+            var project = await _projects.Find(p => p.Id == well.ProjectId).FirstOrDefaultAsync();
+            var wellInfo = new WellInfo()
+            {
+                WellName = well.WellName,
+                WellType = well.WellType,
+                ProjectName = project.ProjectName,
+                Id = well.Id,
+                Status = "Active"
+            };
+
+            return wellInfo;
         }
 
         public async Task AddWellData(WellData welldata)

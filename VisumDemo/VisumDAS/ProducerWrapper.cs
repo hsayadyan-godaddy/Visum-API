@@ -16,7 +16,7 @@ namespace VisumDAS
             _topiName = topicName;
         }
 
-        public async Task WriteMessage(string message)
+        public async Task<string> WriteMessage(string message)
         {
             var config = new ProducerConfig
             {
@@ -34,7 +34,9 @@ namespace VisumDAS
                 catch (Exception ex)
                 {
                     Console.WriteLine($"Something went wrong: {ex}");
+                    return ex.Message;
                 }
+                return message;
             }
 
         }

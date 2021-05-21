@@ -47,5 +47,14 @@ namespace VisumAPI.Controllers
             var jsonResult = JsonConvert.SerializeObject(well);
             return Ok(jsonResult);
         }
+
+        [HttpGet]
+        [Route("welldata/{id}")]
+        public async Task<ActionResult> GetWellAndProject(string id)
+        {
+            var wellInfo = await _dbClient.GetWellAndProjectById(id);
+            var jsonResult = JsonConvert.SerializeObject(wellInfo);
+            return Ok(jsonResult);
+        }
     }
 }

@@ -17,4 +17,10 @@ namespace VisumAPI.Models
         public string ProjectId { get; set; }
     }
 
+    public class WellInfo : Well
+    {
+        public string ProjectName { get; set; }
+        public string Status { get; set; }
+    }
+
 }
