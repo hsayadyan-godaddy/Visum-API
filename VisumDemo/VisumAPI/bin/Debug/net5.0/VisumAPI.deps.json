@@ -34,7 +34,6 @@
       "VisumAPI/1.0.0": {
         "dependencies": {
           "AspNetCore.Identity.Mongo": "8.1.0",
-          "AspNetCore.IdentityProvider.Mongo": "2.2.0",
           "AutoMapper": "10.1.1",
           "Confluent.Kafka": "1.6.3",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "5.0.5",
@@ -347,24 +346,6 @@
         },
         "compile": {
           "lib/netstandard2.1/AspNetCore.Identity.Mongo.dll": {}
-        }
-      },
-      "AspNetCore.IdentityProvider.Mongo/2.2.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Authentication": "2.2.0",
-          "Microsoft.AspNetCore.Identity": "2.2.0",
-          "Microsoft.Extensions.Identity.Core": "5.0.2",
-          "Microsoft.Extensions.Identity.Stores": "5.0.2",
-          "MongoDB.Driver": "2.12.3"
-        },
-        "runtime": {
-          "lib/netcoreapp2.2/AspNetCore.IdentityProvider.Mongo.dll": {
-            "assemblyVersion": "2.2.0.0",
-            "fileVersion": "2.2.0.0"
-          }
-        },
-        "compile": {
-          "lib/netcoreapp2.2/AspNetCore.IdentityProvider.Mongo.dll": {}
         }
       },
       "AutoMapper/10.1.1": {
@@ -2795,13 +2776,6 @@
       "sha512": "sha512-yJt+uNPjsYtheWaxVhZCBQQUJHNiRAnpPek8HYMoC5+986IOwPR2kUBlcy52STTWuAtlZM0mqnXyj50TD5SVww==",
       "path": "aspnetcore.identity.mongo/8.1.0",
       "hashPath": "aspnetcore.identity.mongo.8.1.0.nupkg.sha512"
-    },
-    "AspNetCore.IdentityProvider.Mongo/2.2.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-MvSOxTWF2ODFM7keJArPkRSSoCv2GISRlBHVYbRIVZDPnlFplr4mndBdiNrRjCxcmOLSTHkV1etS/IWe4+GAGQ==",
-      "path": "aspnetcore.identityprovider.mongo/2.2.0",
-      "hashPath": "aspnetcore.identityprovider.mongo.2.2.0.nupkg.sha512"
     },
     "AutoMapper/10.1.1": {
       "type": "package",
