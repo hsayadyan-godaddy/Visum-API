@@ -12,6 +12,6 @@ namespace VisumData
         public string WellId { get; set; }
         public string Pressure { get; set; }
         public string Temperature { get; set; }
-        public string DateTime { get; set; } 
+        public DateTime DateTime { get; set; } 
     }
 }

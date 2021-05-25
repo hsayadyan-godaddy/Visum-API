@@ -35,7 +35,7 @@ namespace VisumKafkaConsumerAPI
                         var message = consumer.Message.Value;
                         // send to API and save into the DB Collection
                         Console.WriteLine($"Message: {message} received from {consumer.TopicPartitionOffset}");
-                        //await SendToDB(message); 
+                        await SendToDB(message); 
                     }
                 }
                 catch (Exception ex)

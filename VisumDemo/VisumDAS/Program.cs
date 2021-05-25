@@ -39,7 +39,7 @@ namespace VisumDAS
                 Temperature = T.ToString(),
                 Pressure = P.ToString(),
                 WellId  = "609d8252c62d2a1a325fa220",
-                DateTime = DateTime.Now.ToString()
+                DateTime = DateTime.Now
             };
         }
 

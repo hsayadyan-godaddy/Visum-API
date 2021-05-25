@@ -76,7 +76,7 @@ namespace VisumAPI
         public async Task AddWellData(WellData welldata)
         {
             //TODO datetime
-            //welldata.DateTime = DateTime.Now;
+            welldata.DateTime = DateTime.Now;
             await _wellData.InsertOneAsync(welldata);
         }
 
