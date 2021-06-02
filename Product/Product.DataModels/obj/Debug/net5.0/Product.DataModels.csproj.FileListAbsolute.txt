@@ -1,0 +1,12 @@
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/bin/Debug/net5.0/Product.DataModels.deps.json
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/bin/Debug/net5.0/Product.DataModels.dll
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/bin/Debug/net5.0/ref/Product.DataModels.dll
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/bin/Debug/net5.0/Product.DataModels.pdb
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.GeneratedMSBuildEditorConfig.editorconfig
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.AssemblyInfoInputs.cache
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.AssemblyInfo.cs
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.csproj.CoreCompileInputs.cache
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.dll
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/ref/Product.DataModels.dll
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.pdb
+/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/Debug/net5.0/Product.DataModels.csprojAssemblyReference.cache
