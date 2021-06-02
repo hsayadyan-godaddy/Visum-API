@@ -21,6 +21,7 @@ namespace VisumDAS
             var config = new ProducerConfig
             {
                 BootstrapServers = "localhost:9092"
+                
             };
             using (var producer = new ProducerBuilder<Null, string>(config).Build())
             {

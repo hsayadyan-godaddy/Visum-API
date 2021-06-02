@@ -103,7 +103,7 @@ namespace VisumAPI
             return  user;
         }
 
-        public async Task AddProject(Project project, ObjectId userId)
+        public async Task AddProject(Project project, string userId)
         {
             var projectn = new Project
             {

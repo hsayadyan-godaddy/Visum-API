@@ -38,7 +38,7 @@ namespace VisumDAS
             {
                 Temperature = T.ToString(),
                 Pressure = P.ToString(),
-                WellId  = "609d8252c62d2a1a325fa220",
+                WellId  = "60af3dcddc4e604afc4f843a",
                 DateTime = DateTime.Now
             };
         }
@@ -48,8 +48,9 @@ namespace VisumDAS
         {
             var data = CreateRandomPT();
             //var jsonData = JsonConvert.SerializeObject(data);
-            var prod = new ProducerWrapper("609d8252c62d2a1a325fa220");
-            await prod.WriteMessage(JsonConvert.SerializeObject(data));
+            var prod = new ProducerWrapper("simpletalk_topic");
+            var res = await prod.WriteMessage(JsonConvert.SerializeObject(data));
+     
         }
     }
 }

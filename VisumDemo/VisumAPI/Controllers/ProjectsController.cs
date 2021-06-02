@@ -38,7 +38,7 @@ namespace VisumAPI.Controllers
         {
 
             var userId = MongoDB.Bson.ObjectId.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
-            await _dbClient.AddProject(project, userId);
+            await _dbClient.AddProject(project, userId.ToString());
             return Created("", project);
         }
 
