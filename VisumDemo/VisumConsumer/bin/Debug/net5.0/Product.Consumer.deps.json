@@ -6,14 +6,14 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "VisumConsumer/1.0.0": {
+      "Product.Consumer/1.0.0": {
         "dependencies": {
           "Confluent.Kafka": "1.7.0",
           "Newtonsoft.Json": "13.0.1",
-          "VisumData": "1.0.0"
+          "Product.DataModels": "1.0.0"
         },
         "runtime": {
-          "VisumConsumer.dll": {}
+          "Product.Consumer.dll": {}
         }
       },
       "Confluent.Kafka/1.7.0": {
@@ -350,20 +350,20 @@
           }
         }
       },
-      "VisumData/1.0.0": {
+      "Product.DataModels/1.0.0": {
         "dependencies": {
           "MongoDB.Bson": "2.12.3",
           "MongoDB.Driver": "2.12.3",
           "System.Configuration.ConfigurationManager": "5.0.0"
         },
         "runtime": {
-          "VisumData.dll": {}
+          "Product.DataModels.dll": {}
         }
       }
     }
   },
   "libraries": {
-    "VisumConsumer/1.0.0": {
+    "Product.Consumer/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -522,7 +522,7 @@
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
     },
-    "VisumData/1.0.0": {
+    "Product.DataModels/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

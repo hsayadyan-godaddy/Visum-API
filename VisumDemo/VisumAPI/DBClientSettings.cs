@@ -1,4 +1,4 @@
-﻿namespace VisumAPI
+﻿namespace Product.API
 {
     public class DBClientSettings : IDBClientSettings
     {

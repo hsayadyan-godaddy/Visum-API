@@ -1,6 +1,4 @@
-﻿
-
-namespace VisumAPI.Models
+﻿namespace Product.API.Models
 {
     public class UserRole 
     {

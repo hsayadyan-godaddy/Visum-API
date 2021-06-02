@@ -7,9 +7,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Newtonsoft.Json;
-using VisumData;
+using Product.DataModels;
 
-namespace VisumConsumer
+namespace Product.Consumer
 {
     class Program
     {

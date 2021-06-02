@@ -1,7 +1,7 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace VisumAPI.Models
+namespace Product.API.Models
 {
     public class Well
     {

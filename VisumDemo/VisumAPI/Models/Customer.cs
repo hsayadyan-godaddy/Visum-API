@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace VisumAPI.Models
+﻿namespace Product.API.Models
 {
     public class Customer { 
         public string UserName { get; set; }

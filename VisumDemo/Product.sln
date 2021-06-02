@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisumAPI", "VisumAPI\VisumAPI.csproj", "{C49509CB-41F4-418C-A6D8-3B0658581B03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Product.API", "VisumAPI\Product.API.csproj", "{C49509CB-41F4-418C-A6D8-3B0658581B03}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisumData", "VisumData\VisumData.csproj", "{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.DataModels", "VisumData\Product.DataModels.csproj", "{B3EC7F45-DED3-43E7-A827-A9A2F8D3214D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VisumDAS", "VisumDAS\VisumDAS.csproj", "{57B24A1A-C818-4459-8E8E-B1F628C0FA01}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.DAS", "VisumDAS\Product.DAS.csproj", "{57B24A1A-C818-4459-8E8E-B1F628C0FA01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisumConsumer", "VisumConsumer\VisumConsumer.csproj", "{472EA2BC-7178-4C3F-B1C1-C18C18BC00F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Product.Consumer", "VisumConsumer\Product.Consumer.csproj", "{472EA2BC-7178-4C3F-B1C1-C18C18BC00F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

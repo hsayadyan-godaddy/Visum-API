@@ -1,10 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using VisumData;
+using Newtonsoft.Json;
+using Product.DataModels;
 
-namespace VisumDAS
+namespace Product.DAS
 {
     class Program
     {

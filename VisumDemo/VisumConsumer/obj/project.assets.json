@@ -416,7 +416,7 @@
           }
         }
       },
-      "VisumData/1.0.0": {
+      "Product.DataModels/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
         "dependencies": {
@@ -425,10 +425,10 @@
           "System.Configuration.ConfigurationManager": "5.0.0"
         },
         "compile": {
-          "bin/placeholder/VisumData.dll": {}
+          "bin/placeholder/Product.DataModels.dll": {}
         },
         "runtime": {
-          "bin/placeholder/VisumData.dll": {}
+          "bin/placeholder/Product.DataModels.dll": {}
         }
       }
     }
@@ -1130,17 +1130,17 @@
         "version.txt"
       ]
     },
-    "VisumData/1.0.0": {
+    "Product.DataModels/1.0.0": {
       "type": "project",
-      "path": "../VisumData/VisumData.csproj",
-      "msbuildProject": "../VisumData/VisumData.csproj"
+      "path": "../VisumData/Product.DataModels.csproj",
+      "msbuildProject": "../VisumData/Product.DataModels.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0": [
       "Confluent.Kafka >= 1.7.0",
       "Newtonsoft.Json >= 13.0.1",
-      "VisumData >= 1.0.0"
+      "Product.DataModels >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -1149,9 +1149,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/VisumConsumer.csproj",
-      "projectName": "VisumConsumer",
-      "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/VisumConsumer.csproj",
+      "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/Product.Consumer.csproj",
+      "projectName": "Product.Consumer",
+      "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/Product.Consumer.csproj",
       "packagesPath": "/Users/haykazsayadyan/.nuget/packages/",
       "outputPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/obj/",
       "projectStyle": "PackageReference",
@@ -1168,8 +1168,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/VisumData.csproj": {
-              "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/VisumData.csproj"
+            "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj": {
+              "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj"
             }
           }
         }

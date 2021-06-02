@@ -1,8 +1,9 @@
-﻿using MongoDB.Bson;
+﻿using System.Collections.Generic;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
 
-namespace VisumAPI.Models
+
+namespace Product.API.Models
 {
     public class Project
     {

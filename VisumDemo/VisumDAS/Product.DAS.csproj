@@ -12,7 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\VisumData\VisumData.csproj" />
+    <ProjectReference Include="..\VisumData\Product.DataModels.csproj" />
   </ItemGroup>
-
 </Project>

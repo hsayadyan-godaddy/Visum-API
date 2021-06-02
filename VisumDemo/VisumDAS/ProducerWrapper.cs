@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Net;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 
-namespace VisumDAS
+namespace Product.DAS
 {
     public class ProducerWrapper
     {

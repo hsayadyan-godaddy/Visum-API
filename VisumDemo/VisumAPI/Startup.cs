@@ -1,16 +1,15 @@
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 
-namespace VisumAPI
+namespace Product.API
 {
     public class Startup
     {
@@ -62,7 +61,7 @@ namespace VisumAPI
             services.AddCors(); //todo
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VisumAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
             });
             
         }
@@ -74,7 +73,7 @@ namespace VisumAPI
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VisumAPI v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Product.API v1"));
             }
 
             app.UseRouting();

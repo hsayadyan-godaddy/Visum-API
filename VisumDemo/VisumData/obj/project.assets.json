@@ -890,9 +890,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/VisumData.csproj",
-      "projectName": "VisumData",
-      "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/VisumData.csproj",
+      "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj",
+      "projectName": "Product.DataModels",
+      "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj",
       "packagesPath": "/Users/haykazsayadyan/.nuget/packages/",
       "outputPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/",
       "projectStyle": "PackageReference",

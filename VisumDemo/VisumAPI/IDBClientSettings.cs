@@ -1,4 +1,4 @@
-﻿namespace VisumAPI
+﻿namespace Product.API
 {
     public interface IDBClientSettings
     {

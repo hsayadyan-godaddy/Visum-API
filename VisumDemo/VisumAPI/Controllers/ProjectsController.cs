@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
 using Newtonsoft.Json;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using VisumAPI.Models;
+using Product.API.Models;
 
-namespace VisumAPI.Controllers
+namespace Product.API.Controllers
 {
     [Route("api/[controller]")]
     [Authorize]

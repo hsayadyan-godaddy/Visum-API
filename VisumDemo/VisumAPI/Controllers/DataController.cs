@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Threading.Tasks;
-using VisumData;
+using Product.DataModels;
 
-namespace VisumAPI.Controllers
+
+namespace Product.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
