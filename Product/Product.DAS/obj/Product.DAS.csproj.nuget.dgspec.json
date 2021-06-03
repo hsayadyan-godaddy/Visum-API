@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumDAS/Product.DAS.csproj": {}
+    "/Users/haykazsayadyan/development/code/Product/Product/Product.DAS/Product.DAS.csproj": {}
   },
   "projects": {
-    "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumDAS/Product.DAS.csproj": {
+    "/Users/haykazsayadyan/development/code/Product/Product/Product.DAS/Product.DAS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumDAS/Product.DAS.csproj",
+        "projectUniqueName": "/Users/haykazsayadyan/development/code/Product/Product/Product.DAS/Product.DAS.csproj",
         "projectName": "Product.DAS",
-        "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumDAS/Product.DAS.csproj",
+        "projectPath": "/Users/haykazsayadyan/development/code/Product/Product/Product.DAS/Product.DAS.csproj",
         "packagesPath": "/Users/haykazsayadyan/.nuget/packages/",
-        "outputPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumDAS/obj/",
+        "outputPath": "/Users/haykazsayadyan/development/code/Product/Product/Product.DAS/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/haykazsayadyan/.config/NuGet/NuGet.Config"
@@ -26,8 +26,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj": {
-                "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj"
+              "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/Product.DataModels.csproj": {
+                "projectPath": "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/Product.DataModels.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj": {
+    "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/Product.DataModels.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj",
+        "projectUniqueName": "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/Product.DataModels.csproj",
         "projectName": "Product.DataModels",
-        "projectPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/Product.DataModels.csproj",
+        "projectPath": "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/Product.DataModels.csproj",
         "packagesPath": "/Users/haykazsayadyan/.nuget/packages/",
-        "outputPath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumData/obj/",
+        "outputPath": "/Users/haykazsayadyan/development/code/Product/Product/Product.DataModels/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/haykazsayadyan/.config/NuGet/NuGet.Config"

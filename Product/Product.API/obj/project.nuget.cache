@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Bvr+wnXtQ4+IKhItkwaIdkfokPIjysiJXyqAasdmJh4C77GmS6mwGjMpnwuvUxuB10OvaeMsv5gfoVZHcVrv0A==",
+  "dgSpecHash": "Me7NPsw1IDKf/4iaWW8XvsQ3Y7FwCnn9QaU4czqJEYl6LfcH4RLzF5vo+rn1McIlQHVIYHDBgynL9LF7LclISQ==",
   "success": true,
-  "projectFilePath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumAPI/Product.API.csproj",
+  "projectFilePath": "/Users/haykazsayadyan/development/code/Product/Product/Product.API/Product.API.csproj",
   "expectedPackageFiles": [
     "/Users/haykazsayadyan/.nuget/packages/automapper/10.1.1/automapper.10.1.1.nupkg.sha512",
     "/Users/haykazsayadyan/.nuget/packages/confluent.kafka/1.6.3/confluent.kafka.1.6.3.nupkg.sha512",

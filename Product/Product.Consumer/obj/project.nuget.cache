@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "bkiZ5drxJ1j3ysFuNFgWf98IkCACfDogQ1OK/kFGx8NnlwC96lrP5G7gsEdQDjDwi3d/YB+oWo+umQHYiBFTSA==",
+  "dgSpecHash": "MvB4JdeBBRSVWD3nmISilAl3ySh7cOme4+CFdAZ8TArjfa6euzHNLU/d+5B7nD/UMgYXs0wQTK0EgEMZy/7L8A==",
   "success": true,
-  "projectFilePath": "/Users/haykazsayadyan/development/code/Visum/VisumDemo/VisumConsumer/Product.Consumer.csproj",
+  "projectFilePath": "/Users/haykazsayadyan/development/code/Product/Product/Product.Consumer/Product.Consumer.csproj",
   "expectedPackageFiles": [
     "/Users/haykazsayadyan/.nuget/packages/confluent.kafka/1.7.0/confluent.kafka.1.7.0.nupkg.sha512",
     "/Users/haykazsayadyan/.nuget/packages/dnsclient/1.4.0/dnsclient.1.4.0.nupkg.sha512",

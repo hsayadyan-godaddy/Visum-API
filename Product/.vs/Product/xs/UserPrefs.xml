@@ -1,40 +1,19 @@
-﻿<Properties StartupConfiguration="{C49509CB-41F4-418C-A6D8-3B0658581B03}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="VisumAPI/Models/Well.cs">
+﻿<Properties StartupConfiguration="{07D46A79-7EB0-40AB-BC17-836CA6519BC7}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Product.API/Models/User.cs">
     <Files>
-      <File FileName="VisumAPI/appsettings.json" Line="11" Column="59" />
-      <File FileName="VisumAPI/Controllers/AccountController.cs" Line="4" Column="32" />
-      <File FileName="VisumAPI/DBClient.cs" Line="31" Column="27" />
-      <File FileName="VisumAPI/JwtHandler.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/Program.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/Controllers/ProjectsController.cs" Line="6" Column="23" />
-      <File FileName="VisumAPI/Models/Project.cs" Line="1" Column="34" />
-      <File FileName="VisumDAS/Program.cs" Line="30" Column="1" />
-      <File FileName="VisumDAS/ProducerWrapper.cs" Line="1" Column="1" />
-      <File FileName="VisumConsumer/Program.cs" Line="90" Column="107" />
-      <File FileName="VisumAPI/Controllers/DataController.cs" Line="6" Column="1" />
-      <File FileName="VisumAPI/Models/Customer.cs" Line="1" Column="1" />
-      <File FileName="../../../../../../Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/bin/MSBuild/Current/bin/Microsoft.Common.CurrentVersion.targets" Line="1909" Column="5" />
-      <File FileName="VisumData/WellData.cs" Line="5" Column="29" />
-      <File FileName="VisumAPI/Models/Well.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/appsettings.Development.json" Line="1" Column="1" />
-      <File FileName="VisumAPI/DBClientSettings.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/IDBClientSettings.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/Startup.cs" Line="1" Column="1" />
-      <File FileName="VisumAPI/Controllers/ViewController.cs" Line="2" Column="1" />
-      <File FileName="VisumAPI/Controllers/WellController.cs" Line="4" Column="23" />
-      <File FileName="VisumAPI/Models/User.cs" Line="3" Column="1" />
-      <File FileName="VisumAPI/Models/UserRole.cs" Line="1" Column="1" />
+      <File FileName="Product.API/Controllers/DataController.cs" Line="8" Column="2" />
+      <File FileName="Product.Consumer/Program.cs" Line="10" Column="15" />
+      <File FileName="Product.API/Program.cs" Line="10" Column="1" />
+      <File FileName="Product.API/Models/User.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Product" expanded="True">
             <Node name="Product.API" expanded="True">
-              <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True">
-                <Node name="Well.cs" selected="True" />
+                <Node name="User.cs" selected="True" />
               </Node>
-              <Node name="appsettings.json" expanded="True" />
             </Node>
             <Node name="Product.Consumer" expanded="True" />
             <Node name="Product.DAS" expanded="True" />
@@ -46,16 +25,11 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.ItemProperties.Product.API PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.ItemProperties.Product.Consumer PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations>
-    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects">
-      <Items>
-        <StartupItem ItemId="{C49509CB-41F4-418C-A6D8-3B0658581B03}" ItemName="VisumAPI" ConfigurationId="Default" />
-      </Items>
-    </MultiItemSolutionRunConfiguration>
+    <MultiItemSolutionRunConfiguration Id="Multiple Projects" Name="Multiple Projects" />
   </MultiItemStartupConfigurations>
 </Properties>
