@@ -6,6 +6,6 @@ namespace Product.DataModels
     {
         public string Key { get; set; }
         public string Label { get; set; }
-        public IReadOnlyCollection<ValueTime> Data { get; set; }
+        public List<ValueTime> Data { get; set; }
     }
 }

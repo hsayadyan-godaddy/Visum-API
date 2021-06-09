@@ -79,6 +79,10 @@ namespace Product.API.WebSocketAPI.Helpers
             {
                 return $"[{GetJsModel(value.GetGenericArguments()[0])}]";
             }
+            else if (Nullable.GetUnderlyingType(value) != null)
+            {
+                return $"null | {GetJsModel(Nullable.GetUnderlyingType(value))}";  
+            }
 
             var model = "{";
             var props = value.GetProperties();
@@ -93,13 +97,17 @@ namespace Product.API.WebSocketAPI.Helpers
 
                 if (jsBase == SimpleType.ComplexType && !_knownTypes.ContainsKey(propType.Name))
                 {
-                    if (itm.PropertyType.IsEnum)
+                    if (propType.IsEnum)
                     {
-                        jsType = GetJsModel(itm.PropertyType);
+                        jsType = GetJsModel(propType);
                     }
-                    else if (itm.PropertyType.IsGenericType && itm.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                    else if (propType.IsGenericType && propType.GetGenericTypeDefinition() == typeof(List<>))
                     {
-                        jsType = GetJsModel(itm.PropertyType);
+                        jsType = GetJsModel(propType);
+                    }
+                    else if (Nullable.GetUnderlyingType(propType) != null)
+                    {
+                        jsType = GetJsModel(propType);
                     }
                     else
                     {
@@ -128,6 +136,9 @@ namespace Product.API.WebSocketAPI.Helpers
             var ret = SimpleType.ComplexType;
 
             if (value.IsEnum) return ret;
+            if (Nullable.GetUnderlyingType(value) != null) 
+                return ret;
+            
 
             switch (Type.GetTypeCode(value))
             {

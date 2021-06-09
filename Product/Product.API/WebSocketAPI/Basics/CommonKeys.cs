@@ -2,6 +2,6 @@
 {
     public class CommonKeys
     {
-        public const string SESSION_TOKEN = "AUTHORIZATION-TOKEN";
+        public const string SESSION_TOKEN = "SESSION-TOKEN";
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Product.API.WebSocketAPI.Helpers;
 using System.Net;
 
 
@@ -22,7 +23,7 @@ namespace Product.API.WebSocketAPI.Basics
         public OperationResponse(object value, OperationResponseStatus status, WSRequestType RequestType = WSRequestType.Subscribe)
         {
             Status = status;
-            ResultJSContent = JsonConvert.SerializeObject(value);
+            ResultJSContent = value.GetJson();
         }
 
         public OperationResponse(OperationRequest value, HttpStatusCode statusCode = HttpStatusCode.OK, string errorMessage = null)

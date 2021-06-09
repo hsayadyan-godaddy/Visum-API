@@ -1,5 +1,7 @@
 ﻿using Product.API.WebSocketAPI.Basics;
 using Product.API.WebSocketAPI.CustomAttributes;
+using Product.DataModels;
+using System.Collections.Generic;
 
 namespace Product.API.WSControllers
 {
@@ -8,11 +10,13 @@ namespace Product.API.WSControllers
     {
 
 
-        [WSMethod(typeof(string))]
+        [WSMethod(typeof(PressureData))]
         public void SubscribePressureData(string wellName, string key, WSContext context)
         {
-            var b = context.ResultCallback(new OperationResponse("All is ok", new OperationResponseStatus()));
+#warning //TODO implement collabacks from simulator
 
+            context.ResultCallback(
+              new OperationResponse(new PressureData { Data = new List<ValueTime>(), Label="PSI" }, new OperationResponseStatus()));
         }
     }
 }

@@ -28,6 +28,10 @@
             border-bottom: 0;
         }
 
+        .accordion-blue {
+            background-color: #d1efff;
+        }
+
             .accordion:hover {
                 background: rgba(0, 0, 0, .01);
             }
@@ -98,6 +102,8 @@
             font-weight: normal;
         }
 
+        
+
             .rootAccordion:hover {
                 background: rgba(50, 2, 2, 0.9);
                 color: #fff;
@@ -110,6 +116,8 @@
             border: 0;
         }
 
+       
+
         .panel-simple {
             border: 1px solid #ddd;
             border-top: 0;
@@ -120,6 +128,16 @@
             border: 1px solid #ddd;
             border-bottom: 0;
             box-shadow: none;
+            margin-top: 0.5rem;
+        }
+
+        .accordion-simple-green {
+            background-color: #bdffe3;
+        }
+
+
+        .accordion-simple-red {
+            background-color: #ffb3b3;
         }
 
         textarea {
@@ -327,7 +345,7 @@
             template.push(btn);
 
             const panel = getPanel();
-            panel.classList = panel.classList + ' rootPanel';
+            panel.classList = panel.classList + ' rootPanel ';
 
             API.operationMethods.forEach(func => {
                 const aItem = getItemAccordion(func);
@@ -371,7 +389,7 @@
             const template = [];
 
             const btn = getButton('Try It Out');
-            btn.classList = btn.classList + ' accordion-simple';
+            btn.classList = btn.classList + ' accordion-simple accordion-simple-red';
             template.push(btn);
 
             const panel = document.createElement('div');
@@ -395,7 +413,7 @@
             const template = [];
 
             const btn = getButton('Model');
-            btn.classList = btn.classList + ' accordion-simple';
+            btn.classList = btn.classList + ' accordion-simple accordion-simple-green';
             template.push(btn);
 
             const panel = document.createElement('div');
@@ -426,7 +444,7 @@
 
         function getButton(label) {
             const btn = document.createElement('button');
-            btn.classList = 'accordion';
+            btn.classList = ' accordion accordion-blue';
             btn.innerText = label;
 
             btn.addEventListener("click", function () {
