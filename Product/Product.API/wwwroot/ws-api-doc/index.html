@@ -1,0 +1,528 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <icon src="/favicon.ico" />
+    <title>WS API</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            background: #fafafa;
+        }
+        /* Style the buttons that are used to open and close the accordion panel */
+        .accordion {
+            background-color: white;
+            cursor: pointer;
+            padding: 16px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: 0.4s;
+            border-radius: 2px;
+            font-weight: bold;
+            color: #3b4151;
+            border: 2px solid #ddd;
+            border-bottom: 0;
+        }
+
+            .accordion:hover {
+                background: rgba(0, 0, 0, .01);
+            }
+
+        .active {
+            box-shadow: none;
+        }
+
+       
+        .panel {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            margin-bottom: .5rem;
+            border: 1px solid #ddd;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .accordion:after {
+            content: '\02795';
+            font-size: 16px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2796";
+        }
+
+        #wsConnectInput {
+            width: 440px;
+            margin: 5px 0;
+            padding: 8px 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+        }
+
+            #wsConnectInput[disabled] {
+                background-color: #ddd;
+            }
+
+        #wsConnectBtn {
+            width: 160px;
+            color: #fff;
+            background-color: #4990e2;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 40px;
+            border-radius: 4px;
+            margin-left: 1rem;
+            border: 0;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .rootAccordion {
+            border: 0;
+            font-size: 20px;
+            margin: 0 0 5px;
+            color: #e1e1e1;
+            background-color: #220a0a;
+            box-shadow: none;
+            font-weight: normal;
+        }
+
+            .rootAccordion:hover {
+                background: rgba(50, 2, 2, 0.9);
+                color: #fff;
+            }
+
+        .rootPanel {
+            background: transparent;
+            box-shadow: none;
+            margin-top: 1rem;
+            border: 0;
+        }
+
+        .panel-simple {
+            border: 1px solid #ddd;
+            border-top: 0;
+            box-shadow: none;
+        }
+
+        .accordion-simple {
+            border: 1px solid #ddd;
+            border-bottom: 0;
+            box-shadow: none;
+        }
+
+        textarea {
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            background: #014000;
+            width: 100%;
+            color: #fcffbb
+        }
+
+        .textarea-req-types {
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            background: #337385;
+            width: 100%;
+            height: 6rem;
+            color: #fcffbb;
+        }
+
+        .textarea-req-types-extra {
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            background: #446779;
+            width: 100%;
+            height: 6rem;
+            color: white;
+        }
+
+        .btnTIO {
+            width: 160px;
+            color: #fff;
+            background-color: #4990e2;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 40px;
+            border-radius: 4px;
+            border: 0;
+            display: block;
+            margin-top: 0.5rem;
+            margin-bottom: .8rem;
+        }
+
+        .label-span {
+            font-size: 25px;
+            font-weight: 700;
+            padding: 2rem 0;
+            color: #4990e2;
+        }
+    </style>
+</head>
+
+<body>
+    <section id="accordion-section"></section>
+    <script>
+        'use strict';
+        let socketConnected = false;
+        let endpointMetadata = '/api/WebSocketMetadata/operationsMetadata';
+        let endpointModels = '/api/WebSocketMetadata/knownModels';
+        let curentRESTURL = '';
+        let curentWSURL = '';
+        let _websocket = null;
+        const wsConnectBtnID = 'wsConnectBtn';
+        const wsConnectStatusID = 'wsConnectStatus';
+        const wsConnectInputID = 'wsConnectInput';
+        window.onload = function () {
+            const curentRESTURL = window.location.protocol;
+            curentWSURL = getWSURL();
+            httpGetAsync(curentRESTURL + endpointMetadata, (response) => {
+                generateUI(JSON.parse(response));
+
+                httpGetAsync(curentRESTURL + endpointModels, (response) => {
+                    generateAttachedModels(JSON.parse(response));
+                });
+            });
+        };
+
+        function wsConnect(wsurl) {
+            const btn = document.getElementById(wsConnectBtnID);
+            if (_websocket) {
+                _websocket.close(3001);
+            } else {
+                _websocket = new WebSocket(wsurl);
+                _websocket.onopen = function () {
+                    logWSStatus('ws connected', 'success');
+                    btn.innerText = 'Disconnect';
+                    socketConnected = true;
+                };
+
+                _websocket.onclose = function (evt) {
+                    if (evt.code == 3001) {
+                        logWSStatus('ws closed', 'success');
+                        btn.innerText = 'Connect';
+                        socketConnected = false;
+                    } else {
+                        btn.innerText = 'Connect';
+                        socketConnected = false;
+                        logWSStatus('ws connection error', 'error');
+                    }
+                    _websocket = null;
+                };
+
+                _websocket.onerror = function (evt) {
+                    if (_websocket.readyState == 1) {
+                        logWSStatus('ws normal error' + evt.type, 'warning');
+                        btn.innerText = 'Connect';
+                        socketConnected = false;
+                    }
+                };
+            }
+        }
+
+        function wsSendMessage(message) {
+            _websocket.send(message);
+        }
+
+        function logWSStatus(status, type) {
+            const statusPanel = document.getElementById(wsConnectStatusID);
+            statusPanel.innerText = type + ': ' + status;
+        }
+
+        function httpGetAsync(theUrl, callback) {
+            var xmlHttp = new XMLHttpRequest();
+            xmlHttp.onreadystatechange = function () {
+                if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                    callback(xmlHttp.responseText);
+            };
+            xmlHttp.open("GET", theUrl, true);
+            xmlHttp.send(null);
+        }
+
+        function generateUI(value) {
+
+
+            const rootDiv = document.getElementById('accordion-section');
+
+            const rootConnect = getRootConnectionSection();
+
+            rootConnect.forEach(itm => {
+                rootDiv.appendChild(itm);
+            });
+
+            value.forEach(api => {
+                console.log(api);
+                const tmpl = getRootAccordion(api);
+                tmpl.forEach(item => {
+                    rootDiv.appendChild(item);
+                });
+            });
+        }
+
+        function generateAttachedModels(value) {
+            if (value && value.length > 0) {
+                const rootDiv = document.getElementById('accordion-section');
+
+                rootDiv.appendChild(getLabel('Extra Models'));
+
+
+                const btn = getButton('(references)');
+                btn.classList = btn.classList + ' rootAccordion';
+
+                rootDiv.appendChild(btn);
+
+                const panel = getPanel();
+                panel.classList = panel.classList + ' rootPanel';
+
+
+
+                value.forEach(apiMod => {
+                    const req = getTextArea(apiMod, true);
+                    req.classList = 'textarea-req-types-extra';
+                    panel.appendChild(req);
+
+                });
+                rootDiv.appendChild(panel);
+
+            }
+        }
+
+
+
+        function getRootConnectionSection() {
+            const template = [];
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = curentWSURL;
+            input.id = wsConnectInputID;
+            template.push(input);
+
+            const btn = geWSConnectButton();
+            template.push(btn);
+
+            const status = document.createElement('p');
+            status.id = wsConnectStatusID;
+            template.push(status);
+
+            return template;
+        }
+
+        function getRootAccordion(API) {
+            const template = [];
+
+            const btn = getButton(API.operationSource);
+            btn.classList = btn.classList + ' rootAccordion';
+            template.push(btn);
+
+            const panel = getPanel();
+            panel.classList = panel.classList + ' rootPanel';
+
+            API.operationMethods.forEach(func => {
+                const aItem = getItemAccordion(func);
+                aItem.forEach(accordion => {
+                    panel.appendChild(accordion);
+                });
+            });
+
+            template.push(panel);
+
+            return template;
+        }
+
+        function getItemAccordion(APIfunction) {
+            const template = [];
+
+            const btn = getButton(APIfunction.methodName);
+            template.push(btn);
+
+            const panel = document.createElement('div');
+            panel.classList = 'panel';
+
+
+
+            const model = getModelAccordion(APIfunction);
+            model.forEach(mdl => {
+                panel.appendChild(mdl);
+            });
+
+            const tryItOut = getTryItOutAccordion(APIfunction.requestModel);
+            tryItOut.forEach(tio => {
+                panel.appendChild(tio);
+            });
+
+            template.push(panel);
+
+            return template;
+        }
+
+        function getTryItOutAccordion(request) {
+            const template = [];
+
+            const btn = getButton('Try It Out');
+            btn.classList = btn.classList + ' accordion-simple';
+            template.push(btn);
+
+            const panel = document.createElement('div');
+            panel.classList = 'panel panel-simple';
+
+            const req = getTextArea(request, false);
+            panel.appendChild(req);
+
+            const tioBtn = getTryItOutButton(request);
+            panel.appendChild(tioBtn);
+
+            const res = getTextArea('', false);
+            panel.appendChild(res);
+
+            template.push(panel);
+
+            return template;
+        }
+
+        function getModelAccordion(APIfunction) {
+            const template = [];
+
+            const btn = getButton('Model');
+            btn.classList = btn.classList + ' accordion-simple';
+            template.push(btn);
+
+            const panel = document.createElement('div');
+            panel.classList = 'panel panel-simple';
+
+            const reqHeader = document.createElement('p');
+            reqHeader.innerText = 'Request';
+            panel.appendChild(reqHeader);
+
+
+            const reqTypes = getTextArea('<enum: requestType>\n' + APIfunction.requestTypesModel, true);
+            reqTypes.classList = 'textarea-req-types';
+            panel.appendChild(reqTypes);
+            const req = getTextArea(APIfunction.requestModel, true);
+            panel.appendChild(req);
+
+            const resHeader = document.createElement('p');
+            resHeader.innerText = 'Response';
+            panel.appendChild(resHeader);
+
+            const res = getTextArea('<' + APIfunction.returnModelName + '>\n' + APIfunction.returnModel, true);
+            panel.appendChild(res);
+
+            template.push(panel);
+
+            return template;
+        }
+
+        function getButton(label) {
+            const btn = document.createElement('button');
+            btn.classList = 'accordion';
+            btn.innerText = label;
+
+            btn.addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = '100%';
+                }
+            });
+
+            return btn;
+        }
+
+        function getTryItOutButton(request) {
+            const btn = document.createElement('button');
+            btn.classList = 'btnTIO';
+            btn.innerText = 'Try It Out';
+
+            btn.addEventListener("click", function () {
+                if (socketConnected) {
+
+                    const inp = this.previousSibling;
+                    const outp = this.nextSibling;
+                    _websocket.onmessage = (msg) => {
+                        const message = JSON.parse(msg.data);
+                        if (message.Action === request.action) {
+                            outp.value = JSON.stringify(message, null, 3);
+                        }
+                    };
+                    wsSendMessage(inp.value);
+                }
+                else {
+                    confirm("WebSocket is disconnected!");
+                }
+            });
+
+            return btn;
+        }
+
+        function geWSConnectButton() {
+            const btn = document.createElement('button');
+            btn.innerText = 'Connect';
+            btn.id = wsConnectBtnID;
+
+            btn.addEventListener("click", function () {
+                const inp = this.previousSibling;
+                if (inp.disabled) {
+                    inp.disabled = false;
+                } else {
+                    inp.disabled = true;
+                }
+                wsConnect(inp.value);
+            });
+
+            return btn;
+        }
+
+        function getPanel() {
+            const panel = document.createElement('div');
+            panel.classList = 'panel';
+
+            return panel;
+        }
+
+        function getTextArea(value, isReadOnly) {
+            const textarea = document.createElement('textarea');
+            textarea.readOnly = isReadOnly;
+            textarea.rows = '20';
+            textarea.value = value;
+
+            return textarea;
+        }
+
+        function getLabel(value) {
+            const label = document.createElement('span');
+            label.textContent = value;
+            label.classList = 'label-span'
+            return label;
+        }
+
+        function getWSURL() {
+            let protocol = '';
+            const parameters = '/ws-api?SESSION-TOKEN=<TOKEN-KEY>';
+            const parser = document.createElement('a');
+            parser.href = window.location.href;
+            if (parser.protocol === 'https:') {
+                protocol = 'wss://';
+            } else {
+                protocol = 'ws://';
+            }
+
+            return protocol + parser.host + parameters;
+        }
+    </script>
+</body>
+
+</html>
