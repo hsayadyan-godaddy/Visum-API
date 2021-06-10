@@ -1,13 +1,19 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Product.API.WebSocketAPI;
+using Product.API.WebSocketAPI.Abstraction;
+using Product.API.WSControllers;
+using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Text;
 
 namespace Product.API
 {
@@ -23,6 +29,13 @@ namespace Product.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<ITokenValidator, TokenValidator>();
+            services.AddTransient<IWebSocketHandler, WebSocketHandler>();
+            services.AddTransient<IOperationExecutor, OperationExecutor>();
+            RegisterWebSocketOperations(services);
+
+
+
             var jwtSettings = Configuration.GetSection("JwtSettings");
             var connectionString = Configuration.GetSection("ConnectionString");
 
@@ -33,7 +46,7 @@ namespace Product.API
                 options.MongodbConnection = Configuration.GetSection("ConnectionString:MongodbConnection").Value;
             });
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
-            services.AddAuthentication(opt => 
+            services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -53,7 +66,7 @@ namespace Product.API
 
             services.AddScoped<JwtHandler>();
             services.AddSingleton<DBClient>();
-           
+
             //TODO AutoMapper
             //services.AddSingleton(mapper);
 
@@ -63,7 +76,9 @@ namespace Product.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
             });
-            
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,6 +103,58 @@ namespace Product.API
             {
                 endpoints.MapControllers();
             });
+
+            app.UseWebSockets(new WebSocketOptions
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(30),
+            });
+
+            app.Use(async (context, next) =>
+            {
+                if (context.Request.Path == "/ws-api")
+                {
+                    context.Response.GetTypedHeaders().CacheControl =
+                    new Microsoft.Net.Http.Headers.CacheControlHeaderValue
+                    {
+                        Public = true,
+                        MaxAge = TimeSpan.FromSeconds(1)
+                    };
+                    context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] = new string[] { "Accept-Encoding" };
+
+
+
+                    var handler = app.ApplicationServices.GetRequiredService<IWebSocketHandler>();
+
+                    await handler.Handle(context);
+                }
+                else
+                {
+                    await next();
+                }
+            });
+
+            EnableWwwRoot(app, env);
+        }
+
+
+        private void EnableWwwRoot(IApplicationBuilder app, IWebHostEnvironment env)
+        {
+            var CACHE_PERIOD = env.IsDevelopment() ? "1" : "600";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={CACHE_PERIOD}");
+                }
+            });
+        }
+
+        private void RegisterWebSocketOperations(IServiceCollection services)
+        {
+            services.AddSingleton<ZoneFlowDataController>();
+            services.AddSingleton<PressureDataController>();
+            services.AddSingleton<RateDataController>();
         }
     }
 }
