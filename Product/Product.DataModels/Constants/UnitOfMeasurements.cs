@@ -10,23 +10,23 @@ namespace Product.DataModels.Constants
             {
                 new UnitOfMeasure
                 {
-                    SourceToMeasure = SourceToMeasure.Oil, Label = UnitsConstants.Bmp
+                    SourceToMeasure = SourceType.Oil, Label = UnitsConstants.Bmp
                 },
                 new UnitOfMeasure
                 {
-                    SourceToMeasure = SourceToMeasure.Water, Label = UnitsConstants.Bmp
+                    SourceToMeasure = SourceType.Water, Label = UnitsConstants.Bmp
                 },
                 new UnitOfMeasure
                 {
-                    SourceToMeasure = SourceToMeasure.Gas, Label = UnitsConstants.CuFt
+                    SourceToMeasure = SourceType.Gas, Label = UnitsConstants.CuFt
                 },
                 new UnitOfMeasure
                 {
-                    SourceToMeasure = SourceToMeasure.Depth, Label = UnitsConstants.Ft
+                    SourceToMeasure = SourceType.Depth, Label = UnitsConstants.Ft
                 },
                 new UnitOfMeasure
                 {
-                    SourceToMeasure = SourceToMeasure.Pressure, Label = UnitsConstants.Psi
+                    SourceToMeasure = SourceType.Pressure, Label = UnitsConstants.Psi
                 }
             };
     }

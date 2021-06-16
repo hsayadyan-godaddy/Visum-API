@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
-using Product.API.Queries;
+﻿using Product.API.Queries;
 using Product.DataModels;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Product.API.Services
+namespace Product.Services.ProductionMonitoring
 {
     public interface IProductionMonitoringService
     {
+
         ZonesData GetZones(string wellName);
         UnitOfMeasure GetUom();
         ZoneFlowData GetZones(ZonesQuery zonesQuery);

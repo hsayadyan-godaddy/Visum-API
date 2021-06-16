@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Product.API</name>
+    </assembly>
+    <members>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand.ProjectId">
+            <summary>
+            Project identifier
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand.WellName">
+            <summary>
+            Well name
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.UnixTo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.From">
+            <summary>
+            From, as DateTime type
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.To">
+            <summary>
+            To, as DateTime type
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.WellboreProfileZonesCommand.DepthType">
+            <summary>
+            Required Depth type
+            </summary>
+        </member>
+        <member name="T:Product.API.ProductionMonitoringController">
+            <summary>
+            Production Monitoring API endpoint
+            </summary>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.#ctor(Product.API.Commands.Executor.ProductionMonitoringCommandExecutor)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="commandExecutor"></param>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetWellboreProfileZones(Product.API.Commands.CommandModel.ProductionMonitoring.WellboreProfileZonesCommand)">
+            <summary>
+            Get Zones for the Wellbore Profile
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Zones and depth ranges for specified well</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetPressureKeys(Product.API.Commands.CommandModel.ProductionMonitoring.PressureKeysCommand)">
+            <summary>
+            Get available keys (sensors) for the Pressure data
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of strings/keys</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetFlowRateKeys(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateKeysCommand)">
+            <summary>
+             Get available keys (sensors) for the Flow Rate data
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of strings/keys</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetPressureHistoryData(Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand)">
+            <summary>
+             Get historical Pressure data
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of Values and Dates structure</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetFlowRateHistoryData(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateHistoryDataCommand)">
+            <summary>
+            Get historical Flow Rate data
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of Values and Dates structure</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionHistoryData(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand)">
+            <summary>
+            Get historica data for Zone Flow Production
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of Values and Dates structure that contains data for oil, water and gas</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionCriticalHighlights(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionCriticalHighlightsCommand)">
+            <summary>
+            Get Critical limits to Highlight zones
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array with limits that should be highlighted</returns>
+        </member>
+        <member name="T:Product.API.Models.Basics.BaseResponse">
+            <summary>
+            Implementation of the base response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Basics.BaseResponse.Error">
+            <summary>
+            Errror message field
+            </summary>
+        </member>
+        <member name="T:Product.API.Models.Basics.IBaseResponse">
+            <summary>
+            Base response interface
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Basics.IBaseResponse.Error">
+            <summary>
+            Error message field
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.RequestID">
+            <summary>
+            returns the same identifier for same parameterts if Suscribe or Unsubscribe
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.CustomAttributes.WSMethodAttribute.#ctor(System.Type,System.Boolean)">
+            <summary>
+            Attribute for WebSoocket method operation. 
+            </summary>
+            <param name="returnType">Declaration of expected data type that will be returned in callback to user</param>
+            <param name="oneTime">
+             Declaration of the oneTime = true means that method will not support subscribe/unsubscribe.
+             Expected one time execution with the response or without
+            </param>
+        </member>
+    </members>
+</doc>

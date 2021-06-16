@@ -68,8 +68,9 @@ namespace Product.API.WebSocketAPI.Helpers
                 }
                 catch (Exception e)
                 {
-#warning implement logger
+#if DEBUG
                     Console.WriteLine(e);
+#endif
                 }
 
                 if (ret != null)
@@ -84,7 +85,6 @@ namespace Product.API.WebSocketAPI.Helpers
         }
 
         #endregion //constants
-
 
         public static byte[] GetBytesArray(this string value)
         {
@@ -139,8 +139,9 @@ namespace Product.API.WebSocketAPI.Helpers
 
         private static void HandleDeserializationError(object sender, ErrorEventArgs errorArgs)
         {
-#warning implement logger
+#if DEBUG
             Console.WriteLine(errorArgs?.ErrorContext?.Error);
+#endif
 
             errorArgs.ErrorContext.Handled = true;
         }

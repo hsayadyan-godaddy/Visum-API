@@ -7,9 +7,15 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Product.API.Commands.Executor;
+using Product.API.Filters;
+using Product.API.Filters.Swagger;
 using Product.API.WebSocketAPI;
 using Product.API.WebSocketAPI.Abstraction;
 using Product.API.WSControllers;
+using Product.Services;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -32,7 +38,9 @@ namespace Product.API
             services.AddSingleton<ITokenValidator, TokenValidator>();
             services.AddTransient<IWebSocketHandler, WebSocketHandler>();
             services.AddTransient<IOperationExecutor, OperationExecutor>();
+
             RegisterWebSocketOperations(services);
+            RegisterCommandExecutors(services);
 
 
 
@@ -70,15 +78,60 @@ namespace Product.API
             //TODO AutoMapper
             //services.AddSingleton(mapper);
 
-            services.AddControllers();
-            services.AddCors(); //todo
-            services.AddSwaggerGen(c =>
+            services.AddControllers()
+            .AddJsonOptions(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
+                options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+            });
+
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(typeof(ExceptionFilter));
+                options.Filters.Add(typeof(BadRequestFilter));
+            }).AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.Formatting = Formatting.None;
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                options.SerializerSettings.StringEscapeHandling = StringEscapeHandling.EscapeHtml;
+                options.SerializerSettings.Converters.Add(new StringEnumConverter());
             });
 
 
+            services.AddCors(); //todo
 
+
+            services.AddSwaggerGen(options =>
+           {
+               options.SwaggerDoc("v1", new OpenApiInfo { Title = "Product.API", Version = "v1" });
+
+               options.OperationFilter<SwaggerExcludeParameterFilter>();
+               options.SchemaFilter<SwaggerExcludeSchemaFilter>();
+               options.SchemaFilter<SwaggerFormatDateSchemaFilter>();
+               options.DescribeAllParametersInCamelCase();
+
+
+#warning requires to refactor and move to config file. Issue that this file can be missing or path in Linux can be defined in different way as in windows
+               try
+               {
+                   options.IncludeXmlComments("Product.API.xml");
+               }
+               catch { }
+           });
+
+        }
+
+        public class TestISO : JavaScriptDateTimeConverter
+        {
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                return base.ReadJson(reader, objectType, existingValue, serializer);
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                base.WriteJson(writer, value, serializer);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -150,11 +203,20 @@ namespace Product.API
             });
         }
 
+
         private void RegisterWebSocketOperations(IServiceCollection services)
         {
             services.AddSingleton<ZoneFlowDataController>();
             services.AddSingleton<PressureDataController>();
             services.AddSingleton<RateDataController>();
         }
+
+        private void RegisterCommandExecutors(IServiceCollection services)
+        {
+            services.RegisterServicesFactory();
+
+            services.AddScoped<ProductionMonitoringCommandExecutor>();
+        }
+
     }
 }

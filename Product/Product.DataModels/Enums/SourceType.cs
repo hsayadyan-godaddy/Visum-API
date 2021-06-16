@@ -1,6 +1,6 @@
 ﻿namespace Product.DataModels.Enums
 {
-    public enum SourceToMeasure
+    public enum SourceType
     {
         Oil,
         Gas,
