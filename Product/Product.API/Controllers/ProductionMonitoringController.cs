@@ -64,9 +64,9 @@ namespace Product.API
         /// <param name="value">Request parameters</param>
         /// <returns>Array of strings/keys</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(PressureKeysResponse), StatusCodes.Status200OK)]
-        [Route("pressureFlowRate/pressure/keys")]
-        public async Task<IActionResult> GetPressureKeys([FromQuery] PressureKeysCommand value)
+        [ProducesResponseType(typeof(PressureSensorsResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/pressure/sensors")]
+        public async Task<IActionResult> GetPressureSensors([FromQuery] PressureSensorsCommand value)
         {
             var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
             return HandleResult(result);
@@ -78,9 +78,9 @@ namespace Product.API
         /// <param name="value">Request parameters</param>
         /// <returns>Array of strings/keys</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(FlowRateKeysResponse), StatusCodes.Status200OK)]
-        [Route("pressureFlowRate/flowRate/keys")]
-        public async Task<IActionResult> GetFlowRateKeys([FromQuery] FlowRateKeysCommand value)
+        [ProducesResponseType(typeof(FlowRateSensorsResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/flowRate/sensors")]
+        public async Task<IActionResult> GetFlowRateSensors([FromQuery] FlowRateSensorsCommand value)
         {
             var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
             return HandleResult(result);
@@ -134,9 +134,9 @@ namespace Product.API
         /// <param name="value">Request parameters</param>
         /// <returns>Array with limits that should be highlighted</returns>
         [HttpGet]
-        [ProducesResponseType(typeof(ZoneFlowProductionCriticalHighlightsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ZoneFlowProductionAcceptableLimitsResponse), StatusCodes.Status200OK)]
         [Route("zoneFlowProduction/criticalHighlights")]
-        public async Task<IActionResult> GetZoneFlowProductionCriticalHighlights([FromQuery] ZoneFlowProductionCriticalHighlightsCommand value)
+        public async Task<IActionResult> GetZoneFlowProductionAcceptableLimits([FromQuery] ZoneFlowProductionAcceptableLimitsCommand value)
         {
             var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
             return HandleResult(result);
@@ -162,98 +162,5 @@ namespace Product.API
         }
 
         #endregion
-
-
-        /*
-
-         
-
-           */
-
-
-
-
-        /*
-
-
-        [HttpPost]
-        [Route("pressureFlowRate/flowallocation")]
-        public async Task<ActionResult> GetZones([FromBody] ZonesQuery zonesQuery)
-        {
-            var zoneFlowData = _productionMonitoringService.GetZones(zonesQuery);
-            return Ok(zoneFlowData);
-        }
-
-
-
-
-
-
-        [HttpGet]
-        [Route("uom")]
-        public async Task<ActionResult> GetUom()
-        {
-            var wellData = _productionMonitoringService.GetUom();
-            return Ok(wellData);
-        }
-
-        [HttpGet]
-        [Route("zones/flowallocation/limits")]
-        public async Task<ActionResult> GetLimits()
-        {
-            var flowLimitInfo = _productionMonitoringService.GetLimits();
-            return Ok(flowLimitInfo);
-        }
-
-        [HttpGet]
-        [Route("zones/{wellName}")]
-        public async Task<ActionResult> GetZones(string wellName)
-        {
-            var zonesData = _productionMonitoringService.GetZones(wellName);
-            return Ok(zonesData);
-        }
-
-        [HttpPost]
-        [Route("zones/flowallocation")]
-        public async Task<ActionResult> GetZones([FromBody] ZonesQuery zonesQuery)
-        {
-            var zoneFlowData = _productionMonitoringService.GetZones(zonesQuery);
-            return Ok(zoneFlowData);
-        }
-
-        [HttpGet]
-        [Route("zones/pressure/{wellName}")]
-        public async Task<ActionResult> GetPressure(string wellName)
-        {
-            var wellData = _productionMonitoringService.GetPressure(wellName);
-            return Ok(wellData);
-        }
-
-        [HttpGet]
-        [Route("pressure/rates/{wellName}/{key}")]
-        public async Task<ActionResult> GetPressureRates(string wellName, string key)
-        {
-            var pressure = _productionMonitoringService.GetPressureRates(wellName, key);
-            return Ok(pressure);
-        }
-
-        [HttpGet]
-        [Route("flow/{wellName}")]
-        public async Task<ActionResult> GetFlow(string wellName)
-        {
-            var wellData = _productionMonitoringService.GetFlow(wellName);
-            return Ok(wellData);
-        }
-
-        [HttpGet]
-        [Route("flow/rates/{wellName}/{key}")]
-        public async Task<ActionResult> GetFlow(string wellName, string key)
-        {
-            var wellData = _productionMonitoringService.GetFlowRates(wellName, key);
-            return Ok(wellData);
-        }
-
-        */
-
     }
 }

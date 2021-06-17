@@ -4,7 +4,7 @@
     {
         #region properties
 
-        double DataValue { get; }
+        double Value { get; }
 
         #endregion
     }

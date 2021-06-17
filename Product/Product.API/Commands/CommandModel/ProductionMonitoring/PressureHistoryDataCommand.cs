@@ -1,5 +1,5 @@
 ﻿using Product.API.Commands.CommandModel.GeneralModels;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Commands.CommandModel.ProductionMonitoring
 {
@@ -9,8 +9,9 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     public class PressureHistoryDataCommand : HistoricaDataCommand
     {
         /// <summary>
-        /// Key (sensor name) of required data
+        /// Sensor ID for required data
         /// </summary>
-        public string Key { get; set; }
+        [Required]
+        public string SensorId { get; set; }
     }
 }

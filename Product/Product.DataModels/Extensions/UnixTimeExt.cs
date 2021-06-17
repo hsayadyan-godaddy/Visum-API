@@ -7,13 +7,13 @@ namespace Product.DataModels.Extensions
         public static DateTime FromUnix(this long value)
         {
             var tmp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return tmp.AddMilliseconds(value);
+            return tmp.AddMilliseconds(value).ToLocalTime();
         }
 
         public static DateTime FromUnixTicks(long unixTime)
         {
             var tmp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return tmp.AddTicks(unixTime);
+            return tmp.AddTicks(unixTime).ToLocalTime();
         }
 
         public static long ToUnix(this DateTime value)
@@ -24,7 +24,7 @@ namespace Product.DataModels.Extensions
         public static long ToUnixTicks(DateTime date)
         {
             var tmp = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            return (long)(date - tmp).TotalMilliseconds;
+            return (long)(date.ToUniversalTime() - tmp).TotalMilliseconds;
         }
     }
 }

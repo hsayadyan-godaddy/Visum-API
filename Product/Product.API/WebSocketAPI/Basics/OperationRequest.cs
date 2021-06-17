@@ -2,14 +2,32 @@
 
 namespace Product.API.WebSocketAPI.Basics
 {
+    /// <summary>
+    /// WebSocket operation request
+    /// </summary>
     public class OperationRequest
     {
         #region properties
 
-        public string ConnectionID { get; set; }
+        /// <summary>
+        /// Connection ID
+        /// </summary>
+        public string ConnectionId { get; set; }
+        /// <summary>
+        /// Operation source name
+        /// </summary>
         public string OperationSource { get; set; }
+        /// <summary>
+        /// Method name
+        /// </summary>
         public string MethodName { get; set; }
+        /// <summary>
+        /// Request type
+        /// </summary>
         public WSRequestType RequestType { get; set; }
+        /// <summary>
+        /// Method parameters
+        /// </summary>
         public Dictionary<string, string> MethodParameters { get; set; }
 
         #endregion // properties
@@ -17,7 +35,7 @@ namespace Product.API.WebSocketAPI.Basics
         /// <summary>
         /// returns the same identifier for same parameterts if Suscribe or Unsubscribe
         /// </summary>
-        public int RequestID
+        public int RequestId
         {
             get
             {
@@ -37,6 +55,9 @@ namespace Product.API.WebSocketAPI.Basics
             }
         }
 
+        /// <summary>
+        /// Create new instance
+        /// </summary>
         public OperationRequest()
         {
             MethodParameters = new Dictionary<string, string>();
@@ -50,7 +71,7 @@ namespace Product.API.WebSocketAPI.Basics
             {
                 var hash = 17;
 
-                hash = hash * 23 + CalculateDeterminatedStringHash(ConnectionID);
+                hash = hash * 23 + CalculateDeterminatedStringHash(ConnectionId);
                 hash = hash * 23 + CalculateDeterminatedStringHash(OperationSource);
                 hash = hash * 23 + CalculateDeterminatedStringHash(MethodName);
 

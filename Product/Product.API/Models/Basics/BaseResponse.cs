@@ -1,5 +1,5 @@
-﻿using Product.API.Models.Error;
-using Product.DataModels.Attributes;
+﻿using Product.API.Attributes;
+using Product.API.Models.Error;
 
 namespace Product.API.Models.Basics
 {

@@ -9,6 +9,9 @@ using System.Reflection;
 
 namespace Product.API.WebSocketAPI
 {
+    /// <summary>
+    /// Operation executor
+    /// </summary>
     public class OperationExecutor : IOperationExecutor
     {
         #region members
@@ -18,13 +21,23 @@ namespace Product.API.WebSocketAPI
         private readonly List<OperationMetadata> _supportedOperations = new List<OperationMetadata>();
         private readonly JSTypeRegistry _jsModelReg = new JSTypeRegistry();
 
+        /// <summary>
+        /// Supported operations
+        /// </summary>
         public List<OperationMetadata> SupportedOperations => _supportedOperations;
+        /// <summary>
+        /// Known/registered JSON models
+        /// </summary>
         public List<string> KnownModels => _jsModelReg.KnownModels;
 
         #endregion //members
 
         #region ctor
 
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        /// <param name="serviceProvider"></param>
         public OperationExecutor(IServiceProvider serviceProvider)
         {
             _serviceProvider = serviceProvider;
@@ -35,6 +48,11 @@ namespace Product.API.WebSocketAPI
 
         #region publics
 
+        /// <summary>
+        /// Invoke operation
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="operationCallback"></param>
         public void InvokeOperation(OperationRequest value, WSContext operationCallback)
         {
             var operationNotFound = true;
@@ -142,7 +160,7 @@ namespace Product.API.WebSocketAPI
                         {
                             MethodName = methodName,
                             OperationSource = operationSource,
-                            SequenceID = "0123456ABCDEF",
+                            SequenceId = "0123456ABCDEF",
                             RequestType = WSRequestType.Subscribe,
                             MethodParameters = new List<WSMethodParameter>()
                         };

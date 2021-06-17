@@ -1,47 +1,77 @@
 ﻿using Product.DataModels.Enums;
 using Product.PseudoData;
-using Product.PseudoData.Abstraction;
 using System;
 using System.Collections.Generic;
 using System.Timers;
 
-namespace Product.API.Services.Simulation
+namespace Product.DAL.Simulation
 {
     public class DataSimulator
     {
         #region members
 
         private readonly Dictionary<string, DataGenerator> _generators = new Dictionary<string, DataGenerator>();
+        private readonly DataCountOptimizer _optimizer = new DataCountOptimizer();
 
         #endregion // members
 
         #region events
 
-        public delegate void RealtimeUpdate(DataItemInfo info, double value);
+        public delegate void RealtimeUpdate(DateTime time);
         public event RealtimeUpdate RealtimeUpdates;
 
         #endregion // events
 
-
-        public List<IDataValue> GetHistory(DataItemInfo info, DateTime from, DateTime to, int adjustCount)
+        public DataSimulator()
         {
-            var gen = GetGenerator(info, true);
-            var count = (int)(to - from).TotalSeconds;
+            CreateRealtime();
+        }
+
+        public List<TimeAndDouble> GetHistory(string key, SourceType sourceType, DateTime fromTime, DateTime toTime, long adjustCount, bool includeTimeValue = true)
+        {
+            var gen = GetGenerator(key, sourceType, true);
+            var count = (int)(toTime - fromTime).TotalMinutes;
+
             var data = gen.Next(count);
 
-            return null;
+            var time = fromTime;
+            var tmp = new List<TimeAndDouble>();
+
+            foreach (var itm in data)
+            {
+
+                tmp.Add(new TimeAndDouble
+                {
+                    Time = time,
+                    Value = itm
+                });
+                
+                if (includeTimeValue)
+                {
+                    time = time.AddSeconds(1);
+                }
+            }
+
+            var ret = _optimizer.OptimizeCount(tmp, adjustCount);
+
+            return ret;
+        }
+
+        public double GetTick(string key, SourceType sourceType)
+        {
+            var gen = GetGenerator(key, sourceType);
+            return gen.Next();
         }
 
         #region privates
 
-        private DataGenerator GetGenerator(DataItemInfo info, bool reset = false)
+        private DataGenerator GetGenerator(string key, SourceType sourceType, bool reset = false)
         {
-            var key = info.ToString();
 
             if (!_generators.ContainsKey(key))
             {
                 var setting = PseudoData.Helpers.Common.DataSettingsOil;
-                switch (info.SourceType)
+                switch (sourceType)
                 {
                     case SourceType.Oil:
                         setting = PseudoData.Helpers.Common.DataSettingsOil;
@@ -52,8 +82,11 @@ namespace Product.API.Services.Simulation
                     case SourceType.Water:
                         setting = PseudoData.Helpers.Common.DataSettingsWater;
                         break;
-                    case SourceType.Pressure:
+                    case SourceType.FlowRate:
                         setting = PseudoData.Helpers.Common.DataSettingsPressure50Down;
+                        break;
+                    case SourceType.Pressure:
+                        setting = PseudoData.Helpers.Common.DataSettingsPressure5Up;
                         break;
                     default:
                         break;
@@ -61,7 +94,6 @@ namespace Product.API.Services.Simulation
                 var generator = new DataGenerator(setting);
                 _generators.Add(key, generator);
 
-                CreateRealtime(generator, info);
             }
 
             if (reset)
@@ -73,18 +105,16 @@ namespace Product.API.Services.Simulation
         }
 
 
-        private void CreateRealtime(DataGenerator generator, DataItemInfo info)
+        private void CreateRealtime()
         {
             var tmr = new Timer();
-            var genRef = generator;
-            var infoRef = info;
-         
 
             tmr.Elapsed += (s, e) =>
             {
-                var val = genRef.Next();
-                RealtimeUpdates?.Invoke(infoRef, val);
+                RealtimeUpdates?.Invoke(DateTime.Now);
             };
+            tmr.Interval = 200;
+            tmr.Start();
         }
 
         #endregion // privates

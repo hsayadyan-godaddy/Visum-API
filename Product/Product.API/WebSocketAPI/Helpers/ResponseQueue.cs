@@ -8,16 +8,24 @@ using System.Net.WebSockets;
 using System.Threading;
 namespace Product.API.WebSocketAPI.Helpers
 {
+    /// <summary>
+    /// Response handler
+    /// </summary>
     public class ResponseQueue
     {
-        public const int QUEUE_MAX_SIZE = 20;
-        public const int QUEUE_REGULAR_SIZE = 10;
+        private const int QUEUE_MAX_SIZE = 20;
+        private const int QUEUE_REGULAR_SIZE = 10;
 
         private readonly object _locker = new object();
         private readonly Dictionary<int, Queue<(WSRequest, OperationResponse)>> _responses = new Dictionary<int, Queue<(WSRequest, OperationResponse)>>();
         private readonly WebSocket _client;
         private readonly CancellationToken _cancellationToken;
 
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="cancellationToken"></param>
         public ResponseQueue(WebSocket client, CancellationToken cancellationToken)
         {
             _client = client;
@@ -73,7 +81,7 @@ namespace Product.API.WebSocketAPI.Helpers
                             {
                                 var wsResponse = new WSResponse
                                 {
-                                    SequenceID = wsRequest.SequenceID,
+                                    SequenceId = wsRequest.SequenceId,
                                     StatusCode = response.Status.StatusCode,
                                     StatusMessage = !string.IsNullOrEmpty(response.Status.ErrorMessage) ? response.Status.ErrorMessage : Errors.GetMessage((HttpStatusCode)response.Status.StatusCode),
                                     OperationSource = wsRequest.OperationSource,
@@ -137,9 +145,15 @@ namespace Product.API.WebSocketAPI.Helpers
             th.Start();
         }
 
-        public void Enqueue(int operationRequestID, WSRequest wsRequest, OperationResponse response)
+        /// <summary>
+        /// Enqueue operation request
+        /// </summary>
+        /// <param name="operationRequestId"></param>
+        /// <param name="wsRequest"></param>
+        /// <param name="response"></param>
+        public void Enqueue(int operationRequestId, WSRequest wsRequest, OperationResponse response)
         {
-            var key = operationRequestID;
+            var key = operationRequestId;
             var pair = (wsRequest, response);
             lock (_locker)
             {

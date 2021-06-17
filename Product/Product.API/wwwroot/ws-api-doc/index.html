@@ -340,7 +340,13 @@
         function getRootAccordion(API) {
             const template = [];
 
-            const btn = getButton(API.operationSource);
+            var searchMask = "WSController";
+            var regEx = new RegExp(searchMask, "ig");
+            
+
+            var controllerName = API.operationSource.replace(regEx, '');
+
+            const btn = getButton(controllerName);
             btn.classList = btn.classList + ' rootAccordion';
             template.push(btn);
 

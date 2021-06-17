@@ -1,11 +1,11 @@
 ﻿using Microsoft.OpenApi.Models;
-using Product.DataModels.Attributes;
+using Product.API.Attributes;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Linq;
 
 namespace Product.API.Filters.Swagger
 {
-    public class SwaggerExcludeParameterFilter : IOperationFilter
+    internal class SwaggerExcludeParameterFilter : IOperationFilter
     {
         #region publics
 

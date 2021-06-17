@@ -1,12 +1,13 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Text;
 
 namespace Product.API.WebSocketAPI.Helpers
 {
+    /// <summary>
+    /// Extension JSON serialization
+    /// </summary>
     public static class DataSerializerExt
     {
         #region constants
@@ -35,87 +36,81 @@ namespace Product.API.WebSocketAPI.Helpers
             MissingMemberHandling = MissingMemberHandling.Ignore,
         };
 
-        public class UserTypeEnumConverter : StringEnumConverter
-        {
-            public override bool CanConvert(Type objectType)
-            {
-                return objectType.IsEnum;
-            }
-
-            public override object ReadJson(JsonReader reader,
-                                            Type objectType,
-                                            object existingValue,
-                                            JsonSerializer serializer)
-            {
-                if (reader.TokenType == JsonToken.Null)
-                {
-                    var isNullable = (Nullable.GetUnderlyingType(objectType) != null);
-                    if (!isNullable)
-                    {
-                        throw new JsonSerializationException();
-                    }
-                    return null;
-                }
-
-                var token = JToken.Load(reader);
-                var value = token.ToString();
-
-                object ret = null;
-
-                try
-                {
-                    ret = Enum.Parse(objectType, value, true);
-                }
-                catch (Exception e)
-                {
-#if DEBUG
-                    Console.WriteLine(e);
-#endif
-                }
-
-                if (ret != null)
-                {
-                    return ret;
-                }
-                else
-                {
-                    return base.ReadJson(reader, objectType, existingValue, serializer);
-                }
-            }
-        }
 
         #endregion //constants
 
+        /// <summary>
+        /// Get Bytes Array
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static byte[] GetBytesArray(this string value)
         {
             return Encoding.UTF8.GetBytes(value);
         }
 
+        /// <summary>
+        /// Get Bytes Array
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static byte[] GetBytesArray<T>(this T value)
         {
             return GetJson(value).GetBytesArray();
         }
 
+        /// <summary>
+        /// Get Json
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static string GetJson<T>(this T value, Func<JsonSerializerSettings> settings = null)
         {
             return JsonConvert.SerializeObject(value, GetSettings(settings));
         }
 
+        /// <summary>
+        /// Get Object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static T GetObject<T>(this byte[] value)
         {
             return GetObject<T>(GetString(value));
         }
 
+        /// <summary>
+        /// Get String
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string GetString(this byte[] value)
         {
             return Encoding.UTF8.GetString(value);
         }
+        /// <summary>
+        /// Get Object
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
 
         public static T GetObject<T>(this string value)
         {
             return GetObjectFromJson<T>(value);
         }
 
+        /// <summary>
+        /// Get Object From Json
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="json"></param>
+        /// <param name="settings"></param>
+        /// <returns></returns>
         public static T GetObjectFromJson<T>(string json, Func<JsonSerializerSettings> settings = null)
         {
             return string.IsNullOrEmpty(json)

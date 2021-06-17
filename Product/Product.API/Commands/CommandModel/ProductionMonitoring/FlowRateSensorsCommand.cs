@@ -5,9 +5,7 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     /// <summary>
     /// Command/Query Parameters
     /// </summary>
-    public class ZoneFlowProductionCriticalHighlightsCommand : ProjectIdWellNameCommand
+    public class FlowRateSensorsCommand : ProjectIdWellNameCommand
     {
-
     }
 }
-

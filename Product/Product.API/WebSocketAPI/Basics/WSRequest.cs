@@ -1,26 +1,31 @@
-﻿using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Product.API.WebSocketAPI.Basics
 {
+    /// <summary>
+    /// WebSocket request
+    /// </summary>
     public class WSRequest
     {
-        public string SequenceID { get; set; }
+        /// <summary>
+        /// Sequence ID
+        /// </summary>
+        public string SequenceId { get; set; }
+        /// <summary>
+        /// Operation source name
+        /// </summary>
         public string OperationSource { get; set; }
+        /// <summary>
+        /// Method mane
+        /// </summary>
         public string MethodName { get; set; }
+        /// <summary>
+        /// Request type
+        /// </summary>
         public WSRequestType RequestType { get; set; }
+        /// <summary>
+        /// Method parameters
+        /// </summary>
         public List<WSMethodParameter> MethodParameters { get; set; }
-    }
-
-    public struct WSMethodParameter
-    {
-        public string Name;
-        public JToken Value;
-
-        public WSMethodParameter(string name, JToken value)
-        {
-            Name = name;
-            Value = value;
-        }
     }
 }

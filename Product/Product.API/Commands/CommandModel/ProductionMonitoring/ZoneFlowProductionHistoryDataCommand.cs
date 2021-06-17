@@ -1,8 +1,6 @@
 ﻿using Product.API.Commands.CommandModel.GeneralModels;
-using Product.DataModels.Attributes;
 using Product.DataModels.Enums;
-using Product.DataModels.Extensions;
-using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Commands.CommandModel.ProductionMonitoring
 {
@@ -12,13 +10,15 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     public class ZoneFlowProductionHistoryDataCommand : HistoricaDataCommand
     {
         /// <summary>
-        /// Key (sensor name) of required data
+        /// Depth type
         /// </summary>
-        public string Key { get; set; }
-       
-
-        public DepthType DepthType { get; }
-
+        [Required]
+        public DepthType DepthType { get; set; }
+        /// <summary>
+        /// Zone number
+        /// </summary>
+        [Required]
+        public int ZoneNumber { get; set; }
     }
 }
 

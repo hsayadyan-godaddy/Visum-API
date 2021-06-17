@@ -23,21 +23,34 @@ using System.Text;
 
 namespace Product.API
 {
+    /// <summary>
+    /// Startup
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Stratup method
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
+        /// <summary>
+        /// Configuration instance
+        /// </summary>
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ITokenValidator, TokenValidator>();
-            services.AddTransient<IWebSocketHandler, WebSocketHandler>();
-            services.AddTransient<IOperationExecutor, OperationExecutor>();
+            services.AddScoped<ITokenValidator, TokenValidator>();
+            services.AddScoped<IWebSocketHandler, WebSocketHandler>();
+            services.AddScoped<IOperationExecutor, OperationExecutor>();
 
             RegisterWebSocketOperations(services);
             RegisterCommandExecutors(services);
@@ -121,20 +134,11 @@ namespace Product.API
 
         }
 
-        public class TestISO : JavaScriptDateTimeConverter
-        {
-            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
-            {
-                return base.ReadJson(reader, objectType, existingValue, serializer);
-            }
-
-            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-            {
-                base.WriteJson(writer, value, serializer);
-            }
-        }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -174,11 +178,11 @@ namespace Product.API
                     };
                     context.Response.Headers[Microsoft.Net.Http.Headers.HeaderNames.Vary] = new string[] { "Accept-Encoding" };
 
-
-
-                    var handler = app.ApplicationServices.GetRequiredService<IWebSocketHandler>();
-
-                    await handler.Handle(context);
+                    using (var scope = app.ApplicationServices.CreateScope())
+                    {
+                        var handler = scope.ServiceProvider.GetService<IWebSocketHandler>();
+                        await handler.Handle(context);
+                    }
                 }
                 else
                 {
@@ -206,9 +210,7 @@ namespace Product.API
 
         private void RegisterWebSocketOperations(IServiceCollection services)
         {
-            services.AddSingleton<ZoneFlowDataController>();
-            services.AddSingleton<PressureDataController>();
-            services.AddSingleton<RateDataController>();
+            services.AddScoped<ProductionMonitoringWSController>();
         }
 
         private void RegisterCommandExecutors(IServiceCollection services)

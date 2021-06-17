@@ -1,4 +1,5 @@
 ﻿using Product.API.Commands.CommandModel.GeneralModels;
+using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Commands.CommandModel.ProductionMonitoring
 {
@@ -7,6 +8,11 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     /// </summary>
     public class FlowRateHistoryDataCommand : HistoricaDataCommand
     {
+        /// <summary>
+        /// Sensor ID for required data
+        /// </summary>
+        [Required]
+        public string SensorId { get; set; }
     }
 }
 

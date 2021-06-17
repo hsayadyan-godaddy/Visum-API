@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
+using Product.DAL.Simulation;
+using Product.DAL.Simulation.Abstraction;
 
 namespace Product.DAL
 {
@@ -8,7 +9,8 @@ namespace Product.DAL
 
         public static void RegisterDataAccessLayerServices(this IServiceCollection service)
         {
-           // service.AddScoped<IProductionMonitoringService, ProductionMonitoringService>();
+            service.AddScoped<ISimulatedDataRepository, SimulatedDataRepository>();
+            service.AddScoped<ISimulatedInfoRepository, SimulatedInfoRepository>();
         }
 
     }

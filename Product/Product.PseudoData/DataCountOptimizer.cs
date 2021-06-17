@@ -8,14 +8,14 @@ namespace Product.PseudoData
     {
         #region publics
 
-        public List<T> OptimizeCount<T>(List<T> data, int avgCount) where T : IDataValue
+        public List<T> OptimizeCount<T>(List<T> data, long avgCount) where T : IDataValue
         {
             var ret = new List<T>();
 
             var extremesCount = avgCount / 2.0;
-            var maxRange = (int)Math.Ceiling(data.Count / extremesCount);
+            var maxRange = extremesCount > 0 ? (int)Math.Ceiling(data.Count / extremesCount) : data.Count;
 
-            if (data.Count >= maxRange)
+            if (data.Count > maxRange)
             {
                 var pointer = 0;
                 while (true)
@@ -65,14 +65,14 @@ namespace Product.PseudoData
             {
                 var itm = value[i];
 
-                if (min.Item2 > itm.DataValue)
+                if (min.Item2 > itm.Value)
                 {
-                    min = (i, itm.DataValue);
+                    min = (i, itm.Value);
                 }
 
-                if (max.Item2 < itm.DataValue)
+                if (max.Item2 < itm.Value)
                 {
-                    max = (i, itm.DataValue);
+                    max = (i, itm.Value);
                 }
             }
 

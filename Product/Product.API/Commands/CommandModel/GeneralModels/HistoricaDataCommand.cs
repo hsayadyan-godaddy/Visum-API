@@ -1,32 +1,45 @@
-﻿using Product.DataModels.Attributes;
+﻿using Product.API.Attributes;
+using Product.DataModels.Enums;
 using Product.DataModels.Extensions;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Commands.CommandModel.GeneralModels
 {
     /// <summary>
     /// General implementation of historical data request command
     /// </summary>
-    public class HistoricaDataCommand: ProjectIdWellNameCommand
+    public class HistoricaDataCommand : ProjectIdWellNameCommand
     {
         /// <summary>
-        /// From, Unix format 
+        /// Required periodicity
         /// </summary>
-        public long? From { get; set; }
+        [Required]
+        public Periodicity Periodicity { get; set; }
+        
         /// <summary>
-        /// To, Unix format 
+        /// Define size of the snapshot to optimize lenght of data. Will be returned Max-Min points instead all possible data
         /// </summary>
-        public long? To { get; set; }
+        public long SnapshotSize { get; set; }
+
+        /// <summary>
+        /// Date and Time, Unix format 
+        /// </summary>
+        public long? FromDate { get; set; }
+        /// <summary>
+        /// Date and Time, Unix format 
+        /// </summary>
+        public long? ToDate { get; set; }
 
         /// <summary>
         /// From, as DateTime type
         /// </summary>
         [SwaggerExclude]
-        public DateTime? NativeFrom => From?.FromUnix();
+        public DateTime? NativeFromDate => FromDate?.FromUnix();
         /// <summary>
         /// To, as DateTime type
         /// </summary>
         [SwaggerExclude]
-        public DateTime? NativeTo => To?.FromUnix();
+        public DateTime? NativeToDate => ToDate?.FromUnix();
     }
 }

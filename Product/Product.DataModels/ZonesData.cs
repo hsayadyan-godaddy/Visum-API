@@ -6,6 +6,6 @@ namespace Product.DataModels
     public struct ZonesData
     {
         public DepthType DepthType { get; set; }
-        public IReadOnlyCollection<ZoneInfo> Data { get; set; }
+        public List<ZoneInfo> Data { get; set; }
     }
 }

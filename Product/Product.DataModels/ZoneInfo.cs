@@ -2,9 +2,9 @@
 {
     public struct ZoneInfo
     {
-        public int DepthFrom { get; set; }
+        public double DepthFrom { get; set; }
 
-        public int DepthTo { get; set; }
+        public double DepthTo { get; set; }
 
         public int ZoneNumber { get; set; }
     }

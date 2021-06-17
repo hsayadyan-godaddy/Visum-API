@@ -2,21 +2,25 @@
 using Product.API.Commands.Abstraction;
 using Product.API.Commands.CommandModel.ProductionMonitoring;
 using Product.API.Models.ProductionMonitoring;
+using Product.DataModels.Enums;
 using Product.Services.ProductionMonitoring;
 using System;
 using System.Threading.Tasks;
 
 namespace Product.API.Commands.Executor
 {
-    public class ProductionMonitoringCommandExecutor : IAsyncCommandExecutor<PressureKeysCommand, PressureKeysResponse>,
-                                                       IAsyncCommandExecutor<WellboreProfileZonesCommand, WellboreProfileZonesResponse>,
-                                                       IAsyncCommandExecutor<FlowRateKeysCommand, FlowRateKeysResponse>,
+    /// <summary>
+    /// Production Monitoring CommandExecutor
+    /// </summary>
+    public class ProductionMonitoringCommandExecutor : IAsyncCommandExecutor<WellboreProfileZonesCommand, WellboreProfileZonesResponse>,
+                                                       IAsyncCommandExecutor<PressureSensorsCommand, PressureSensorsResponse>,
+                                                       IAsyncCommandExecutor<FlowRateSensorsCommand, FlowRateSensorsResponse>,
                                                        IAsyncCommandExecutor<PressureHistoryDataCommand, PressureHistoryDataResponse>,
                                                        IAsyncCommandExecutor<FlowRateHistoryDataCommand, FlowRateHistoryDataResponse>,
                                                        IAsyncCommandExecutor<ZoneFlowProductionHistoryDataCommand, ZoneFlowProductionHistoryDataResponse>,
-                                                       IAsyncCommandExecutor<ZoneFlowProductionCriticalHighlightsCommand, ZoneFlowProductionCriticalHighlightsResponse>
+                                                       IAsyncCommandExecutor<ZoneFlowProductionAcceptableLimitsCommand, ZoneFlowProductionAcceptableLimitsResponse>
 
-        
+
 
 
     {
@@ -28,6 +32,10 @@ namespace Product.API.Commands.Executor
 
         #region ctor
 
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        /// <param name="productionMonitoringService"></param>
         public ProductionMonitoringCommandExecutor(IProductionMonitoringService productionMonitoringService)
         {
             _productionMonitoringService = productionMonitoringService;
@@ -37,49 +45,120 @@ namespace Product.API.Commands.Executor
 
         #region publics
 
-        public Task<PressureKeysResponse> ExecuteAsync(PressureKeysCommand command, HttpContext context)
+        /// <summary>
+        /// Get Pressure Sensors Info
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<PressureSensorsResponse> ExecuteAsync(PressureSensorsCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var result = await _productionMonitoringService.GetPressureSensorsInfoAsync(command.ProjectId, command.WellId);
+            return new PressureSensorsResponse(result);
         }
 
-        public Task<WellboreProfileZonesResponse> ExecuteAsync(WellboreProfileZonesCommand command, HttpContext context)
+        /// <summary>
+        /// Get Wellbore Profile zones
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<WellboreProfileZonesResponse> ExecuteAsync(WellboreProfileZonesCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var uomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.Depth);
+            var result = await _productionMonitoringService.GetZonesDataAsync(command.ProjectId, command.WellId, command.DepthType);
+            
+            return new WellboreProfileZonesResponse(uomInfo, result);
         }
 
-        public Task<FlowRateKeysResponse> ExecuteAsync(FlowRateKeysCommand command, HttpContext context)
+        /// <summary>
+        /// Get Flow Rate Sensors Info
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<FlowRateSensorsResponse> ExecuteAsync(FlowRateSensorsCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var result = await _productionMonitoringService.GetFlowRateInfoAsync(command.ProjectId, command.WellId);
+            return new FlowRateSensorsResponse(result);
         }
 
-        public Task<PressureHistoryDataResponse> ExecuteAsync(PressureHistoryDataCommand command, HttpContext context)
+        /// <summary>
+        /// Get Flow acceptable limitss
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<ZoneFlowProductionAcceptableLimitsResponse> ExecuteAsync(ZoneFlowProductionAcceptableLimitsCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var result = await _productionMonitoringService.GetFlowAcceptableLimitsAsync(command.ProjectId, command.WellId);
+            return new ZoneFlowProductionAcceptableLimitsResponse(result);
         }
 
-        public Task<FlowRateHistoryDataResponse> ExecuteAsync(FlowRateHistoryDataCommand command, HttpContext context)
+        /// <summary>
+        /// Get Pressure History data
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<PressureHistoryDataResponse> ExecuteAsync(PressureHistoryDataCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var uomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.Pressure);
+            var result = await _productionMonitoringService.GetPressureDataAsync(command.ProjectId, 
+                                                                                 command.WellId, 
+                                                                                 command.SensorId, 
+                                                                                 command.Periodicity, 
+                                                                                 command.SnapshotSize, 
+                                                                                 command.NativeFromDate, 
+                                                                                 command.NativeToDate);
+
+            return new PressureHistoryDataResponse(uomInfo, result);
         }
 
-        public Task<ZoneFlowProductionHistoryDataResponse> ExecuteAsync(ZoneFlowProductionHistoryDataCommand command, HttpContext context)
+        /// <summary>
+        /// Get FlowRate History data
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<FlowRateHistoryDataResponse> ExecuteAsync(FlowRateHistoryDataCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var uomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.FlowRate);
+            var result = await _productionMonitoringService.GetFlowRateDataAsync(command.ProjectId,
+                                                                                 command.WellId,
+                                                                                 command.SensorId,
+                                                                                 command.Periodicity,
+                                                                                 command.SnapshotSize,
+                                                                                 command.NativeFromDate,
+                                                                                 command.NativeToDate);
+
+            return new FlowRateHistoryDataResponse(uomInfo, result);
         }
 
-        public Task<ZoneFlowProductionCriticalHighlightsResponse> ExecuteAsync(ZoneFlowProductionCriticalHighlightsCommand command, HttpContext context)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<ZoneFlowProductionHistoryDataResponse> ExecuteAsync(ZoneFlowProductionHistoryDataCommand command, HttpContext context)
         {
-            throw new NotImplementedException();
+            var oilUomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.Oil);
+            var waterUomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.Water);
+            var gasUomInfo = await _productionMonitoringService.GetUnitOfMeasureInfoAsync(command.ProjectId, command.WellId, SourceType.Gas);
+
+            var result = await _productionMonitoringService.GetZoneFlowProductionDataAsync(command.ProjectId,
+                                                                                 command.WellId,
+                                                                                 command.DepthType,
+                                                                                 command.ZoneNumber,
+                                                                                 command.Periodicity,
+                                                                                 command.SnapshotSize,
+                                                                                 command.NativeFromDate,
+                                                                                 command.NativeToDate);
+
+            return new ZoneFlowProductionHistoryDataResponse(oilUomInfo,waterUomInfo, gasUomInfo, result);
         }
-
-        //public async Task<AccountPropertiesResponse> ExecuteAsync(ProductionMonitoringCommand command, HttpContext context)
-        //{
-        //    var info = UserSession(context);
-        //    var request = command.ToPipeRequest(info);
-
-        //    var result = await _nextGenPipe.RequestAsync(request, info.SessionToken);
-        //    return new AccountPropertiesResponse(result);
-        //}
+       
 
         #endregion
     }

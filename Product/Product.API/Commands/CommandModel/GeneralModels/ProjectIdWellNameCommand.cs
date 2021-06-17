@@ -2,6 +2,9 @@
 
 namespace Product.API.Commands.CommandModel.GeneralModels
 {
+    /// <summary>
+    /// Base command
+    /// </summary>
     public class ProjectIdWellNameCommand
     {
         /// <summary>
@@ -10,9 +13,9 @@ namespace Product.API.Commands.CommandModel.GeneralModels
         [Required]
         public string ProjectId { get; set; }
         /// <summary>
-        /// Well name
+        /// Well id
         /// </summary>
         [Required]
-        public string WellName { get; set; }
+        public string WellId { get; set; }
     }
 }

@@ -4,35 +4,236 @@
         <name>Product.API</name>
     </assembly>
     <members>
+        <member name="T:Product.API.Attributes.ModelValidationAttribute">
+            <summary>
+            Mode lValidation Attribute
+            </summary>
+        </member>
+        <member name="M:Product.API.Attributes.ModelValidationAttribute.OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext)">
+            <summary>
+            Handler
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="T:Product.API.Attributes.SwaggerExcludeAttribute">
+            <summary>
+            Attribute to exclude property in swagger documentation
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.Abstraction.IAsyncCommandExecutor`2">
+            <summary>
+            Command Executor Generic
+            </summary>
+            <typeparam name="TInput"></typeparam>
+            <typeparam name="TOutput"></typeparam>
+        </member>
+        <member name="M:Product.API.Commands.Abstraction.IAsyncCommandExecutor`2.ExecuteAsync(`0,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Execute command
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand">
+            <summary>
+            General implementation of historical data request command
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.Periodicity">
+            <summary>
+            Required periodicity
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.SnapshotSize">
+            <summary>
+            Define size of the snapshot to optimize lenght of data. Will be returned Max-Min points instead all possible data
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.FromDate">
+            <summary>
+            Date and Time, Unix format 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.ToDate">
+            <summary>
+            Date and Time, Unix format 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.NativeFromDate">
+            <summary>
+            From, as DateTime type
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.NativeToDate">
+            <summary>
+            To, as DateTime type
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand">
+            <summary>
+            Base command
+            </summary>
+        </member>
         <member name="P:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand.ProjectId">
             <summary>
             Project identifier
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand.WellName">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.ProjectIdWellNameCommand.WellId">
             <summary>
-            Well name
+            Well id
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.UnixTo">
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateHistoryDataCommand">
             <summary>
-            
+            Command/Query Parameters
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.From">
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateHistoryDataCommand.SensorId">
             <summary>
-            From, as DateTime type
+            Sensor ID for required data
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.To">
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateSensorsCommand">
             <summary>
-            To, as DateTime type
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand">
+            <summary>
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand.SensorId">
+            <summary>
+            Sensor ID for required data
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.PressureSensorsCommand">
+            <summary>
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.WellboreProfileZonesCommand">
+            <summary>
+            Command/Query Parameters
             </summary>
         </member>
         <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.WellboreProfileZonesCommand.DepthType">
             <summary>
             Required Depth type
             </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsCommand">
+            <summary>
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand">
+            <summary>
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand.DepthType">
+            <summary>
+            Depth type
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand.ZoneNumber">
+            <summary>
+            Zone number
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor">
+            <summary>
+            Production Monitoring CommandExecutor
+            </summary>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.#ctor(Product.Services.ProductionMonitoring.IProductionMonitoringService)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="productionMonitoringService"></param>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.PressureSensorsCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get Pressure Sensors Info
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.WellboreProfileZonesCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get Wellbore Profile zones
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateSensorsCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get Flow Rate Sensors Info
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get Flow acceptable limitss
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.PressureHistoryDataCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get Pressure History data
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateHistoryDataCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Get FlowRate History data
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.Controllers.WebSocketMetadataController">
+            <summary>
+            WebSocket Metadata
+            </summary>
+        </member>
+        <member name="M:Product.API.Controllers.WebSocketMetadataController.#ctor(Product.API.WebSocketAPI.Abstraction.IOperationExecutor)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="operationExecutor"></param>
+        </member>
+        <member name="M:Product.API.Controllers.WebSocketMetadataController.GetDataModels">
+            <summary>
+            Get data models metadata
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Controllers.WebSocketMetadataController.GetOperationsMetadata">
+            <summary>
+            Get operations models metadata
+            </summary>
+            <returns></returns>
         </member>
         <member name="T:Product.API.ProductionMonitoringController">
             <summary>
@@ -52,14 +253,14 @@
             <param name="value">Request parameters</param>
             <returns>Zones and depth ranges for specified well</returns>
         </member>
-        <member name="M:Product.API.ProductionMonitoringController.GetPressureKeys(Product.API.Commands.CommandModel.ProductionMonitoring.PressureKeysCommand)">
+        <member name="M:Product.API.ProductionMonitoringController.GetPressureSensors(Product.API.Commands.CommandModel.ProductionMonitoring.PressureSensorsCommand)">
             <summary>
             Get available keys (sensors) for the Pressure data
             </summary>
             <param name="value">Request parameters</param>
             <returns>Array of strings/keys</returns>
         </member>
-        <member name="M:Product.API.ProductionMonitoringController.GetFlowRateKeys(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateKeysCommand)">
+        <member name="M:Product.API.ProductionMonitoringController.GetFlowRateSensors(Product.API.Commands.CommandModel.ProductionMonitoring.FlowRateSensorsCommand)">
             <summary>
              Get available keys (sensors) for the Flow Rate data
             </summary>
@@ -87,7 +288,7 @@
             <param name="value">Request parameters</param>
             <returns>Array of Values and Dates structure that contains data for oil, water and gas</returns>
         </member>
-        <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionCriticalHighlights(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionCriticalHighlightsCommand)">
+        <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionAcceptableLimits(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsCommand)">
             <summary>
             Get Critical limits to Highlight zones
             </summary>
@@ -114,9 +315,658 @@
             Error message field
             </summary>
         </member>
-        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.RequestID">
+        <member name="T:Product.API.Models.ProductionMonitoring.FlowRateHistoryDataResponse">
+            <summary>
+            Flow Rate History Data response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.FlowRateHistoryDataResponse.UnitOfMeasureInfo">
+            <summary>
+            UoM of data info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.FlowRateHistoryDataResponse.FlowRateData">
+            <summary>
+            Flow Rate data
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.FlowRateHistoryDataResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.FlowRateHistoryDataResponse.#ctor(Product.DataModels.UnitOfMeasureInfo,Product.DataModels.FlowRateData)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="unitOfMeasureInfo"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.FlowRateSensorsResponse">
+            <summary>
+            Flow Rate Sensors Response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.FlowRateSensorsResponse.Info">
+            <summary>
+            Array or sensor info
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.FlowRateSensorsResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.FlowRateSensorsResponse.#ctor(System.Collections.Generic.IReadOnlyCollection{Product.DataModels.SensorInfo})">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.PressureHistoryDataResponse">
+            <summary>
+            Pressure History Data response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.PressureHistoryDataResponse.UnitOfMeasureInfo">
+            <summary>
+            UoM of data info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.PressureHistoryDataResponse.PressureData">
+            <summary>
+            Pressure data
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.PressureHistoryDataResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.PressureHistoryDataResponse.#ctor(Product.DataModels.UnitOfMeasureInfo,Product.DataModels.PressureData)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="unitOfMeasureInfo"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.PressureSensorsResponse">
+            <summary>
+            Pressure Sensors Response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.PressureSensorsResponse.Info">
+            <summary>
+            Array or sensor info
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.PressureSensorsResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.PressureSensorsResponse.#ctor(System.Collections.Generic.IReadOnlyCollection{Product.DataModels.SensorInfo})">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="info"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse">
+            <summary>
+            Wellbore Profile Zones response 
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse.UnitOfMeasureInfo">
+            <summary>
+            UoM of data info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse.DepthType">
+            <summary>
+            Data depth type
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse.ZoneInfoData">
+            <summary>
+            Zone info data
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.WellboreProfileZonesResponse.#ctor(Product.DataModels.UnitOfMeasureInfo,Product.DataModels.ZonesData)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="unitOfMeasureInfo"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse">
+            <summary>
+            Zone Flow Production Critical Highlights response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse.Oil">
+            <summary>
+            Acceptable range for Oil flow
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse.Water">
+            <summary>
+            Acceptable range for Water flow
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse.Gas">
+            <summary>
+            Acceptable range for Gas flow
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionAcceptableLimitsResponse.#ctor(Product.DataModels.FlowAcceptableLimits)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse">
+            <summary>
+            Zone Flow Production History Data response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.ZoneNumber">
+            <summary>
+            Zone number
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.OilUoM">
+            <summary>
+            Oil Unit Of Measure Info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.WaterUoM">
+            <summary>
+            Water Unit Of Measure Info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.GasUoM">
+            <summary>
+            Gas Unit Of Measure Info
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.DepthType">
+            <summary>
+            Depth type
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.ZoneFlowProductionData">
+            <summary>
+            Zone info data
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.#ctor(Product.DataModels.UnitOfMeasureInfo,Product.DataModels.UnitOfMeasureInfo,Product.DataModels.UnitOfMeasureInfo,Product.DataModels.ZoneFlowData)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.Startup">
+            <summary>
+            Startup
+            </summary>
+        </member>
+        <member name="M:Product.API.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Stratup method
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:Product.API.Startup.Configuration">
+            <summary>
+            Configuration instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            This method gets called by the runtime. Use this method to add services to the container.
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:Product.API.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Abstraction.IOperationExecutor">
+            <summary>
+            Operation Executor
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Abstraction.IOperationExecutor.InvokeOperation(Product.API.WebSocketAPI.Basics.OperationRequest,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Invoke Operation
+            </summary>
+            <param name="value"></param>
+            <param name="operationCallback"></param>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Abstraction.IOperationExecutor.SupportedOperations">
+            <summary>
+            Available/supported operations
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Abstraction.IOperationExecutor.KnownModels">
+            <summary>
+            Known models as JSON
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Abstraction.ITokenValidator">
+            <summary>
+            TokenValidator
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Abstraction.ITokenValidator.ValidateToken(System.String)">
+            <summary>
+            Validate acces token
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.CommonKeys">
+            <summary>
+            Common Keys constants
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.CommonKeys.SESSION_TOKEN">
+            <summary>
+            Session access token key name
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.MethodInfoData">
+            <summary>
+            Method info data
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.MethodInfoData.MethodInfo">
+            <summary>
+            Ref. method info
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.MethodInfoData.Params">
+            <summary>
+            Method parameters info
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.OperationMetadata">
+            <summary>
+            Operation metadata
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMetadata.OperationSource">
+            <summary>
+            Operation source name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMetadata.OperationMethods">
+            <summary>
+            Operation supported methods
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.OperationMethodMetadata">
+            <summary>
+            Operation Method Metadata
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.OneTime">
+            <summary>
+            Is one-time operation or subscribe/unsubscribe
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.MethodName">
+            <summary>
+            Method name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.ReturnModelName">
+            <summary>
+            Return JSON model name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.ReturnModel">
+            <summary>
+            Return JSON model structure
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.RequestModel">
+            <summary>
+            Request JSON model
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.RequestTypesModel">
+            <summary>
+            Request types model
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationMethodMetadata.Params">
+            <summary>
+            Parameters info
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.OperationRequest">
+            <summary>
+            WebSocket operation request
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.ConnectionId">
+            <summary>
+            Connection ID
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.OperationSource">
+            <summary>
+            Operation source name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.MethodName">
+            <summary>
+            Method name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.RequestType">
+            <summary>
+            Request type
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.MethodParameters">
+            <summary>
+            Method parameters
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationRequest.RequestId">
             <summary>
             returns the same identifier for same parameterts if Suscribe or Unsubscribe
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationRequest.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.OperationResponse">
+            <summary>
+            Websocket operation response
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponse.RequestType">
+            <summary>
+            Request type
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponse.Status">
+            <summary>
+            Response status
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponse.ResultJSContent">
+            <summary>
+            Result JSON content
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationResponse.#ctor(System.Object,Product.API.WebSocketAPI.Basics.OperationResponseStatus,Product.API.WebSocketAPI.Basics.WSRequestType)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationResponse.#ctor(Product.API.WebSocketAPI.Basics.OperationRequest,System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.OperationResponseStatus">
+            <summary>
+            WebSocket operation response status
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponseStatus.OK">
+            <summary>
+            Default OK status
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponseStatus.StatusCode">
+            <summary>
+            Status code
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponseStatus.ErrorMessage">
+            <summary>
+            Error message
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.OperationResponseStatus.ServiceUnavailable">
+            <summary>
+            Is service unavailable
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationResponseStatus.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.OperationResponseStatus.#ctor(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSContext">
+            <summary>
+            WebSocket context
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSContext.ConnectionId">
+            <summary>
+            Connection ID
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSContext.SessionToken">
+            <summary>
+            Session access token
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSContext.ResultCallback">
+            <summary>
+            Result callback delegate
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSContext.Cancellation">
+            <summary>
+            Cancelation token
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSContext.RequestType">
+            <summary>
+            Request type
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.WSContext.#ctor(System.String,System.String,Product.API.WebSocketAPI.Basics.WSRequestType,System.Func{Product.API.WebSocketAPI.Basics.OperationResponse,System.Boolean},System.Threading.CancellationToken)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="sessionToken"></param>
+            <param name="connectionId"></param>
+            <param name="requestType"></param>
+            <param name="callback"></param>
+            <param name="cancellation"></param>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSMethodParameter">
+            <summary>
+            WebSocket method parameters info
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSMethodParameter.Name">
+            <summary>
+            Parameter name
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSMethodParameter.Value">
+            <summary>
+            Parameter value
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Basics.WSMethodParameter.#ctor(System.String,Newtonsoft.Json.Linq.JToken)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="name"></param>
+            <param name="value"></param>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSOperationInstance">
+            <summary>
+            WebSocket Operation INstance
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSOperationInstance.Instance">
+            <summary>
+            Instance object
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSOperationInstance.OperationMethods">
+            <summary>
+            Operation methods
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSOperationMethodParams">
+            <summary>
+            WebSocket operation method params
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSOperationMethodParams.Name">
+            <summary>
+            PArameter name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSOperationMethodParams.TypeModel">
+            <summary>
+            Partameter type JSON model
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSRequest">
+            <summary>
+            WebSocket request
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSRequest.SequenceId">
+            <summary>
+            Sequence ID
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSRequest.OperationSource">
+            <summary>
+            Operation source name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSRequest.MethodName">
+            <summary>
+            Method mane
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSRequest.RequestType">
+            <summary>
+            Request type
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSRequest.MethodParameters">
+            <summary>
+            Method parameters
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSRequestType">
+            <summary>
+            WebSocket supported operation types
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSRequestType.OneTime">
+            <summary>
+            Call as function, response is not required
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSRequestType.Subscribe">
+            <summary>
+            Subscribe on callback
+            </summary>
+        </member>
+        <member name="F:Product.API.WebSocketAPI.Basics.WSRequestType.Unsubscribe">
+            <summary>
+            Unsubscribe on callback
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Basics.WSResponse">
+            <summary>
+            WebSocket response
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.SequenceId">
+            <summary>
+            Sequence ID
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.StatusCode">
+            <summary>
+            Status code
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.StatusMessage">
+            <summary>
+            Status message
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.OperationSource">
+            <summary>
+            Operation source name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.MethodName">
+            <summary>
+            Method name
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Basics.WSResponse.Response">
+            <summary>
+            Method parameters
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.CustomAttributes.WSControllerAttribute">
+            <summary>
+            WebSocket Controller Attribute
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.CustomAttributes.WSMethodAttribute">
+            <summary>
+            WebSocket Method Attribute
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.CustomAttributes.WSMethodAttribute.OneTime">
+            <summary>
+            Declare that methid will not return response, one-time execution
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.CustomAttributes.WSMethodAttribute.ReturnType">
+            <summary>
+            Declare expected operation return type
             </summary>
         </member>
         <member name="M:Product.API.WebSocketAPI.CustomAttributes.WSMethodAttribute.#ctor(System.Type,System.Boolean)">
@@ -128,6 +978,182 @@
              Declaration of the oneTime = true means that method will not support subscribe/unsubscribe.
              Expected one time execution with the response or without
             </param>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Helpers.DataSerializerExt">
+            <summary>
+            Extension JSON serialization
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetBytesArray(System.String)">
+            <summary>
+            Get Bytes Array
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetBytesArray``1(``0)">
+            <summary>
+            Get Bytes Array
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetJson``1(``0,System.Func{Newtonsoft.Json.JsonSerializerSettings})">
+            <summary>
+            Get Json
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <param name="settings"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetObject``1(System.Byte[])">
+            <summary>
+            Get Object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetString(System.Byte[])">
+            <summary>
+            Get String
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetObject``1(System.String)">
+            <summary>
+            Get Object
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.DataSerializerExt.GetObjectFromJson``1(System.String,System.Func{Newtonsoft.Json.JsonSerializerSettings})">
+            <summary>
+            Get Object From Json
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="json"></param>
+            <param name="settings"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Helpers.Errors">
+            <summary>
+            Error messages helper
+            </summary>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Helpers.JSTypeRegistry">
+            <summary>
+            Registry for serrialized types to JSON
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.Helpers.JSTypeRegistry.KnownModels">
+            <summary>
+            Already registered and known types
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.JSTypeRegistry.GetEnumAsModel(System.Type)">
+            <summary>
+            Get enums as JSON
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.JSTypeRegistry.GetJsModel(System.Type)">
+            <summary>
+            Generate JSON model from type
+            </summary>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.Helpers.ResponseQueue">
+            <summary>
+            Response handler
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.ResponseQueue.#ctor(System.Net.WebSockets.WebSocket,System.Threading.CancellationToken)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="client"></param>
+            <param name="cancellationToken"></param>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.Helpers.ResponseQueue.Enqueue(System.Int32,Product.API.WebSocketAPI.Basics.WSRequest,Product.API.WebSocketAPI.Basics.OperationResponse)">
+            <summary>
+            Enqueue operation request
+            </summary>
+            <param name="operationRequestId"></param>
+            <param name="wsRequest"></param>
+            <param name="response"></param>
+        </member>
+        <member name="T:Product.API.WebSocketAPI.OperationExecutor">
+            <summary>
+            Operation executor
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.OperationExecutor.SupportedOperations">
+            <summary>
+            Supported operations
+            </summary>
+        </member>
+        <member name="P:Product.API.WebSocketAPI.OperationExecutor.KnownModels">
+            <summary>
+            Known/registered JSON models
+            </summary>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.OperationExecutor.#ctor(System.IServiceProvider)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="serviceProvider"></param>
+        </member>
+        <member name="M:Product.API.WebSocketAPI.OperationExecutor.InvokeOperation(Product.API.WebSocketAPI.Basics.OperationRequest,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Invoke operation
+            </summary>
+            <param name="value"></param>
+            <param name="operationCallback"></param>
+        </member>
+        <member name="T:Product.API.WSControllers.ProductionMonitoringWSController">
+            <summary>
+            Production Monitoring WebSocket operation controller
+            </summary>
+        </member>
+        <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.#ctor(Product.Services.ProductionMonitoring.IProductionMonitoringService)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.PressureDataUpdates(System.String,System.String,System.String,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Call Pressure data updates
+            </summary>
+            <param name="projectId"></param>
+            <param name="wellId"></param>
+            <param name="sensorId"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.FlowRateDataUpdates(System.String,System.String,System.String,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Call Flow Rate data updates
+            </summary>
+            <param name="projectId"></param>
+            <param name="wellId"></param>
+            <param name="sensorId"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.ZoneFlowProductionDataUpdates(System.String,System.String,Product.DataModels.Enums.DepthType,System.Int32,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Call Zone Flow Production data updates
+            </summary>
+            <param name="projectId"></param>
+            <param name="wellId"></param>
+            <param name="depthType"></param>
+            <param name="zoneNumber"></param>
+            <param name="context"></param>
         </member>
     </members>
 </doc>

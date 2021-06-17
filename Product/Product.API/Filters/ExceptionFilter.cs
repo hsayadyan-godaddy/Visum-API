@@ -7,7 +7,7 @@ using System.Net;
 
 namespace Product.API.Filters
 {
-    public class ExceptionFilter : IExceptionFilter
+    internal class ExceptionFilter : IExceptionFilter
     {
         #region members
 

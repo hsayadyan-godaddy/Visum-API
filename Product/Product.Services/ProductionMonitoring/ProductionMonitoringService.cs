@@ -1,49 +1,136 @@
-﻿using Product.API.Queries;
+﻿using Product.DAL.Simulation.Abstraction;
 using Product.DataModels;
+using Product.DataModels.Enums;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Product.Services.ProductionMonitoring
 {
     internal class ProductionMonitoringService : IProductionMonitoringService
     {
-        public IEnumerable<string> GetFlow(string wellName)
+        #region members
+
+        private readonly ISimulatedDataRepository _simulatedDataRepository;
+        private readonly ISimulatedInfoRepository _simulatedInfoRepository;
+
+        #endregion
+
+        #region ctor
+
+        public ProductionMonitoringService(ISimulatedDataRepository simulatedDataRepository,
+                                           ISimulatedInfoRepository simulatedInfoRepository)
         {
-            throw new System.NotImplementedException();
+            _simulatedDataRepository = simulatedDataRepository;
+            _simulatedInfoRepository = simulatedInfoRepository;
         }
 
-        public RateData GetFlowRates(string wellName, string key)
+        #endregion
+
+        #region publics
+
+        public void FlowRateDataUpdates(string connectionId,
+                                        string projectId,
+                                        string wellId,
+                                        string sensorId,
+                                        Func<TimeValue, bool> callback)
         {
-            throw new System.NotImplementedException();
+            _simulatedDataRepository.FlowRateDataUpdates(connectionId, sensorId, callback);
         }
 
-        public FlowLimitInfo GetLimits()
+        public Task<FlowAcceptableLimits> GetFlowAcceptableLimitsAsync(string projectId, string wellId)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedInfoRepository.GetFlowAcceptableLimits());
         }
 
-        public IEnumerable<string> GetPressure(string wellName)
+        public Task<FlowRateData> GetFlowRateDataAsync(string projectId,
+                                                       string wellId,
+                                                       string sensorId,
+                                                       Periodicity periodicity,
+                                                       long snapshotSize,
+                                                       DateTime? fromDate,
+                                                       DateTime? toDate)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedDataRepository.GetFlowRateData(sensorId,
+                                                                            periodicity,
+                                                                            snapshotSize,
+                                                                            fromDate,
+                                                                            toDate));
         }
 
-        public RateData GetPressureRates(string wellName, string key)
+        public Task<List<SensorInfo>> GetFlowRateInfoAsync(string projectId, string wellId)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedInfoRepository.GetFlowRateInfo());
         }
 
-        public UnitOfMeasure GetUom()
+        public Task<PressureData> GetPressureDataAsync(string projectId,
+                                                       string wellId,
+                                                       string sensorId,
+                                                       Periodicity periodicity,
+                                                       long snapshotSize, DateTime? fromDate,
+                                                       DateTime? toDate)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedDataRepository.GetPressureData(sensorId,
+                                                                            periodicity,
+                                                                            snapshotSize,
+                                                                            fromDate,
+                                                                            toDate));
         }
 
-        public ZonesData GetZones(string wellName)
+        public Task<List<SensorInfo>> GetPressureSensorsInfoAsync(string projectId, string wellId)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedInfoRepository.GetPressureSensorsInfo());
         }
 
-        public ZoneFlowData GetZones(ZonesQuery zonesQuery)
+        public Task<UnitOfMeasureInfo> GetUnitOfMeasureInfoAsync(string projectId, string wellId, SourceType sourceType)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(_simulatedInfoRepository.GetUnitOfMeasureInfo(sourceType));
         }
+
+        public Task<ZoneFlowData> GetZoneFlowProductionDataAsync(string projectId,
+                                                                 string wellId,
+                                                                 DepthType depthType,
+                                                                 int zoneNumber,
+                                                                 Periodicity periodicity,
+                                                                 long snapshotSize,
+                                                                 DateTime? fromDate,
+                                                                 DateTime? toDate)
+        {
+            return Task.FromResult(_simulatedDataRepository.GetZoneFlowProductionData(depthType,
+                                                                                      zoneNumber,
+                                                                                      periodicity,
+                                                                                      snapshotSize,
+                                                                                      fromDate,
+                                                                                      toDate));
+        }
+
+        public Task<ZonesData> GetZonesDataAsync(string projectId, string wellId, DepthType depthType)
+        {
+            return Task.FromResult(_simulatedDataRepository.GetZonesData(depthType));
+        }
+
+        public void PressureDataUpdates(string connectionId,
+                                        string projectId,
+                                        string wellId,
+                                        string sensorId,
+                                        Func<TimeValue, bool> callback)
+        {
+            _simulatedDataRepository.PressureDataUpdates(connectionId, sensorId, callback);
+        }
+
+        public void ZoneFlowProductionDataUpdates(string connectionId,
+                                                  string projectId,
+                                                  string wellId,
+                                                  DepthType depthType,
+                                                  int zoneNumber,
+                                                  Func<ZoneFlowTimeOilWaterGas, bool> callback)
+        {
+            _simulatedDataRepository.ZoneFlowProductionDataUpdates(connectionId,
+                                                                   depthType,
+                                                                   zoneNumber,
+                                                                   callback);
+        }
+
+        #endregion
     }
 }

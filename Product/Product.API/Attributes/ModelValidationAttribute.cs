@@ -10,10 +10,17 @@ using System.Reflection;
 
 namespace Product.API.Attributes
 {
+    /// <summary>
+    /// Mode lValidation Attribute
+    /// </summary>
     public class ModelValidationAttribute : ActionFilterAttribute
     {
         #region publics
 
+        /// <summary>
+        /// Handler
+        /// </summary>
+        /// <param name="context"></param>
         public override void OnActionExecuting(ActionExecutingContext context)
         {
             var modelState = context.ModelState;

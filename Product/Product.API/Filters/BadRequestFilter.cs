@@ -5,7 +5,7 @@ using Product.API.Models.Error;
 
 namespace Product.API.Filters
 {
-    public class BadRequestFilter : IActionFilter
+    internal class BadRequestFilter : IActionFilter
     {
         public void OnActionExecuting(ActionExecutingContext context)
         {

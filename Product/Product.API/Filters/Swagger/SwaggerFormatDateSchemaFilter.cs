@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace Product.API.Filters.Swagger
 {
-    public class SwaggerFormatDateSchemaFilter : ISchemaFilter
+    internal class SwaggerFormatDateSchemaFilter : ISchemaFilter
     {
         #region publics
 
