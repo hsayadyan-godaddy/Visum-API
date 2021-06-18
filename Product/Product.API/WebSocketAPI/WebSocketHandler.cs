@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Product.API.WebSocketAPI
 {
-    public class WebSocketHandler : IWebSocketHandler
+    internal class WebSocketHandler : IWebSocketHandler
     {
         #region constants
 
@@ -122,7 +122,7 @@ namespace Product.API.WebSocketAPI
 
                             if (keepConnection)
                             {
-                                responseQueue.Enqueue(operationRequest.RequestID, wsRequest, response);
+                                responseQueue.Enqueue(operationRequest.RequestId, wsRequest, response);
                             }
                             else
                             {
@@ -133,7 +133,7 @@ namespace Product.API.WebSocketAPI
                             return keepConnection;
                         });
 
-                        var callbackResponse = new WSContext(authToken, operationRequest.ConnectionID, resultCallback, cancellationSource.Token);
+                        var callbackResponse = new WSContext(authToken, operationRequest.ConnectionId, operationRequest.RequestType, resultCallback, cancellationSource.Token);
                         _operationExecutor.InvokeOperation(operationRequest, callbackResponse);
                     }
                 }
@@ -169,7 +169,7 @@ namespace Product.API.WebSocketAPI
 
                 ret = new OperationRequest()
                 {
-                    ConnectionID = context.Connection.Id,
+                    ConnectionId = context.Connection.Id,
                     RequestType = value.RequestType,
                     OperationSource = value.OperationSource,
                     MethodName = value.MethodName,

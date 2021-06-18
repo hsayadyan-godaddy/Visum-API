@@ -1,84 +1,166 @@
-﻿using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Product.API.Queries;
-using Product.API.Services;
+using Product.API.Attributes;
+using Product.API.Commands.CommandModel.ProductionMonitoring;
+using Product.API.Commands.Executor;
+using Product.API.Models.Basics;
+using Product.API.Models.Error;
+using Product.API.Models.ProductionMonitoring;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace Product.API
 {
+    /// <summary>
+    /// Production Monitoring API endpoint
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
+    [ModelValidation]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(ServerError), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ServerError), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ServerError), StatusCodes.Status500InternalServerError)]
     public class ProductionMonitoringController : ControllerBase
     {
-        private readonly IProductionMonitoringService _productionMonitoringService;
+        #region members
 
-        public ProductionMonitoringController(IProductionMonitoringService productionMonitoringService)
+        private readonly ProductionMonitoringCommandExecutor _commandExecutor;
+
+        #endregion
+
+        #region ctor
+
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        /// <param name="commandExecutor"></param>
+        public ProductionMonitoringController(ProductionMonitoringCommandExecutor commandExecutor)
         {
-            _productionMonitoringService = productionMonitoringService;
+            _commandExecutor = commandExecutor;
         }
 
+        #endregion
+
+        #region publics
+
+        /// <summary>
+        /// Get Zones for the Wellbore Profile
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Zones and depth ranges for specified well</returns>
         [HttpGet]
-        [Route("uom")]
-        public async Task<ActionResult> GetUom()
+        [ProducesResponseType(typeof(WellboreProfileZonesResponse), StatusCodes.Status200OK)]
+        [Route("wellboreProfile/zones")]
+        public async Task<IActionResult> GetWellboreProfileZones([FromQuery] WellboreProfileZonesCommand value)
         {
-            var wellData = _productionMonitoringService.GetUom();
-            return Ok(wellData);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+        /// <summary>
+        /// Get available keys (sensors) for the Pressure data
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of strings/keys</returns>
         [HttpGet]
-        [Route("zones/flowallocation/limits")]
-        public async Task<ActionResult> GetLimits()
+        [ProducesResponseType(typeof(PressureSensorsResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/pressure/sensors")]
+        public async Task<IActionResult> GetPressureSensors([FromQuery] PressureSensorsCommand value)
         {
-            var flowLimitInfo = _productionMonitoringService.GetLimits();
-            return Ok(flowLimitInfo);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+        /// <summary>
+        ///  Get available keys (sensors) for the Flow Rate data
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of strings/keys</returns>
         [HttpGet]
-        [Route("zones/{wellName}")]
-        public async Task<ActionResult> GetZones(string wellName)
+        [ProducesResponseType(typeof(FlowRateSensorsResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/flowRate/sensors")]
+        public async Task<IActionResult> GetFlowRateSensors([FromQuery] FlowRateSensorsCommand value)
         {
-            var zonesData = _productionMonitoringService.GetZones(wellName);
-            return Ok(zonesData);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
-        [HttpPost]
-        [Route("zones/flowallocation")]
-        public async Task<ActionResult> GetZones([FromBody] ZonesQuery zonesQuery)
-        {
-            var zoneFlowData = _productionMonitoringService.GetZones(zonesQuery);
-            return Ok(zoneFlowData);
-        }
-
+        /// <summary>
+        ///  Get historical Pressure data
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of Values and Dates structure</returns>
         [HttpGet]
-        [Route("zones/pressure/{wellName}")]
-        public async Task<ActionResult> GetPressure(string wellName)
+        [ProducesResponseType(typeof(PressureHistoryDataResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/pressure/historyData")]
+        public async Task<IActionResult> GetPressureHistoryData([FromQuery] PressureHistoryDataCommand value)
         {
-            var wellData = _productionMonitoringService.GetPressure(wellName);
-            return Ok(wellData);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+        /// <summary>
+        /// Get historical Flow Rate data
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of Values and Dates structure</returns>
         [HttpGet]
-        [Route("pressure/rates/{wellName}/{key}")]
-        public async Task<ActionResult> GetPressureRates(string wellName, string key)
+        [ProducesResponseType(typeof(FlowRateHistoryDataResponse), StatusCodes.Status200OK)]
+        [Route("pressureFlowRate/flowRate/historyData")]
+        public async Task<IActionResult> GetFlowRateHistoryData([FromQuery] FlowRateHistoryDataCommand value)
         {
-            var pressure = _productionMonitoringService.GetPressureRates(wellName, key);
-            return Ok(pressure);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+        /// <summary>
+        /// Get historica data for Zone Flow Production
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of Values and Dates structure that contains data for oil, water and gas</returns>
         [HttpGet]
-        [Route("flow/{wellName}")]
-        public async Task<ActionResult> GetFlow(string wellName)
+        [ProducesResponseType(typeof(ZoneFlowProductionHistoryDataResponse), StatusCodes.Status200OK)]
+        [Route("zoneFlowProduction/historyData")]
+        public async Task<IActionResult> GetZoneFlowProductionHistoryData([FromQuery] ZoneFlowProductionHistoryDataCommand value)
         {
-            var wellData = _productionMonitoringService.GetFlow(wellName);
-            return Ok(wellData);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+        /// <summary>
+        /// Get Critical limits to Highlight zones
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array with limits that should be highlighted</returns>
         [HttpGet]
-        [Route("flow/rates/{wellName}/{key}")]
-        public async Task<ActionResult> GetFlow(string wellName, string key)
+        [ProducesResponseType(typeof(ZoneFlowProductionAcceptableLimitsResponse), StatusCodes.Status200OK)]
+        [Route("zoneFlowProduction/criticalHighlights")]
+        public async Task<IActionResult> GetZoneFlowProductionAcceptableLimits([FromQuery] ZoneFlowProductionAcceptableLimitsCommand value)
         {
-            var wellData = _productionMonitoringService.GetFlowRates(wellName, key);
-            return Ok(wellData);
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
         }
 
+#endregion
+
+        #region privates
+
+        private IActionResult HandleResult(IBaseResponse result)
+        {
+            if (result.Error == null)
+            {
+                return Ok(result);
+            }
+            else
+            {
+                return new ObjectResult(result.Error)
+                {
+                    StatusCode = result.Error.ErrorCode
+                };
+            }
+        }
+
+        #endregion
     }
 }

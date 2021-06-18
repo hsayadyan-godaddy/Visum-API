@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Product.API.WebSocketAPI.Abstraction
 {
-    public interface IWebSocketHandler
+    internal interface IWebSocketHandler
     {
         Task Handle(HttpContext context);
     }

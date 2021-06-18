@@ -5,6 +5,9 @@ using System.Collections.Generic;
 
 namespace Product.API.Controllers
 {
+    /// <summary>
+    /// WebSocket Metadata
+    /// </summary>
     [ApiExplorerSettings(IgnoreApi = true)]
     [Route("api/[controller]")]
     [ApiController]
@@ -12,11 +15,19 @@ namespace Product.API.Controllers
     {
         private readonly IOperationExecutor _operationExecutor;
 
+        /// <summary>
+        /// Create new instance
+        /// </summary>
+        /// <param name="operationExecutor"></param>
         public WebSocketMetadataController(IOperationExecutor operationExecutor)
         {
             _operationExecutor = operationExecutor;
         }
 
+        /// <summary>
+        /// Get data models metadata
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("knownModels")]
         [ProducesResponseType(typeof(List<string>), 200)]
@@ -26,6 +37,10 @@ namespace Product.API.Controllers
             return Ok(datamodels);
         }
 
+        /// <summary>
+        /// Get operations models metadata
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("operationsMetadata")]
         [ProducesResponseType(typeof(List<OperationMetadata>), 200)]

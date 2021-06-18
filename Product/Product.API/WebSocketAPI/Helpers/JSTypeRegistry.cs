@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Product.API.WebSocketAPI.Helpers
 {
+    /// <summary>
+    /// Registry for serrialized types to JSON
+    /// </summary>
     public class JSTypeRegistry
     {
         private enum SimpleType
@@ -11,7 +14,8 @@ namespace Product.API.WebSocketAPI.Helpers
             ComplexType,
             String,
             Number,
-            Boolean
+            Boolean,
+            DateTicks
         }
 
         #region members
@@ -22,6 +26,9 @@ namespace Product.API.WebSocketAPI.Helpers
 
         #region properties
 
+        /// <summary>
+        /// Already registered and known types
+        /// </summary>
         public List<string> KnownModels
         {
             get
@@ -41,6 +48,11 @@ namespace Product.API.WebSocketAPI.Helpers
 
         #region publics
 
+        /// <summary>
+        /// Get enums as JSON
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public string GetEnumAsModel(Type value)
         {
             var ret = string.Empty;
@@ -64,6 +76,11 @@ namespace Product.API.WebSocketAPI.Helpers
             return ret;
         }
 
+        /// <summary>
+        /// Generate JSON model from type
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public string GetJsModel(Type value)
         {
             var tmpBase = JSBaseType(value);
@@ -81,7 +98,7 @@ namespace Product.API.WebSocketAPI.Helpers
             }
             else if (Nullable.GetUnderlyingType(value) != null)
             {
-                return $"null | {GetJsModel(Nullable.GetUnderlyingType(value))}";  
+                return $"null | {GetJsModel(Nullable.GetUnderlyingType(value))}";
             }
 
             var model = "{";
@@ -136,9 +153,9 @@ namespace Product.API.WebSocketAPI.Helpers
             var ret = SimpleType.ComplexType;
 
             if (value.IsEnum) return ret;
-            if (Nullable.GetUnderlyingType(value) != null) 
+            if (Nullable.GetUnderlyingType(value) != null)
                 return ret;
-            
+
 
             switch (Type.GetTypeCode(value))
             {
@@ -161,6 +178,9 @@ namespace Product.API.WebSocketAPI.Helpers
                     break;
                 case TypeCode.String:
                     ret = SimpleType.String;
+                    break;
+                case TypeCode.DateTime:
+                    ret = SimpleType.DateTicks;
                     break;
                 default:
                     break;

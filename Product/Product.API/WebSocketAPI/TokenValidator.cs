@@ -2,7 +2,7 @@
 
 namespace Product.API.WebSocketAPI
 {
-    public class TokenValidator : ITokenValidator
+    internal class TokenValidator : ITokenValidator
     {
 #warning TODO
 

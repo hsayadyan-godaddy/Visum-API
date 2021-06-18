@@ -2,10 +2,19 @@
 
 namespace Product.API.WebSocketAPI.CustomAttributes
 {
+    /// <summary>
+    /// WebSocket Method Attribute
+    /// </summary>
     [AttributeUsage(AttributeTargets.Method)]
     public class WSMethodAttribute : Attribute
     {
+        /// <summary>
+        /// Declare that methid will not return response, one-time execution
+        /// </summary>
         public bool OneTime { get; }
+        /// <summary>
+        /// Declare expected operation return type
+        /// </summary>
         public Type ReturnType { get; }
 
         /// <summary>

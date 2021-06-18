@@ -2,7 +2,10 @@
 
 namespace Product.API.WebSocketAPI.Helpers
 {
-    public static class Errors
+    /// <summary>
+    /// Error messages helper
+    /// </summary>
+    internal static class Errors
     {
         public static string GetMessage(HttpStatusCode value)
         {

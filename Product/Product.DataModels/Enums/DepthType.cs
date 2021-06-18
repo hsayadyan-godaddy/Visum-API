@@ -2,8 +2,7 @@
 {
     public enum DepthType
     {
-        None = 0,
-        MD,
+        MD = 0,
         TVD,
         TVDSS
     }

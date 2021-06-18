@@ -1,7 +1,15 @@
 ﻿namespace Product.API.WebSocketAPI.Abstraction
 {
-    public interface ITokenValidator
+    /// <summary>
+    /// TokenValidator
+    /// </summary>
+    internal interface ITokenValidator
     {
+        /// <summary>
+        /// Validate acces token
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         bool ValidateToken(string value);
     }
 }
