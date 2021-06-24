@@ -30,8 +30,7 @@ namespace Product.DataModels.Attributes
             else
             {
                 var unixTime = value.ToUnix();
-                var tmp = unixTime.ToString(CultureInfo.InvariantCulture);
-                writer.WriteValue(tmp);
+                writer.WriteValue(unixTime);
             }
         }
     }
