@@ -18,7 +18,8 @@ namespace Product.Services.ProductionMonitoring
                                  string wellId, 
                                  string sensorId, 
                                  Func<TimeValue, bool> callback);
-        void ZoneFlowProductionDataUpdates(string connectionId, 
+        void ZoneFlowProductionDataUpdates(bool returnRates, 
+                                           string connectionId, 
                                            string projectId, 
                                            string wellId, 
                                            DepthType depthType,
@@ -52,5 +53,14 @@ namespace Product.Services.ProductionMonitoring
                                                 long snapshotSize,
                                                 DateTime? fromDate,
                                                 DateTime? toDate);
+
+        Task<ZoneFlowData> GetZoneFlowProductionDataRatesAsync(string projectId,
+                                               string wellId,
+                                               DepthType depthType,
+                                               int zoneNumber,
+                                               Periodicity periodicity,
+                                               long snapshotSize,
+                                               DateTime? fromDate,
+                                               DateTime? toDate);
     }
 }

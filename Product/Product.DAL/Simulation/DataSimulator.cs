@@ -48,7 +48,7 @@ namespace Product.DAL.Simulation
                 
                 if (includeTimeValue)
                 {
-                    time = time.AddSeconds(1);
+                    time = time.AddMinutes(1);
                 }
             }
 

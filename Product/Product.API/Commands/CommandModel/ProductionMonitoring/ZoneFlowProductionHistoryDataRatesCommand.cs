@@ -1,4 +1,5 @@
 ﻿using Product.API.Commands.CommandModel.GeneralModels;
+using Product.DataModels.Enums;
 using System.ComponentModel.DataAnnotations;
 
 namespace Product.API.Commands.CommandModel.ProductionMonitoring
@@ -6,13 +7,18 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     /// <summary>
     /// Command/Query Parameters
     /// </summary>
-    public class FlowRateHistoryDataCommand : HistoricalDataCommand
+    public class ZoneFlowProductionHistoryDataRatesCommand : HistoricalDataCommand
     {
         /// <summary>
-        /// Sensor ID for required data
+        /// Depth type
         /// </summary>
         [Required]
-        public string SensorId { get; set; }
+        public DepthType DepthType { get; set; }
+        /// <summary>
+        /// Zone number
+        /// </summary>
+        [Required]
+        public int ZoneNumber { get; set; }
     }
 }
 

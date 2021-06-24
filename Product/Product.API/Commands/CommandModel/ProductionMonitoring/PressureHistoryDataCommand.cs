@@ -6,7 +6,7 @@ namespace Product.API.Commands.CommandModel.ProductionMonitoring
     /// <summary>
     /// Command/Query Parameters
     /// </summary>
-    public class PressureHistoryDataCommand : HistoricaDataCommand
+    public class PressureHistoryDataCommand : HistoricalDataCommand
     {
         /// <summary>
         /// Sensor ID for required data

@@ -129,6 +129,20 @@ namespace Product.API
         }
 
         /// <summary>
+        /// Get historica data for Zone Flow Production
+        /// </summary>
+        /// <param name="value">Request parameters</param>
+        /// <returns>Array of Values and Dates structure that contains data for oil, water and gas</returns>
+        [HttpGet]
+        [ProducesResponseType(typeof(ZoneFlowProductionHistoryDataRatesResponse), StatusCodes.Status200OK)]
+        [Route("zoneFlowProduction/historyData/rates")]
+        public async Task<IActionResult> GetZoneFlowProductionHistoryDataRates([FromQuery] ZoneFlowProductionHistoryDataRatesCommand value)
+        {
+            var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
+            return HandleResult(result);
+        }
+
+        /// <summary>
         /// Get Critical limits to Highlight zones
         /// </summary>
         /// <param name="value">Request parameters</param>

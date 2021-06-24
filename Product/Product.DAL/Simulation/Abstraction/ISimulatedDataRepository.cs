@@ -8,7 +8,8 @@ namespace Product.DAL.Simulation.Abstraction
     {
         void FlowRateDataUpdates(string connectionId, string sensorId, Func<TimeValue, bool> callback);
         void PressureDataUpdates(string connectionId, string sensorId, Func<TimeValue, bool> callback);
-        void ZoneFlowProductionDataUpdates(string connectionId,
+        void ZoneFlowProductionDataUpdates(bool returnRates, 
+                                           string connectionId,
                                            DepthType depthType,
                                            int zoneNumber,
                                            Func<ZoneFlowTimeOilWaterGas, bool> callback);
@@ -26,13 +27,13 @@ namespace Product.DAL.Simulation.Abstraction
                                     DateTime? fromDate,
                                     DateTime? toDate);
 
-        ZoneFlowData GetZoneFlowProductionData(DepthType depthType,
+        ZoneFlowData GetZoneFlowProductionData(bool prepareRates,
+                                               DepthType depthType,
                                                int zoneNumber,
                                                Periodicity periodicity,
                                                long snapshotSize,
                                                DateTime? fromDate,
                                                DateTime? toDate);
-
 
 
     }

@@ -2,7 +2,8 @@
 {
     public enum Periodicity
     {
-        All = 0,
+        None = 0,
+        All,
         FromRange,
         OneYear,
         Days90,
