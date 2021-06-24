@@ -35,37 +35,37 @@
             <param name="context"></param>
             <returns></returns>
         </member>
-        <member name="T:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand">
+        <member name="T:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand">
             <summary>
             General implementation of historical data request command
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.Periodicity">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.Periodicity">
             <summary>
             Required periodicity
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.SnapshotSize">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.SnapshotSize">
             <summary>
             Define size of the snapshot to optimize lenght of data. Will be returned Max-Min points instead all possible data
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.FromDate">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.FromDate">
             <summary>
             Date and Time, Unix format 
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.ToDate">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.ToDate">
             <summary>
             Date and Time, Unix format 
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.NativeFromDate">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.NativeFromDate">
             <summary>
             From, as DateTime type
             </summary>
         </member>
-        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricaDataCommand.NativeToDate">
+        <member name="P:Product.API.Commands.CommandModel.GeneralModels.HistoricalDataCommand.NativeToDate">
             <summary>
             To, as DateTime type
             </summary>
@@ -145,6 +145,21 @@
             Zone number
             </summary>
         </member>
+        <member name="T:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesCommand">
+            <summary>
+            Command/Query Parameters
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesCommand.DepthType">
+            <summary>
+            Depth type
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesCommand.ZoneNumber">
+            <summary>
+            Zone number
+            </summary>
+        </member>
         <member name="T:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor">
             <summary>
             Production Monitoring CommandExecutor
@@ -205,6 +220,14 @@
             <returns></returns>
         </member>
         <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesCommand,Microsoft.AspNetCore.Http.HttpContext)">
             <summary>
             
             </summary>
@@ -282,6 +305,13 @@
             <returns>Array of Values and Dates structure</returns>
         </member>
         <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionHistoryData(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataCommand)">
+            <summary>
+            Get historica data for Zone Flow Production
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Array of Values and Dates structure that contains data for oil, water and gas</returns>
+        </member>
+        <member name="M:Product.API.ProductionMonitoringController.GetZoneFlowProductionHistoryDataRates(Product.API.Commands.CommandModel.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesCommand)">
             <summary>
             Get historica data for Zone Flow Production
             </summary>
@@ -473,6 +503,36 @@
             Create new instance
             </summary>
             <param name="value"></param>
+        </member>
+        <member name="T:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse">
+            <summary>
+            Zone Flow Production History Data response
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse.ZoneNumber">
+            <summary>
+            Zone number
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse.DepthType">
+            <summary>
+            Depth type
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse.ZoneFlowProductionData">
+            <summary>
+            Zone info data
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataRatesResponse.#ctor(Product.DataModels.ZoneFlowData)">
+            <summary>
+            Create new instance
+            </summary>
         </member>
         <member name="T:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse">
             <summary>
@@ -1148,6 +1208,16 @@
         <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.ZoneFlowProductionDataUpdates(System.String,System.String,Product.DataModels.Enums.DepthType,System.Int32,Product.API.WebSocketAPI.Basics.WSContext)">
             <summary>
             Call Zone Flow Production data updates
+            </summary>
+            <param name="projectId"></param>
+            <param name="wellId"></param>
+            <param name="depthType"></param>
+            <param name="zoneNumber"></param>
+            <param name="context"></param>
+        </member>
+        <member name="M:Product.API.WSControllers.ProductionMonitoringWSController.ZoneFlowProductionDataRatesUpdates(System.String,System.String,Product.DataModels.Enums.DepthType,System.Int32,Product.API.WebSocketAPI.Basics.WSContext)">
+            <summary>
+            Call Zone Flow Production rates data updates
             </summary>
             <param name="projectId"></param>
             <param name="wellId"></param>

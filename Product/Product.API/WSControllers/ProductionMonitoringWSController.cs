@@ -128,11 +128,51 @@ namespace Product.API.WSControllers
                 };
             }
 
-            _productionMonitoringService.ZoneFlowProductionDataUpdates(context.ConnectionId, 
+            _productionMonitoringService.ZoneFlowProductionDataUpdates(false,
+                                                                       context.ConnectionId, 
                                                                        projectId, 
                                                                        wellId, 
                                                                        depthType, 
                                                                        zoneNumber, 
+                                                                       dataCallback);
+        }
+
+        /// <summary>
+        /// Call Zone Flow Production rates data updates
+        /// </summary>
+        /// <param name="projectId"></param>
+        /// <param name="wellId"></param>
+        /// <param name="depthType"></param>
+        /// <param name="zoneNumber"></param>
+        /// <param name="context"></param>
+        [WSMethod(typeof(ZoneFlowTimeOilWaterGas))]
+        public void ZoneFlowProductionDataRatesUpdates(string projectId,
+                                                  string wellId,
+                                                  DepthType depthType,
+                                                  int zoneNumber,
+                                                  WSContext context)
+        {
+            var refCtx = context;
+
+
+            Func<ZoneFlowTimeOilWaterGas, bool> dataCallback = null;
+
+            if (context.RequestType == WSRequestType.Subscribe)
+            {
+                dataCallback = (data) =>
+                {
+                    var success = refCtx.ResultCallback(new OperationResponse(data,
+                                                             OperationResponseStatus.OK));
+                    return success;
+                };
+            }
+
+            _productionMonitoringService.ZoneFlowProductionDataUpdates(true,
+                                                                       context.ConnectionId,
+                                                                       projectId,
+                                                                       wellId,
+                                                                       depthType,
+                                                                       zoneNumber,
                                                                        dataCallback);
         }
 

@@ -12,11 +12,15 @@ namespace Product.PseudoData
         {
             var ret = new List<T>();
 
+
+
             var extremesCount = avgCount / 2.0;
             var maxRange = extremesCount > 0 ? (int)Math.Ceiling(data.Count / extremesCount) : data.Count;
 
             if (data.Count > maxRange)
             {
+                ret.Add(data[0]);
+
                 var pointer = 0;
                 while (true)
                 {
@@ -37,9 +41,14 @@ namespace Product.PseudoData
                     }
                 }
 
-                while (ret.Count > avgCount)
+                if (ret.Count > 2)
                 {
-                    ret.RemoveAt(0);
+                    while (ret.Count > avgCount - 2)
+                    {
+                        ret.RemoveAt(0);
+                    }
+
+                    ret.Add(data[data.Count - 1]);
                 }
             }
             else

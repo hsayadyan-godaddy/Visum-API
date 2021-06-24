@@ -22,6 +22,9 @@ namespace Product.DAL.Simulation
         private readonly Dictionary<string, Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>> _callbacksOil
                                 = new Dictionary<string, Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>>();
 
+        private readonly Dictionary<string, Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>> _callbacksOilRates
+                              = new Dictionary<string, Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>>();
+
 
         #endregion
 
@@ -96,7 +99,7 @@ namespace Product.DAL.Simulation
             };
         }
 
-        public ZoneFlowData GetZoneFlowProductionData(DepthType depthType, int zoneNumber, Periodicity periodicity, long snapshotSize, DateTime? fromDate, DateTime? toDate)
+        public ZoneFlowData GetZoneFlowProductionData(bool returnRates, DepthType depthType, int zoneNumber, Periodicity periodicity, long snapshotSize, DateTime? fromDate, DateTime? toDate)
         {
             var range = GetRange(periodicity, fromDate, toDate);
 
@@ -112,12 +115,25 @@ namespace Product.DAL.Simulation
             var rdata = new List<ZoneFlowTimeOilWaterGas>();
             for (int i = 0; i < tmpOil.Count; i++)
             {
+                var oil = tmpOil[i].Value;
+                var gas = tmpGas.Count > i ? tmpGas[i].Value : 0;
+                var water = tmpWater.Count > i ? tmpWater[i].Value : 0;
+
+                if (returnRates)
+                {
+                    var totalSum = oil + gas + water;
+                 
+                    oil = oil / totalSum;
+                    gas = gas / totalSum;
+                    water = water / totalSum;
+                }
+
                 rdata.Add(new ZoneFlowTimeOilWaterGas
                 {
-                    Oil = tmpOil[i].Value,
+                    Oil = oil,
                     Time = tmpOil[i].Time,
-                    Gas = tmpGas.Count > i ? tmpGas[i].Value : 0,
-                    Water = tmpWater.Count > i ? tmpWater[i].Value : 0
+                    Gas = gas,
+                    Water = water
                 });
             }
 
@@ -184,7 +200,7 @@ namespace Product.DAL.Simulation
             }
         }
 
-        public void ZoneFlowProductionDataUpdates(string connectionId, DepthType depthType, int zoneNumber, Func<ZoneFlowTimeOilWaterGas, bool> callback)
+        public void ZoneFlowProductionDataUpdates(bool returnRates, string connectionId, DepthType depthType, int zoneNumber, Func<ZoneFlowTimeOilWaterGas, bool> callback)
         {
             var key = GetKey(SourceType.Oil);
 
@@ -194,12 +210,15 @@ namespace Product.DAL.Simulation
 
             lock (_locker)
             {
-                if (!_callbacksOil.ContainsKey(key))
+                var tmpCallbacks = returnRates ? _callbacksOilRates : _callbacksOil;
+
+
+                if (!tmpCallbacks.ContainsKey(key))
                 {
-                    _callbacksOil.Add(key, new Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>());
+                    tmpCallbacks.Add(key, new Dictionary<string, (string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)>());
                 }
 
-                var connections = _callbacksOil[key];
+                var connections = tmpCallbacks[key];
                 if (connections.ContainsKey(connectionId))
                 {
                     if (callback != null)
@@ -230,12 +249,14 @@ namespace Product.DAL.Simulation
             List<(string, Func<TimeValue, bool>)> flowRateCalls = null;
             List<(string, Func<TimeValue, bool>)> pressureCalls = null;
             List<(string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)> oilCalls = null;
+            List<(string, string, string, Func<ZoneFlowTimeOilWaterGas, bool>)> oilRatesCalls = null;
 
             lock (_locker)
             {
                 flowRateCalls = _callbacksFlowRate.Values.SelectMany(x => x.Values).ToList();
                 pressureCalls = _callbacksPressure.Values.SelectMany(x => x.Values).ToList();
                 oilCalls = _callbacksOil.Values.SelectMany(x => x.Values).ToList();
+                oilRatesCalls = _callbacksOilRates.Values.SelectMany(x => x.Values).ToList();
             }
 
             foreach (var itm in flowRateCalls)
@@ -255,6 +276,27 @@ namespace Product.DAL.Simulation
                 var tickOil = _simulator.GetTick(itm.Item1, SourceType.Oil);
                 var tickWater = _simulator.GetTick(itm.Item2, SourceType.Water);
                 var tickGas = _simulator.GetTick(itm.Item3, SourceType.Gas);
+
+                itm.Item4.Invoke(new ZoneFlowTimeOilWaterGas
+                {
+                    Oil = tickOil,
+                    Water = tickWater,
+                    Gas = tickGas,
+                    Time = time
+                });
+            }
+
+            foreach (var itm in oilRatesCalls)
+            {
+                var tickOil = _simulator.GetTick(itm.Item1, SourceType.Oil);
+                var tickWater = _simulator.GetTick(itm.Item2, SourceType.Water);
+                var tickGas = _simulator.GetTick(itm.Item3, SourceType.Gas);
+
+                var totalSum = tickOil + tickWater + tickGas;
+
+                tickOil = tickOil / totalSum;
+                tickWater = tickWater / totalSum;
+                tickGas = tickGas / totalSum;
 
                 itm.Item4.Invoke(new ZoneFlowTimeOilWaterGas
                 {
@@ -325,7 +367,10 @@ namespace Product.DAL.Simulation
                     }
                     break;
                 case Periodicity.All:
+                    break;
+                case Periodicity.None:
                 default:
+                    dFrom = dTo = DateTime.Now;
                     break;
             }
 

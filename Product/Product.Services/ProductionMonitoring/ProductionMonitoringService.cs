@@ -96,12 +96,29 @@ namespace Product.Services.ProductionMonitoring
                                                                  DateTime? fromDate,
                                                                  DateTime? toDate)
         {
-            return Task.FromResult(_simulatedDataRepository.GetZoneFlowProductionData(depthType,
+            return Task.FromResult(_simulatedDataRepository.GetZoneFlowProductionData(false, depthType,
                                                                                       zoneNumber,
                                                                                       periodicity,
                                                                                       snapshotSize,
                                                                                       fromDate,
                                                                                       toDate));
+        }
+
+        public Task<ZoneFlowData> GetZoneFlowProductionDataRatesAsync(string projectId,
+                                                                      string wellId,
+                                                                      DepthType depthType,
+                                                                      int zoneNumber,
+                                                                      Periodicity periodicity,
+                                                                      long snapshotSize,
+                                                                      DateTime? fromDate,
+                                                                      DateTime? toDate)
+        {
+            return Task.FromResult(_simulatedDataRepository.GetZoneFlowProductionData(true, depthType,
+                                                                                       zoneNumber,
+                                                                                       periodicity,
+                                                                                       snapshotSize,
+                                                                                       fromDate,
+                                                                                       toDate));
         }
 
         public Task<ZonesData> GetZonesDataAsync(string projectId, string wellId, DepthType depthType)
@@ -118,14 +135,16 @@ namespace Product.Services.ProductionMonitoring
             _simulatedDataRepository.PressureDataUpdates(connectionId, sensorId, callback);
         }
 
-        public void ZoneFlowProductionDataUpdates(string connectionId,
+        public void ZoneFlowProductionDataUpdates(bool returnRates,
+                                                  string connectionId,
                                                   string projectId,
                                                   string wellId,
                                                   DepthType depthType,
                                                   int zoneNumber,
                                                   Func<ZoneFlowTimeOilWaterGas, bool> callback)
         {
-            _simulatedDataRepository.ZoneFlowProductionDataUpdates(connectionId,
+            _simulatedDataRepository.ZoneFlowProductionDataUpdates(returnRates,
+                                                                   connectionId,
                                                                    depthType,
                                                                    zoneNumber,
                                                                    callback);

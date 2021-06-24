@@ -18,10 +18,8 @@ namespace Product.API.Commands.Executor
                                                        IAsyncCommandExecutor<PressureHistoryDataCommand, PressureHistoryDataResponse>,
                                                        IAsyncCommandExecutor<FlowRateHistoryDataCommand, FlowRateHistoryDataResponse>,
                                                        IAsyncCommandExecutor<ZoneFlowProductionHistoryDataCommand, ZoneFlowProductionHistoryDataResponse>,
+                                                       IAsyncCommandExecutor<ZoneFlowProductionHistoryDataRatesCommand, ZoneFlowProductionHistoryDataRatesResponse>,
                                                        IAsyncCommandExecutor<ZoneFlowProductionAcceptableLimitsCommand, ZoneFlowProductionAcceptableLimitsResponse>
-
-
-
 
     {
         #region members
@@ -158,7 +156,30 @@ namespace Product.API.Commands.Executor
 
             return new ZoneFlowProductionHistoryDataResponse(oilUomInfo,waterUomInfo, gasUomInfo, result);
         }
-       
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public async Task<ZoneFlowProductionHistoryDataRatesResponse> ExecuteAsync(ZoneFlowProductionHistoryDataRatesCommand command, HttpContext context)
+        {
+            var result = await _productionMonitoringService.GetZoneFlowProductionDataRatesAsync(command.ProjectId,
+                                                                                 command.WellId,
+                                                                                 command.DepthType,
+                                                                                 command.ZoneNumber,
+                                                                                 command.Periodicity,
+                                                                                 command.SnapshotSize,
+                                                                                 command.NativeFromDate,
+                                                                                 command.NativeToDate);
+
+            return new ZoneFlowProductionHistoryDataRatesResponse(result);
+        }
+
+
+        
+
 
         #endregion
     }

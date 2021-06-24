@@ -15,35 +15,35 @@ namespace Product.PseudoData.Helpers
         {
             BehaviourType = BehaviourType.Down,
             Mean = 200,
-            StdDev = 0.15
+            StdDev = 0.015
         };
 
         public static readonly DataSettings DataSettingsWater = new DataSettings
         {
             BehaviourType = BehaviourType.Down,
-            Mean = 5,
-            StdDev = 0.05
+            Mean = 100,
+            StdDev = 0.005
         };
 
         public static readonly DataSettings DataSettingsPressure20Down = new DataSettings
         {
             BehaviourType = BehaviourType.Down,
             Mean = 20,
-            StdDev = 0.02
+            StdDev = 0.002
         };
 
         public static readonly DataSettings DataSettingsPressure50Down = new DataSettings
         {
             BehaviourType = BehaviourType.Down,
             Mean = 50,
-            StdDev = 0.03
+            StdDev = 0.003
         };
 
         public static readonly DataSettings DataSettingsPressure5Up = new DataSettings
         {
             BehaviourType = BehaviourType.Down,
             Mean = 5,
-            StdDev = 0.003
+            StdDev = 0.0003
         };
     }
 }
