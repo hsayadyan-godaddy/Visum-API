@@ -202,7 +202,7 @@ namespace Product.DAL.Simulation
 
         public void ZoneFlowProductionDataUpdates(bool returnRates, string connectionId, DepthType depthType, int zoneNumber, Func<ZoneFlowTimeOilWaterGas, bool> callback)
         {
-            var key = GetKey(SourceType.Oil);
+            var key = $"{GetKey(SourceType.Oil)}|{depthType}|{zoneNumber}";
 
             var keyOil = GetKey(SourceType.Oil, zoneNumber);
             var keyWater = GetKey(SourceType.Water, zoneNumber);
