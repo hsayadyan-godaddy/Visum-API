@@ -78,11 +78,11 @@ namespace Product.API.WebSocketAPI
                         }
                         else
                         {
-                            var key = pxInfo.Name;
+                            var key = pxInfo.Name.ToLower();
                             if (value.MethodParameters.ContainsKey(key))
                             {
                                 var val = value.MethodParameters[key];
-                                var reqVal = Convert.ChangeType(val, pxInfo.ParameterType);
+                                var reqVal = ConvertType(val, pxInfo.ParameterType);
                                 methodParams.Add(reqVal);
                             }
                             else
@@ -114,6 +114,14 @@ namespace Product.API.WebSocketAPI
         #endregion //publics
 
         #region privates
+
+        private object ConvertType(string value, Type type)
+        {
+            if (type.IsEnum)
+                return Enum.Parse(type, value);
+
+            return Convert.ChangeType(value, type);
+        }
 
         private void RegisterControllers()
         {
