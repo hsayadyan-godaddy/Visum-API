@@ -5,7 +5,7 @@ namespace Product.API.Commands.CommandModel.GeneralModels
     /// <summary>
     /// Base command
     /// </summary>
-    public class ProjectIdWellNameCommand
+    public abstract class ProjectIdWellNameCommand
     {
         /// <summary>
         /// Project identifier

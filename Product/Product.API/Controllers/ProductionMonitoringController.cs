@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Product.API.Attributes;
 using Product.API.Commands.CommandModel.ProductionMonitoring;
 using Product.API.Commands.Executor;
-using Product.API.Models.Basics;
+using Product.API.Controllers.Basics;
 using Product.API.Models.Error;
 using Product.API.Models.ProductionMonitoring;
 using System.Net.Mime;
@@ -21,7 +21,7 @@ namespace Product.API
     [ProducesResponseType(typeof(ServerError), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ServerError), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ServerError), StatusCodes.Status500InternalServerError)]
-    public class ProductionMonitoringController : ControllerBase
+    public class ProductionMonitoringController : RestAPIController
     {
         #region members
 
@@ -154,25 +154,6 @@ namespace Product.API
         {
             var result = await _commandExecutor.ExecuteAsync(value, HttpContext);
             return HandleResult(result);
-        }
-
-#endregion
-
-        #region privates
-
-        private IActionResult HandleResult(IBaseResponse result)
-        {
-            if (result.Error == null)
-            {
-                return Ok(result);
-            }
-            else
-            {
-                return new ObjectResult(result.Error)
-                {
-                    StatusCode = result.Error.ErrorCode
-                };
-            }
         }
 
         #endregion

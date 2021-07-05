@@ -160,6 +160,61 @@
             Zone number
             </summary>
         </member>
+        <member name="T:Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand">
+            <summary>
+            Well names search 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand.SearchString">
+            <summary>
+            Searching/filtering string
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand.CurrentProjectId">
+            <summary>
+            Define if required to return wells connected to specific project. 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand.MaxResults">
+            <summary>
+            Define max allowed results per page
+            </summary>
+        </member>
+        <member name="T:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand">
+            <summary>
+            Well search 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.SearchString">
+            <summary>
+            Searching/filtering string
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.NearbyWellsOnly">
+            <summary>
+            Define if required to return only nearby wells. 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.RecentWells">
+            <summary>
+            Define if required to return only recent wells. 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.CurrentProjectId">
+            <summary>
+            Define if required to return wells connected to specific project. 
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.ResultsPerPage">
+            <summary>
+            Define max allowed results per page
+            </summary>
+        </member>
+        <member name="P:Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand.PageIndex">
+            <summary>
+            Zero based page index
+            </summary>
+        </member>
         <member name="T:Product.API.Commands.Executor.ProductionMonitoringCommandExecutor">
             <summary>
             Production Monitoring CommandExecutor
@@ -235,6 +290,45 @@
             <param name="context"></param>
             <returns></returns>
         </member>
+        <member name="T:Product.API.Commands.Executor.WellboreCommandExecutor">
+            <summary>
+            Production Monitoring CommandExecutor
+            </summary>
+        </member>
+        <member name="M:Product.API.Commands.Executor.WellboreCommandExecutor.#ctor(Product.Services.Wellbore.IWellboreService)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="wellboreService"></param>
+        </member>
+        <member name="M:Product.API.Commands.Executor.WellboreCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Search wells
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Product.API.Commands.Executor.WellboreCommandExecutor.ExecuteAsync(Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand,Microsoft.AspNetCore.Http.HttpContext)">
+            <summary>
+            Search wells names for autocomplete
+            </summary>
+            <param name="command"></param>
+            <param name="context"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Product.API.Controllers.Basics.RestAPIController">
+            <summary>
+            Basic controller implementation
+            </summary>
+        </member>
+        <member name="M:Product.API.Controllers.Basics.RestAPIController.HandleResult(Product.API.Models.Basics.IBaseResponse)">
+            <summary>
+            Handle result
+            </summary>
+            <param name="result"></param>
+            <returns></returns>
+        </member>
         <member name="T:Product.API.Controllers.WebSocketMetadataController">
             <summary>
             WebSocket Metadata
@@ -257,6 +351,31 @@
             Get operations models metadata
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Product.API.Controllers.WellboreController">
+            <summary>
+            Wellbore data API endpoint
+            </summary>
+        </member>
+        <member name="M:Product.API.Controllers.WellboreController.#ctor(Product.API.Commands.Executor.WellboreCommandExecutor)">
+            <summary>
+            Create new instance
+            </summary>
+            <param name="commandExecutor"></param>
+        </member>
+        <member name="M:Product.API.Controllers.WellboreController.GetWellbores(Product.API.Commands.CommandModel.Wellbore.WellboreSearchCommand)">
+            <summary>
+            Get available wellbores
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Zones and depth ranges for specified well</returns>
+        </member>
+        <member name="M:Product.API.Controllers.WellboreController.GetWellboreNames(Product.API.Commands.CommandModel.Wellbore.WellboreNamesToCompleteCommand)">
+            <summary>
+            Get wellbore names for autocomplete
+            </summary>
+            <param name="value">Request parameters</param>
+            <returns>Zones and depth ranges for specified well</returns>
         </member>
         <member name="T:Product.API.ProductionMonitoringController">
             <summary>
@@ -575,6 +694,46 @@
             </summary>
         </member>
         <member name="M:Product.API.Models.ProductionMonitoring.ZoneFlowProductionHistoryDataResponse.#ctor(Product.DataModels.UnitOfMeasureInfo,Product.DataModels.UnitOfMeasureInfo,Product.DataModels.UnitOfMeasureInfo,Product.DataModels.ZoneFlowData)">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.Models.Wellbore.WellboreNamesToCompleteResponse">
+            <summary>
+            Wellbore names to complete
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Wellbore.WellboreNamesToCompleteResponse.Result">
+            <summary>
+            Well names
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.Wellbore.WellboreNamesToCompleteResponse.#ctor">
+            <summary>
+            Create new instance
+            </summary>
+        </member>
+        <member name="T:Product.API.Models.Wellbore.WellboreSearchResponse">
+            <summary>
+            Wellbore Profile Zones response 
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Wellbore.WellboreSearchResponse.Result">
+            <summary>
+            Contains information about well and project that has reference to this well
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Wellbore.WellboreSearchResponse.CurrentPageIndex">
+            <summary>
+            Zero based page index
+            </summary>
+        </member>
+        <member name="P:Product.API.Models.Wellbore.WellboreSearchResponse.TotalPages">
+            <summary>
+            Total pages
+            </summary>
+        </member>
+        <member name="M:Product.API.Models.Wellbore.WellboreSearchResponse.#ctor">
             <summary>
             Create new instance
             </summary>

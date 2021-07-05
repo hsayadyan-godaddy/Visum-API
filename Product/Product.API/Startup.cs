@@ -218,6 +218,7 @@ namespace Product.API
             services.RegisterServicesFactory();
 
             services.AddScoped<ProductionMonitoringCommandExecutor>();
+            services.AddScoped<WellboreCommandExecutor>();
         }
 
     }
