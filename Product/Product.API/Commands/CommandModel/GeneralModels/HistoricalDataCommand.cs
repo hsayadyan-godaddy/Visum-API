@@ -10,7 +10,7 @@ namespace Product.API.Commands.CommandModel.GeneralModels
     /// <summary>
     /// General implementation of historical data request command
     /// </summary>
-    public class HistoricalDataCommand : ProjectIdWellNameCommand
+    public abstract class HistoricalDataCommand : ProjectIdWellNameCommand
     {
         /// <summary>
         /// Required periodicity

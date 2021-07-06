@@ -9,8 +9,10 @@ namespace Product.DAL
 
         public static void RegisterDataAccessLayerServices(this IServiceCollection service)
         {
-            service.AddScoped<ISimulatedDataRepository, SimulatedDataRepository>();
-            service.AddScoped<ISimulatedInfoRepository, SimulatedInfoRepository>();
+            service.AddSingleton<ISimulatedDataRepository, SimulatedDataRepository>();
+            service.AddSingleton<ISimulatedInfoRepository, SimulatedInfoRepository>();
+            service.AddSingleton<ISimulatedWellsAndProjectsRepository, SimulatedWellsAndProjectsRepository>();
+            
         }
 
     }

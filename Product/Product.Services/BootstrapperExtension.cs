@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Product.DAL;
 using Product.Services.ProductionMonitoring;
+using Product.Services.Wellbore;
 
 namespace Product.Services
 {
@@ -11,6 +12,7 @@ namespace Product.Services
             service.RegisterDataAccessLayerServices();
 
             service.AddScoped<IProductionMonitoringService, ProductionMonitoringService>();
+            service.AddScoped<IWellboreService, WellboreService>();
         }
     }
 }
