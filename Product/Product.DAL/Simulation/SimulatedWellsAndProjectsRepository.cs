@@ -100,10 +100,17 @@ namespace Product.DAL.Simulation
                     }
                 }
 
-                var ret = tmp.Where(x => x.Wellbore.Name.StartsWith(searchLine, StringComparison.OrdinalIgnoreCase)
-                                      || x.Wellbore.Name.Contains(searchLine, StringComparison.OrdinalIgnoreCase)
-                                      || (searchVector?.Length > 1 && searchVector
-                                            .Any(z => x.Wellbore.Name.Contains(z, StringComparison.OrdinalIgnoreCase))))
+
+                var selection = tmp.Where(x => x.Wellbore.Name.StartsWith(searchLine, StringComparison.OrdinalIgnoreCase));
+                if (selection.Count() == 0)
+                {
+                    selection = tmp.Where(x => x.Wellbore.Name.Contains(searchLine, StringComparison.OrdinalIgnoreCase)
+                               || (searchVector?.Length > 1 && searchVector
+                               .Any(z => x.Wellbore.Name.Contains(z, StringComparison.OrdinalIgnoreCase))));
+                }
+
+
+                var ret = selection
                              .Select(x => x.Wellbore.Name)
                              .Distinct()
                              .OrderBy(x => x)
@@ -146,10 +153,14 @@ namespace Product.DAL.Simulation
                 if (!string.IsNullOrEmpty(searchLine) && tmp != null)
                 {
 
-                    var selectionStep = tmp.Where(x => x.Wellbore.Name.StartsWith(searchLine, StringComparison.OrdinalIgnoreCase)
-                                                    || x.Wellbore.Name.Contains(searchLine, StringComparison.OrdinalIgnoreCase)
+                    var selectionStep = tmp.Where(x => x.Wellbore.Name.StartsWith(searchLine, StringComparison.OrdinalIgnoreCase));
+
+                    if (selectionStep.Count() == 0)
+                    {
+                        selectionStep = tmp.Where(x => x.Wellbore.Name.Contains(searchLine, StringComparison.OrdinalIgnoreCase)
                                                     || (searchVector?.Length > 1 && searchVector
                                                             .Any(z => x.Wellbore.Name.Contains(z, StringComparison.OrdinalIgnoreCase))));
+                    }
 
                     if (selectionStep.Count() == 0)
                     {
