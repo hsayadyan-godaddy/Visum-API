@@ -8,6 +8,7 @@
         Water,
         Depth,
         Pressure,
-        FlowRate
+        FlowRate,
+        AnyRate
     }
 }

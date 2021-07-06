@@ -45,5 +45,12 @@ namespace Product.PseudoData.Helpers
             Mean = 5,
             StdDev = 0.0003
         };
+
+        public static readonly DataSettings DataSettingsAnyRate = new DataSettings
+        {
+            BehaviourType = BehaviourType.Regular,
+            Mean = 0.12,
+            StdDev = 0.04
+        };
     }
 }

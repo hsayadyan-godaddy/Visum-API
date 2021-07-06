@@ -9,10 +9,10 @@ namespace Product.PseudoData
         #region members
 
         private readonly DataSettings _dataSettings;
-        private  Random _rand = new Random();
-        private  BehaviourType _behaviourType;
-        private  double _mean;
-        private  double _stdDev;
+        private Random _rand = new Random();
+        private BehaviourType _behaviourType;
+        private double _mean;
+        private double _stdDev;
         private double _lastMax;
         private double _lastMin;
         private double _stdDevKoef;
@@ -103,7 +103,7 @@ namespace Product.PseudoData
 
             var ret = mean + stdDev * rndNormal;
 
-            return ret;
+            return ret > 0 ? ret : -ret;
         }
 
         #endregion
