@@ -12,6 +12,7 @@ namespace Product.DAL.Simulation
 
         private readonly Dictionary<string, DataGenerator> _generators = new Dictionary<string, DataGenerator>();
         private readonly DataCountOptimizer _optimizer = new DataCountOptimizer();
+        private readonly object _locker = new object();
 
         #endregion // members
 
@@ -45,7 +46,7 @@ namespace Product.DAL.Simulation
                     Time = time,
                     Value = itm
                 });
-                
+
                 if (includeTimeValue)
                 {
                     time = time.AddMinutes(1);
@@ -67,44 +68,49 @@ namespace Product.DAL.Simulation
 
         private DataGenerator GetGenerator(string key, SourceType sourceType, bool reset = false)
         {
+            DataGenerator ret = null;
 
-            if (!_generators.ContainsKey(key))
+            lock (_locker)
             {
-                var setting = PseudoData.Helpers.Common.DataSettingsOil;
-                switch (sourceType)
+                if (!_generators.ContainsKey(key))
                 {
-                    case SourceType.Oil:
-                        setting = PseudoData.Helpers.Common.DataSettingsOil;
-                        break;
-                    case SourceType.Gas:
-                        setting = PseudoData.Helpers.Common.DataSettingsGas;
-                        break;
-                    case SourceType.Water:
-                        setting = PseudoData.Helpers.Common.DataSettingsWater;
-                        break;
-                    case SourceType.FlowRate:
-                        setting = PseudoData.Helpers.Common.DataSettingsPressure50Down;
-                        break;
-                    case SourceType.Pressure:
-                        setting = PseudoData.Helpers.Common.DataSettingsPressure5Up;
-                        break;
-                    case SourceType.AnyRate:
-                        setting = PseudoData.Helpers.Common.DataSettingsAnyRate;
-                        break;
-                    default:
-                        break;
+                    var setting = PseudoData.Helpers.Common.DataSettingsOil;
+                    switch (sourceType)
+                    {
+                        case SourceType.Oil:
+                            setting = PseudoData.Helpers.Common.DataSettingsOil;
+                            break;
+                        case SourceType.Gas:
+                            setting = PseudoData.Helpers.Common.DataSettingsGas;
+                            break;
+                        case SourceType.Water:
+                            setting = PseudoData.Helpers.Common.DataSettingsWater;
+                            break;
+                        case SourceType.FlowRate:
+                            setting = PseudoData.Helpers.Common.DataSettingsPressure50Down;
+                            break;
+                        case SourceType.Pressure:
+                            setting = PseudoData.Helpers.Common.DataSettingsPressure5Up;
+                            break;
+                        case SourceType.AnyRate:
+                            setting = PseudoData.Helpers.Common.DataSettingsAnyRate;
+                            break;
+                        default:
+                            break;
+                    }
+                    var generator = new DataGenerator(setting);
+                    _generators.Add(key, generator);
                 }
-                var generator = new DataGenerator(setting);
-                _generators.Add(key, generator);
 
+                if (reset)
+                {
+                    _generators[key].Reset();
+                }
+
+                ret = _generators[key];
             }
 
-            if (reset)
-            {
-                _generators[key].Reset();
-            }
-
-            return _generators[key];
+            return ret;
         }
 
 

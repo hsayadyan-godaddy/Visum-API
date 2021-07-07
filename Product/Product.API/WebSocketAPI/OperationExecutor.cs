@@ -117,10 +117,22 @@ namespace Product.API.WebSocketAPI
 
         private object ConvertType(string value, Type type)
         {
-            if (type.IsEnum)
-                return Enum.Parse(type, value);
+            object ret = default(Type);
 
-            return Convert.ChangeType(value, type);
+            if (type.IsEnum)
+            {
+                Enum.TryParse(type, value, out ret);
+            }
+            else
+            {
+                try
+                {
+                    Convert.ChangeType(value, type);
+                }
+                catch { }
+            }
+
+            return ret;
         }
 
         private void RegisterControllers()
