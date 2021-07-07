@@ -101,32 +101,64 @@ namespace Product.DAL.Simulation
 
         public ZoneFlowData GetZoneFlowProductionData(bool returnRates, DepthType depthType, int zoneNumber, Periodicity periodicity, long snapshotSize, DateTime? fromDate, DateTime? toDate)
         {
+            if (returnRates)
+            {
+                return GetZoneFlowProductionDataRates(zoneNumber, periodicity, snapshotSize, fromDate, toDate);
+            }
+            else
+            {
+                var range = GetRange(periodicity, fromDate, toDate);
+
+                var key = GetKey(SourceType.Oil, zoneNumber);
+                var tmpOil = _simulator.GetHistory(key, SourceType.Oil, range.Item1, range.Item2, snapshotSize);
+
+                key = GetKey(SourceType.Water, zoneNumber);
+                var tmpWater = _simulator.GetHistory(key, SourceType.Water, range.Item1, range.Item2, snapshotSize);
+
+                key = GetKey(SourceType.Gas, zoneNumber);
+                var tmpGas = _simulator.GetHistory(key, SourceType.Gas, range.Item1, range.Item2, snapshotSize);
+
+                var rdata = new List<ZoneFlowTimeOilWaterGas>();
+                for (int i = 0; i < tmpOil.Count; i++)
+                {
+                    var oil = tmpOil[i].Value;
+                    var gas = tmpGas.Count > i ? tmpGas[i].Value : 0;
+                    var water = tmpWater.Count > i ? tmpWater[i].Value : 0;
+
+                    rdata.Add(new ZoneFlowTimeOilWaterGas
+                    {
+                        Oil = oil,
+                        Time = tmpOil[i].Time,
+                        Gas = gas,
+                        Water = water
+                    });
+                }
+
+                return new ZoneFlowData
+                {
+                    ZoneNumber = zoneNumber,
+                    Data = rdata
+                };
+            }
+        }
+
+        public ZoneFlowData GetZoneFlowProductionDataRates(int zoneNumber, Periodicity periodicity, long snapshotSize, DateTime? fromDate, DateTime? toDate)
+        {
             var range = GetRange(periodicity, fromDate, toDate);
 
-            var key = GetKey(SourceType.Oil, zoneNumber);
-            var tmpOil = _simulator.GetHistory(key, SourceType.Oil, range.Item1, range.Item2, snapshotSize);
+            var anyRatesKey = GetKey(SourceType.AnyRate);
 
-            key = GetKey(SourceType.Water, zoneNumber);
-            var tmpWater = _simulator.GetHistory(key, SourceType.Water, range.Item1, range.Item2, snapshotSize);
-
-            key = GetKey(SourceType.Gas, zoneNumber);
-            var tmpGas = _simulator.GetHistory(key, SourceType.Gas, range.Item1, range.Item2, snapshotSize);
+            var tmpOil = _simulator.GetHistory(anyRatesKey, SourceType.AnyRate, range.Item1, range.Item2, snapshotSize);
+            var tmpWater = _simulator.GetHistory(anyRatesKey, SourceType.AnyRate, range.Item1, range.Item2, snapshotSize);
+            var tmpGas = _simulator.GetHistory(anyRatesKey, SourceType.AnyRate, range.Item1, range.Item2, snapshotSize);
 
             var rdata = new List<ZoneFlowTimeOilWaterGas>();
+
             for (int i = 0; i < tmpOil.Count; i++)
             {
                 var oil = tmpOil[i].Value;
                 var gas = tmpGas.Count > i ? tmpGas[i].Value : 0;
                 var water = tmpWater.Count > i ? tmpWater[i].Value : 0;
-
-                if (returnRates)
-                {
-                    var totalSum = oil + gas + water;
-                 
-                    oil = oil / totalSum;
-                    gas = gas / totalSum;
-                    water = water / totalSum;
-                }
 
                 rdata.Add(new ZoneFlowTimeOilWaterGas
                 {
@@ -286,17 +318,14 @@ namespace Product.DAL.Simulation
                 });
             }
 
+            var anyRatesKey = GetKey(SourceType.AnyRate);
+
             foreach (var itm in oilRatesCalls)
             {
-                var tickOil = _simulator.GetTick(itm.Item1, SourceType.Oil);
-                var tickWater = _simulator.GetTick(itm.Item2, SourceType.Water);
-                var tickGas = _simulator.GetTick(itm.Item3, SourceType.Gas);
-
-                var totalSum = tickOil + tickWater + tickGas;
-
-                tickOil = tickOil / totalSum;
-                tickWater = tickWater / totalSum;
-                tickGas = tickGas / totalSum;
+               
+                var tickOil = _simulator.GetTick(anyRatesKey, SourceType.AnyRate);
+                var tickWater = _simulator.GetTick(anyRatesKey, SourceType.AnyRate);
+                var tickGas = _simulator.GetTick(anyRatesKey, SourceType.AnyRate);
 
                 itm.Item4.Invoke(new ZoneFlowTimeOilWaterGas
                 {

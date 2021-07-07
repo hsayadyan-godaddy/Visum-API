@@ -88,6 +88,9 @@ namespace Product.DAL.Simulation
                     case SourceType.Pressure:
                         setting = PseudoData.Helpers.Common.DataSettingsPressure5Up;
                         break;
+                    case SourceType.AnyRate:
+                        setting = PseudoData.Helpers.Common.DataSettingsAnyRate;
+                        break;
                     default:
                         break;
                 }
