@@ -31,7 +31,7 @@ namespace Product.DAL.Simulation
         public List<TimeAndDouble> GetHistory(string key, SourceType sourceType, DateTime fromTime, DateTime toTime, long adjustCount, bool includeTimeValue = true)
         {
             var gen = GetGenerator(key, sourceType, true);
-            var count = (int)(toTime - fromTime).TotalMinutes;
+            var count = (int)(toTime - fromTime).TotalMinutes + 1;
 
             var data = gen.Next(count);
 
