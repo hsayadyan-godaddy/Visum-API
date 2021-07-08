@@ -17,7 +17,7 @@ namespace Product.PseudoData
             var extremesCount = avgCount / 2.0;
             var maxRange = extremesCount > 0 ? (int)Math.Ceiling(data.Count / extremesCount) : data.Count;
 
-            if (data.Count > maxRange)
+            if (data.Count > avgCount)
             {
                 ret.Add(data[0]);
 
@@ -41,14 +41,14 @@ namespace Product.PseudoData
                     }
                 }
 
-                if (ret.Count > 2)
+                if (ret.Count >= 1)
                 {
-                    while (ret.Count > avgCount - 2)
-                    {
-                        ret.RemoveAt(0);
-                    }
-
                     ret.Add(data[data.Count - 1]);
+
+                    while (ret.Count > avgCount && ret.Count > 1)
+                    {
+                        ret.RemoveAt(1);
+                    }
                 }
             }
             else

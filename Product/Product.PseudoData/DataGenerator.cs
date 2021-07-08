@@ -9,7 +9,6 @@ namespace Product.PseudoData
         #region members
 
         private readonly DataSettings _dataSettings;
-        private Random _rand = new Random();
         private BehaviourType _behaviourType;
         private double _mean;
         private double _stdDev;
@@ -95,8 +94,9 @@ namespace Product.PseudoData
 
         private double NextNormal(double mean, double stdDev)
         {
-            var randA = 1.0 - _rand.NextDouble();
-            var randB = 1.0 - _rand.NextDouble();
+            var rand = new Random();
+            var randA = 1.0 - rand.NextDouble();
+            var randB = 1.0 - rand.NextDouble();
             var rndNormal
                 = Math.Sqrt(-2.0 * Math.Log(randA)) *
                   Math.Sin(2.0 * Math.PI * randB);
