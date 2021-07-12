@@ -30,21 +30,24 @@ namespace Product.PseudoData
 
         #region publics
 
-        public double Next()
+        public double Next(bool useBehaviourTrend = true)
         {
-            switch (_behaviourType)
+            if (useBehaviourTrend)
             {
-                case BehaviourType.Up:
-                    _mean = _lastMax;
-                    _stdDev = _lastMax * _stdDevKoef;
-                    break;
-                case BehaviourType.Down:
-                    _mean = _lastMin;
-                    _stdDev = _lastMin * _stdDevKoef;
-                    break;
-                case BehaviourType.Regular:
-                default:
-                    break;
+                switch (_behaviourType)
+                {
+                    case BehaviourType.Up:
+                        _mean = _lastMax;
+                        _stdDev = _lastMax * _stdDevKoef;
+                        break;
+                    case BehaviourType.Down:
+                        _mean = _lastMin;
+                        _stdDev = _lastMin * _stdDevKoef;
+                        break;
+                    case BehaviourType.Regular:
+                    default:
+                        break;
+                }
             }
 
             var ret = NextNormal(_mean, _stdDev);

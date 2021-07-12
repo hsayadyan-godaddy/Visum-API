@@ -58,10 +58,10 @@ namespace Product.DAL.Simulation
             return ret;
         }
 
-        public double GetTick(string key, SourceType sourceType)
+        public double GetTick(string key, SourceType sourceType, bool useBehaviourTrend = false)
         {
             var gen = GetGenerator(key, sourceType);
-            return gen.Next();
+            return gen.Next(useBehaviourTrend);
         }
 
         #region privates
@@ -122,7 +122,7 @@ namespace Product.DAL.Simulation
             {
                 RealtimeUpdates?.Invoke(DateTime.Now);
             };
-            tmr.Interval = 200;
+            tmr.Interval = 500;
             tmr.Start();
         }
 

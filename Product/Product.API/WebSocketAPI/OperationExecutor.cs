@@ -127,7 +127,7 @@ namespace Product.API.WebSocketAPI
             {
                 try
                 {
-                    Convert.ChangeType(value, type);
+                    ret = Convert.ChangeType(value, type);
                 }
                 catch { }
             }
