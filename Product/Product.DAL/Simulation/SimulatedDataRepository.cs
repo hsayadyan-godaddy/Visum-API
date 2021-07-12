@@ -178,11 +178,15 @@ namespace Product.DAL.Simulation
 
         public ZonesData GetZonesData(DepthType depthType)
         {
+            const int zonesStart = 17500;
+            const int zonesMax = 21500;
+            const int zoneStep = 200;
+
             var data = new List<ZoneInfo>();
             var num = 1;
-            var zoneStep = 750;
+            
 
-            for (int i = 0; i < 15000; i += zoneStep)
+            for (int i = zonesStart; i < zonesMax; i += zoneStep)
             {
                 data.Add(new ZoneInfo
                 {
