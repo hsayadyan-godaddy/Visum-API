@@ -1,5 +1,4 @@
 name: .NET
-value: '**/*.csproj'
 on:
   push:
     branches: [ dev ]
